@@ -1,88 +1,40 @@
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
-
-# testing
-/coverage
-
-# production
-/build
-/dist
-
-# misc
-.DS_Store
-.env
-.env.*
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
-
-# IDEs and editors
-.vscode/
-.idea/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-
-# macOS
-*.DS_Store
-
-# logs
+# Logs
 logs
 *.log
 npm-debug.log*
 yarn-debug.log*
+yarn-error.log*
 pnpm-debug.log*
+lerna-debug.log*
 
-# local env files
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+node_modules
+.DS_Store
+dist
+dist-ssr
+coverage
+*.local
 
-# Next.js build output
-.next
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
-# Nuxt.js build / generate output
-.nuxt
-
-# Gatsby files
-.cache/
-public/
-
-# Vite / general static build
-dist/
-
-# Storybook
-out/
-storybook-static/
-
-# parcel-bundler cache
-.cache
-
-# SvelteKit
-.svelte-kit
-
-# TypeScript
 *.tsbuildinfo
 
-# JetBrains
-*.iml
-.idea/
+.eslintcache
 
-# npm cache
-.npm
+# Cypress
+/cypress/videos/
+/cypress/screenshots/
 
-# Optional npm cache directory
-.npmrc
+# Vitest
+__screenshots__/
 
-# lock files (if you want to keep them, remove these entries)
-# package-lock.json
-# yarn.lock
-# pnpm-lock.yaml
+# Vite
+*.timestamp-*-*.mjs
