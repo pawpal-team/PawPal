@@ -1,7 +1,7 @@
-<script setup>
-import AppSidebar from './components/layout/AppSidebar.vue'
-</script>
+<script setup></script>
 
 <template>
-  <AppSidebar />
+  <h1>You did it!</h1>
 </template>
+
+<style scoped></style>
