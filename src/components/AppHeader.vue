@@ -4,47 +4,45 @@
     <div class="md:hidden">
       <div class="mx-auto flex h-[55px] px-4 items-center justify-between">
         <a href="#" class="items-center">
-          <img src="../assets/icons/PawPal_logo_p.webp" alt="logo" class="h-10 w-auto" />
+          <img src="@/assets/icons/PawPal-logo_p.webp" alt="logo" class="h-10 w-auto" />
         </a>
 
         <button type="button" class="flex h-10 w-10 items-center justify-center">
-          <img src="../assets/images/bars-solid.png" alt="menu" class="h-5 w-5 object-contain" />
+          <img src="@/assets/icons/header-bars.svg" alt="menu" class="h-5 w-5 object-contain" />
         </button>
       </div>
     </div>
 
     <!-- 平板版&電腦版 -->
-    <div class="mx-auto hidden h-[68px] max-w-6xl items-center px-4 md:flex md:justify-between">
+    <div class="mx-auto hidden h-17 max-w-5xl items-center px-4 md:flex md:justify-between">
       <a href="#" class="flex items-center">
-        <img src="../assets/icons/PawPal_logo_p.webp" alt="logo" class="h-[68px] w-auto" />
+        <img src="@/assets/icons/PawPal-logo_p.webp" alt="logo" class="h-17 w-auto" />
       </a>
 
       <div class="flex items-center gap-5 lg:contents">
         <nav class="flex items-center gap-5 text-[#717182]">
-          <a href="#" class="transition hover:text-[#606060]">關於我們</a>
+          <a href="#" class="transition hover:text-[#FFA002]">關於我們</a>
 
           <div v-for="group in navGroups" :key="group.id" class="group relative">
             <button
               type="button"
-              class="flex cursor-pointer items-center gap-1 transition hover:text-[#606060]"
+              class="group flex cursor-pointer items-center gap-1 transition group-hover:text-[#FFA002]"
             >
               <span>{{ group.label }}</span>
-              <span
-                ><svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="size-4"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="m19.5 8.25-7.5 7.5-7.5-7.5"
-                  />
-                </svg>
-              </span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-4 text-[#717182] transition group-hover:text-[#FFA002]"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="m19.5 8.25-7.5 7.5-7.5-7.5"
+                />
+              </svg>
             </button>
 
             <div
@@ -54,20 +52,20 @@
                 v-for="item in group.items"
                 :key="item.label"
                 :href="item.href"
-                class="block px-4 py-2 transition hover:bg-gray-50 hover:text-[#606060]"
+                class="block px-4 py-2 transition hover:bg-[#E9EDFC] hover:text-[#606060]"
               >
                 {{ item.label }}
               </a>
             </div>
           </div>
 
-          <a href="#" class="transition hover:text-[#606060]">會員專區</a>
+          <a href="#" class="transition hover:text-[#FFA002]">會員專區</a>
         </nav>
 
         <div class="flex items-center gap-2">
           <a
             href="#"
-            class="flex items-center justify-center rounded-full bg-[#FFA002] px-4 py-2 text-white transition hover:opacity-90"
+            class="flex items-center justify-center rounded-full bg-[#FFA002] px-4 py-2 text-white transition hover:bg-[#e58f04]"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
