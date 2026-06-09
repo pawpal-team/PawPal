@@ -1,9 +1,9 @@
 <script setup>
-import home from '@/views/HomeView.vue'
+import Home from '@/views/HomeView.vue'
 </script>
 
 <template>
-  <home />
+  <Home />
 </template>
 
 <style scoped></style>

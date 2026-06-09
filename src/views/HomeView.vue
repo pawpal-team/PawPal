@@ -3,8 +3,8 @@ import bgImage from '@/assets/images/home-bg.png'
 import visualImage from '@/assets/images/home-visual.png'
 import aboutImage from '@/assets/images/home-about.png'
 import IconLocation from '@/assets/icons/location_o.svg'
-import navbar from '@/components/layout/AppHeader.vue'
-import foot from '@/components/layout/AppFooter.vue'
+import Header from '@/components/layout/AppHeader.vue'
+import Footer from '@/components/layout/AppFooter.vue'
 
 const services = [
   {
@@ -51,9 +51,9 @@ const getIconUrl = (name) => {
 </script>
 
 <template>
-  <navbar />
+  <Header />
   <main
-    class="w-full min-h-screen select-none pt-8 pb-56 pawpal-container text-brand-gray overflow-x-hidden font-[family:var(--font-english),var(--font-chinese),sans-serif]"
+    class="w-full min-h-screen select-none pt-8 pb-56 pawpal-container text-brand-gray overflow-x-hidden"
   >
     <section class="hero-section text-center w-full">
       <span
@@ -256,5 +256,5 @@ const getIconUrl = (name) => {
       </div>
     </section>
   </main>
-  <foot />
+  <Footer />
 </template>

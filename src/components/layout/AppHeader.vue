@@ -1,5 +1,5 @@
 <script setup>
-import AppSidebar from '@/components/layout/AppSidebar.vue'
+import Sidebar from '@/components/layout/AppSidebar.vue'
 import { useSidebarStore } from '@/stores/sidebar'
 
 const sidebarStore = useSidebarStore()
@@ -121,7 +121,7 @@ const navGroups = [
       v-if="sidebarStore.isOpen"
       class="fixed inset-y-0 left-0 z-50 w-[420px] overflow-y-auto bg-white md:hidden"
     >
-      <AppSidebar />
+      <Sidebar />
     </div>
   </transition>
 </template>
