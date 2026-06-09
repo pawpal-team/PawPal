@@ -2,12 +2,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;700&display=swap');
 @import 'tailwindcss';
+@theme {
+  --font-brand-main: 'Fredoka', 'Chiron GoRound TC', 'Noto Sans TC', sans-serif;
 
-:root {
-  --font-english: 'Fredoka';
-  --font-chinese: 'Chiron GoRound TC', 'Noto Sans TC';
+  --color-brand-blue: #92a8f5;
+  --color-brand-orange: #ffa002;
+  --color-brand-lightblue: #e9eefd;
+  --color-brand-navy: #3d4a7a;
+  --color-brand-gray: #717182;
+  --color-brand-darkgray: #606060;
+  --color-brand-white: #ffffff;
 }
 
 body {
-  font-family: var(--font-english), var(--font-chinese), sans-serif;
+  font-family: var(--font-brand-main);
 }
