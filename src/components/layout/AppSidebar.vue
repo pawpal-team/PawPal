@@ -3,7 +3,7 @@
     <div class="flex items-center justify-end px-5 pt-5">
       <button
         type="button"
-        class="grid h-9 w-9 cursor-pointer place-items-center text-slate-500 hover:text-[#FFA002]"
+        class="grid h-9 w-9 cursor-pointer place-items-center text-[#717182] hover:text-[#FFA002]"
         aria-label="關閉選單"
       >
         <svg
@@ -25,31 +25,31 @@
       <section>
         <ul class="flex flex-col gap-4">
           <li>
-            <a href="#" class="text-base font-medium text-[#3D4A7A] hover:text-[#FFA002]">關於我們</a>
+            <a href="#" class="px-3 text-sm font-medium text-[#717182] active:text-[#FFA002] cursor-pointer">關於我們</a>
           </li>
-          <li><span class="text-xs font-bold tracking-wider text-[#717182]">醫療專區</span></li>
-          <li><a href="#" class="text-base font-medium text-[#3D4A7A] hover:text-[#FFA002]">搜尋醫療院所</a></li>
-          <li><a href="#" class="text-base font-medium text-[#3D4A7A] hover:text-[#FFA002]">AI 即時診斷</a></li>
-          <li><a href="#" class="text-base font-medium text-[#3D4A7A] hover:text-[#FFA002]">緊急處置教學</a></li>
+          <li><span class="text-base font-bold tracking-wider text-[#3D4A7A]">醫療專區</span></li>
+          <li><a href="#" class="px-3 text-sm font-medium text-[#717182] active:text-[#FFA002] cursor-pointer">搜尋醫療院所</a></li>
+          <li><a href="#" class="px-3 text-sm font-medium text-[#717182] active:text-[#FFA002] cursor-pointer">AI 即時診斷</a></li>
+          <li><a href="#" class="px-3 text-sm font-medium text-[#717182] active:text-[#FFA002] cursor-pointer">緊急處置教學 </a></li>
+        </ul>
+      </section>
+      
+      <section>
+        <ul class="flex flex-col gap-4">
+          <li><span class="text-base font-bold tracking-wider text-[#3D4A7A]">寵物知識+</span></li>
+          <li><a href="#" class="px-3 text-sm font-medium text-[#717182] active:text-[#FFA002] cursor-pointer">經驗分享討論區</a></li>
+          <li><a href="#" class="px-3 text-sm font-medium text-[#717182] active:text-[#FFA002] cursor-pointer">衛教文章</a></li>
+          <li><a href="#" class="px-3 text-sm font-medium text-[#717182] active:text-[#FFA002] cursor-pointer">小知識測驗</a></li>
         </ul>
       </section>
 
       <section>
         <ul class="flex flex-col gap-4">
-          <li><span class="text-xs font-bold tracking-wider text-[#717182]">寵物知識+</span></li>
-          <li><a href="#" class="text-base font-medium text-[#3D4A7A] hover:text-[#FFA002]">經驗分享討論區</a></li>
-          <li><a href="#" class="text-base font-medium text-[#3D4A7A] hover:text-[#FFA002]">衛教文章</a></li>
-          <li><a href="#" class="text-base font-medium text-[#3D4A7A] hover:text-[#FFA002]">小知識測驗</a></li>
-        </ul>
-      </section>
-
-      <section>
-        <ul class="flex flex-col gap-4">
-          <li><span class="text-xs font-bold tracking-wider text-[#717182]">會員專區</span></li>
-          <li><a href="#" class="text-base font-medium text-[#3D4A7A] hover:text-[#FFA002]">會員主頁</a></li>
+          <li><span class="text-base font-bold tracking-wider text-[#3D4A7A]">會員專區</span></li>
+          <li><a href="#" class="px-3 text-sm font-medium text-[#717182] active:text-[#FFA002] cursor-pointer">會員主頁</a></li>
           <li>
             <div class="flex items-center justify-center gap-20 border-t border-slate-200 pt-[50px]">
-              <a href="#" class="flex items-center gap-1.5 text-base font-medium text-slate-500 hover:text-[#FFA002]">
+              <a href="#" class="flex items-center gap-1.5 text-base font-medium text-[#717182] active:text-[#FFA002] cursor-pointer">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -67,7 +67,7 @@
                 </svg>
                 註冊
               </a>
-              <a href="#" class="flex items-center gap-1.5 text-base font-medium text-slate-500 hover:text-[#FFA002]">
+              <a href="#" class="flex items-center gap-1.5 text-base font-medium text-[#717182] active:text-[#FFA002] cursor-pointer">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -93,7 +93,7 @@
     <div class="px-6 pb-8">
       <button
         type="button"
-        class="flex w-full items-center justify-center gap-2 rounded-full bg-[#92A8F5] py-4 text-base font-medium text-white shadow-md transition hover:bg-[#FFA002] active:bg-[#E08F00] cursor-pointer"
+        class="flex w-full items-center justify-center gap-2 rounded-full bg-[#FFA002] py-4 text-base font-medium text-white shadow-md transition hover:bg-[#e58f00] active:bg-[#E08F00] cursor-pointer"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
