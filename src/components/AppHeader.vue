@@ -100,7 +100,7 @@ const navGroups = [
 ]
 </script>
 
-<style>
+<style scoped>
 .arrow-icon {
   filter: invert(46%) sepia(8%) saturate(567%) hue-rotate(202deg) brightness(92%) contrast(88%);
 }
