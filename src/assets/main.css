@@ -1,20 +1,7 @@
-@import "tailwindcss";
-
-@theme {
-  --font-chiron: "Chiron GoRound TC", system-ui, sans-serif;
-}
-
-html,
-body {
-  font-family: "Chiron GoRound TC", system-ui, sans-serif;
-}
-
 @import url('https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@200..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;700&display=swap');
-
 @import 'tailwindcss';
-
 @theme {
   --font-brand-main: 'Fredoka', 'Chiron GoRound TC', 'Noto Sans TC', sans-serif;
 
