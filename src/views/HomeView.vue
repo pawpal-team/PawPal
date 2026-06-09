@@ -3,6 +3,8 @@ import bgImage from '@/assets/images/home-bg.png'
 import visualImage from '@/assets/images/home-visual.png'
 import aboutImage from '@/assets/images/home-about.png'
 import IconLocation from '@/assets/icons/location_o.svg'
+import navbar from '@/components/layout/AppHeader.vue'
+import foot from '@/components/layout/AppFooter.vue'
 
 const services = [
   {
@@ -49,8 +51,9 @@ const getIconUrl = (name) => {
 </script>
 
 <template>
-  <div
-    class="w-full min-h-screen select-none pt-18 pb-64 pawpal-container text-brand-gray overflow-x-hidden font-[family:var(--font-english),var(--font-chinese),sans-serif]"
+  <navbar />
+  <main
+    class="w-full min-h-screen select-none pt-8 pb-56 pawpal-container text-brand-gray overflow-x-hidden font-[family:var(--font-english),var(--font-chinese),sans-serif]"
   >
     <section class="hero-section text-center w-full">
       <span
@@ -252,5 +255,6 @@ const getIconUrl = (name) => {
         </RouterLink>
       </div>
     </section>
-  </div>
+  </main>
+  <foot />
 </template>
