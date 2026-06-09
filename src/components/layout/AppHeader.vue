@@ -1,4 +1,9 @@
 <script setup>
+import AppSidebar from '@/components/layout/AppSidebar.vue'
+import { useSidebarStore } from '@/stores/sidebar'
+
+const sidebarStore = useSidebarStore()
+
 const navGroups = [
   {
     id: 'medical',
@@ -30,7 +35,11 @@ const navGroups = [
           <img src="@/assets/images/PawPal-logo_p.webp" alt="logo" class="h-10 w-auto" />
         </a>
 
-        <button type="button" class="flex h-10 w-10 items-center justify-center">
+        <button
+          type="button"
+          class="flex h-10 w-10 items-center justify-center"
+          @click="sidebarStore.toggleSidebar()"
+        >
           <img src="@/assets/icons/header-bars.svg" alt="menu" class="h-5 w-5 object-contain" />
         </button>
       </div>
@@ -98,6 +107,23 @@ const navGroups = [
       </div>
     </div>
   </header>
+
+  <!-- Sidebar Overlay -->
+  <div
+    v-if="sidebarStore.isOpen"
+    class="fixed inset-0 z-40 bg-black/50 md:hidden"
+    @click="sidebarStore.closeSidebar()"
+  />
+
+  <!-- Sidebar -->
+  <transition name="slide">
+    <div
+      v-if="sidebarStore.isOpen"
+      class="fixed inset-y-0 left-0 z-50 w-[420px] overflow-y-auto bg-white md:hidden"
+    >
+      <AppSidebar />
+    </div>
+  </transition>
 </template>
 
 <style scoped>
@@ -117,5 +143,18 @@ const navGroups = [
 .member-icon:hover {
   filter: brightness(0) invert(38%) sepia(0%) saturate(1%) hue-rotate(198deg) brightness(94%)
     contrast(92%);
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.3s ease;
+}
+
+.slide-enter-from {
+  transform: translateX(100%);
+}
+
+.slide-leave-to {
+  transform: translateX(100%);
 }
 </style>
