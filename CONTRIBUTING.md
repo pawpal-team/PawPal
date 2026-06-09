@@ -7,8 +7,15 @@
 ## 🛠 框架與技術棧 (Framework & Tech Stack)
 
 * **前端框架：** Vue.js
-* **樣式處理：** CSS
+* **樣式處理：** CSS / Tailwind CSS
 * **網路請求：** Axios
+
+---
+
+## 📁 資產與檔案管理 (Asset Management)
+
+* **共用圖片：** LOGO 等專案共用圖片統一放置於 `src/assets/images/` 資料夾。
+* **圖示規範：** 圖示（Icon）統一使用 **SVG** 格式。
 
 ---
 
@@ -58,14 +65,19 @@
 
 ## 🎨 UI 規範 (UI Standards)
 
-* **UI 規範項目：**
-  * **字體設定：**
-    * 繁中：`Chiron GoRound TC`、`Noto Sans Traditional Chinese`
-    * 英文：`Fredoka`
-  * 字體大小:
-  * 顏色:
-  * 間距:
-* **目前狀態：** 暫定 (後續更新補上)。
+* **字體設定：**
+  * 繁中：`Chiron GoRound TC`、`Noto Sans Traditional Chinese`
+  * 英文：`Fredoka`
+* **Tailwind 間距與尺寸：**
+  * 統一以 **4px** 為基礎單位（例如 `p-1` 為 4px、`p-2` 為 8px）。
+  * 若遇到非 4 的倍數之特殊情況，尺寸拿捏需以**偶數**為基準。
+* **版面寬度：**
+  * 主要容器寬度設定為 `1024px`（或 `max-w-[1024px]`），且左右內距固定為 `px-4`。
+* **色彩與狀態 (Colors & States)：**
+  * 灰色文字在滑鼠懸停（`hover`）時，統一變更為**橘色**。
+* **響應式設計 (RWD Breakpoints)：**
+  * 平板（Tablet）與電腦（Desktop）採用完全相同的樣式。
+  * 統一以 Tailwind 的 `md` 作為響應式切換的斷點（Breakpoint）。
 
 ---
 

@@ -13,11 +13,7 @@
   --color-brand-darkgray: #606060;
   --color-brand-white: #ffffff;
 }
-:root {
-  --font-english: 'Fredoka';
-  --font-chinese: 'Chiron GoRound TC', 'Noto Sans TC';
-}
 
 body {
-  font-family: var(--font-english), var(--font-chinese), sans-serif;
+  font-family: var(--font-brand-main);
 }
