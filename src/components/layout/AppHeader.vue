@@ -32,7 +32,7 @@ const navGroups = [
     <div class="md:hidden">
       <div class="mx-auto flex h-[55px] px-4 items-center justify-between">
         <a href="#" class="items-center">
-          <img src="@/assets/images/PawPal-logo_p.webp" alt="logo" class="h-10 w-auto" />
+          <img src="@/assets/images/PawPal_logo.PNG" alt="logo" class="h-10 w-auto" />
         </a>
 
         <button
@@ -48,7 +48,7 @@ const navGroups = [
     <!-- 平板版&電腦版 -->
     <div class="mx-auto hidden h-17 max-w-5xl items-center px-4 md:flex md:justify-between">
       <a href="#" class="flex items-center">
-        <img src="@/assets/images/PawPal-logo_p.webp" alt="logo" class="h-17 w-auto" />
+        <img src="@/assets/images/PawPal_logo.PNG" alt="logo" class="h-17 w-auto" />
       </a>
 
       <div class="flex items-center gap-5 lg:contents">
