@@ -5,7 +5,9 @@ const sidebarStore = useSidebarStore()
 </script>
 
 <template>
-  <div class="mx-auto flex min-h-screen w-full max-w-[420px] flex-col bg-brand-white">
+  <div
+    class="fixed inset-y-0 left-0 z-50 flex h-[100dvh] w-screen max-w-none flex-col overflow-y-auto overflow-x-hidden bg-brand-white"
+  >
     <div class="flex items-center justify-end px-5 pt-5">
       <button
         type="button"
@@ -17,7 +19,7 @@ const sidebarStore = useSidebarStore()
       </button>
     </div>
 
-    <nav class="flex flex-1 flex-col gap-6 px-8 pt-2 pb-6">
+    <nav class="flex flex-col gap-5 px-4 pt-2 pb-5">
       <section>
         <ul class="flex flex-col gap-4">
           <li>
