@@ -6,7 +6,7 @@
       <div class="flex flex-col pt-8 md:items-start md:pt-0 md:max-w-[240px]">
         <img
           class="w-[140px] h-[80px] object-contain md:w-[180px]"
-          src="@/assets/images/PawPal_logo_p.PNG"
+          src="@/assets/images/PawPal_logo.PNG"
         />
         <p class="hidden text-[#6B7280] md:block text-sm">
           為毛孩家庭打造的即時照護平台,24 小時陪伴每一個緊急時刻。

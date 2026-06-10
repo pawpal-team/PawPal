@@ -100,8 +100,9 @@ const sidebarStore = useSidebarStore()
                 <img src="@/assets/icons/register.svg" alt="Register Icon" class="h-4 w-4" />
                 註冊
               </a>
-              <a
-                href="#"
+              <router-link
+                to="/login"
+                @click="sidebarStore.closeSidebar()"
                 class="cursor-pointer flex items-center gap-1.5 text-base font-medium text-brand-gray active:text-brand-orange"
               >
                 <img
@@ -110,7 +111,7 @@ const sidebarStore = useSidebarStore()
                   class="h-4 w-4 active:stroke-brand-orange"
                 />
                 登入
-              </a>
+              </router-link>
             </div>
           </li>
         </ul>
