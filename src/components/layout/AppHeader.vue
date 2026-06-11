@@ -28,11 +28,11 @@ const navGroups = [
 
 <template>
   <header class="bg-white shadow-sm">
-    <!-- 手機版 -->
-    <div class="md:hidden">
-      <div class="mx-auto flex h-[55px] px-4 items-center justify-between">
+    <!-- 手機版與平板版 -->
+    <div class="lg:hidden">
+      <div class="mx-auto flex h-[55px] items-center justify-between px-6 md:px-4">
         <router-link to="/" class="items-center">
-          <img src="@/assets/images/PawPal_logo.PNG" alt="logo" class="h-10 w-auto" />
+          <img src="@/assets/images/PawPal_logo.PNG" alt="logo" class="h-10 w-auto md:h-8" />
         </router-link>
 
         <button
@@ -45,10 +45,10 @@ const navGroups = [
       </div>
     </div>
 
-    <!-- 平板版&電腦版 -->
-    <div class="mx-auto hidden h-17 max-w-5xl items-center px-4 md:flex md:justify-between">
+    <!-- 電腦版 -->
+    <div class="mx-auto hidden h-17 max-w-7xl items-center px-4 lg:flex lg:justify-between">
       <router-link to="/" class="flex items-center">
-        <img src="@/assets/images/PawPal_logo.PNG" alt="logo" class="h-17 w-auto" />
+        <img src="@/assets/images/PawPal_logo.PNG" alt="logo" class="h-12 w-auto" />
       </router-link>
 
       <div class="flex items-center gap-5 lg:contents">
@@ -111,7 +111,7 @@ const navGroups = [
   <!-- Sidebar Overlay -->
   <div
     v-if="sidebarStore.isOpen"
-    class="fixed inset-0 z-40 bg-black/50 md:hidden"
+    class="fixed inset-0 z-40 bg-black/50 lg:hidden"
     @click="sidebarStore.closeSidebar()"
   />
 
@@ -119,7 +119,7 @@ const navGroups = [
   <transition name="slide">
     <div
       v-if="sidebarStore.isOpen"
-      class="fixed inset-y-0 left-0 z-50 w-[420px] overflow-y-auto bg-white md:hidden"
+      class="fixed inset-y-0 right-0 z-50 overflow-y-auto bg-white lg:hidden"
     >
       <Sidebar />
     </div>
