@@ -99,7 +99,7 @@ const navGroups = [
           >
             <img
               src="@/assets/icons/member.svg"
-              class="member-icon size-6 transition duration-150"
+              class="member-icon size-11 transition duration-150"
               alt="member"
             />
           </router-link>
