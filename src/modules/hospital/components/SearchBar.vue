@@ -21,13 +21,18 @@
         />
         <circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="2" />
       </svg>
-      <input id="hospital-search-input" type="text" placeholder="醫院名稱、地區、地址" />
+      <input
+        id="hospital-search-input"
+        v-model="searchQuery"
+        type="text"
+        placeholder="醫院名稱、地區、地址"
+      />
     </label>
 
     <div class="search-bar__switches">
-      <label class="search-bar__switch-row" for="focus-switch">
+      <label class="search-bar__switch-row" for="only-open-switch">
         <span>只顯示營業中</span>
-        <input id="focus-switch" v-model="onlyOpen" type="checkbox" />
+        <input id="only-open-switch" v-model="onlyOpen" type="checkbox" />
       </label>
       <label class="search-bar__switch-row" for="all-day-switch">
         <span>24 小時急診</span>
@@ -51,7 +56,7 @@
       </div>
     </div>
 
-    <p class="search-bar__summary">找到 <strong>5</strong> 間醫院</p>
+    <p class="search-bar__summary">找到 <strong>{{ hospitalCount }}</strong> 間醫院</p>
   </section>
 </template>
 
@@ -75,8 +80,10 @@ const categories = [
 ]
 
 const activeCategory = ref('全部')
+const searchQuery = ref('')
 const onlyOpen = ref(true)
 const allDayEmergency = ref(false)
+const hospitalCount = ref(5)
 </script>
 
 <style scoped>
