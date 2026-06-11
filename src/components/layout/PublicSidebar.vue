@@ -5,9 +5,7 @@ const sidebarStore = useSidebarStore()
 </script>
 
 <template>
-  <div
-    class="fixed inset-y-0 left-0 z-50 flex h-[100dvh] w-screen max-w-none flex-col overflow-y-auto overflow-x-hidden bg-brand-white"
-  >
+  <div class="fixed inset-0 z-50 bg-brand-white">
     <div class="flex items-center justify-end px-5 pt-5">
       <button
         type="button"
