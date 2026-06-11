@@ -19,7 +19,7 @@ const sidebarStore = useSidebarStore()
       </button>
     </div>
 
-    <nav class="flex flex-col gap-5 px-4 pt-2 pb-5">
+    <nav class="flex flex-col gap-5 px-8 pt-2 pb-5">
       <section>
         <ul class="flex flex-col gap-4">
           <li>
@@ -56,7 +56,9 @@ const sidebarStore = useSidebarStore()
 
       <section>
         <ul class="flex flex-col gap-4">
-          <li><span class="text-base font-bold tracking-wider text-brand-navy">寵物知識+</span></li>
+          <li><span class="text-base font-bold tracking-wider text-brand-navy">
+          寵物知識<span class="relative -top-0.5">+</span>
+          </span></li>
           <li>
             <a
               href="#"
