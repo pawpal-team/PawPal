@@ -78,10 +78,10 @@
           >註冊帳號</RouterLink
         >
         <span class="text-[#DDE5FC]">・</span>
-        <a
+        <RouterLink
           class="text-brand-gray transition active:text-brand-navy lg:hover:text-brand-navy"
-          href="#"
-          >忘記密碼</a
+          to="/forgot-password"
+          >忘記密碼</RouterLink
         >
       </div>
     </form>
