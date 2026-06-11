@@ -23,7 +23,7 @@
       </label>
 
       <button
-        class="mt-5 h-11 w-full rounded-xl bg-brand-blue text-[14px] font-bold text-brand-white shadow-[0_8px_18px_rgba(146,168,245,0.36)] transition hover:bg-[#7F97EC] focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2"
+        class="mt-5 h-11 w-full rounded-xl bg-brand-blue text-[14px] font-bold text-brand-white shadow-[0_8px_18px_rgba(146,168,245,0.36)] transition active:bg-[#7F97EC] lg:hover:bg-[#7F97EC] focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2"
         type="submit"
       >
         寄出重設連結
