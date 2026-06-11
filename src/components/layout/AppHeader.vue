@@ -1,5 +1,5 @@
 <script setup>
-import Sidebar from '@/components/layout/AppSidebar.vue'
+import Sidebar from '@/components/layout/PublicSidebar.vue'
 import { useSidebarStore } from '@/stores/sidebar'
 
 const sidebarStore = useSidebarStore()

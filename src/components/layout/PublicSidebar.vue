@@ -5,7 +5,7 @@ const sidebarStore = useSidebarStore()
 </script>
 
 <template>
-  <div class="mx-auto flex min-h-screen w-full max-w-[420px] flex-col bg-brand-white">
+  <div class="fixed inset-0 z-50 bg-brand-white">
     <div class="flex items-center justify-end px-5 pt-5">
       <button
         type="button"
@@ -17,7 +17,7 @@ const sidebarStore = useSidebarStore()
       </button>
     </div>
 
-    <nav class="flex flex-1 flex-col gap-6 px-8 pt-2 pb-6">
+    <nav class="flex flex-col gap-5 px-8 pt-2 pb-5">
       <section>
         <ul class="flex flex-col gap-4">
           <li>
@@ -54,7 +54,9 @@ const sidebarStore = useSidebarStore()
 
       <section>
         <ul class="flex flex-col gap-4">
-          <li><span class="text-base font-bold tracking-wider text-brand-navy">寵物知識+</span></li>
+          <li><span class="text-base font-bold tracking-wider text-brand-navy">
+          寵物知識<span class="relative -top-0.5">+</span>
+          </span></li>
           <li>
             <a
               href="#"
