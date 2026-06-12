@@ -5,7 +5,7 @@ import RegisterForm from '@/modules/auth/RegisterForm.vue'
 </script>
 
 <template>
-  <div class="flex min-h-screen flex-col">
+  <div class="flex min-h-screen flex-col pt-[55px] lg:pt-[68px]">
     <Header />
     <RegisterForm class="flex-1" />
     <Footer />
