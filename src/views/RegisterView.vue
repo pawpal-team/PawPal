@@ -1,0 +1,13 @@
+<script setup>
+import Header from '@/components/layout/AppHeader.vue'
+import Footer from '@/components/layout/AppFooter.vue'
+import RegisterForm from '@/modules/auth/RegisterForm.vue'
+</script>
+
+<template>
+  <div class="flex min-h-screen flex-col">
+    <Header />
+    <RegisterForm class="flex-1" />
+    <Footer />
+  </div>
+</template>
