@@ -2,7 +2,7 @@
 import HospitalCard from './HospitalCard.vue'
 
 defineProps({
-  events: {
+  hospitals: {
     type: Array,
     required: false,
     default: () => [
@@ -74,7 +74,7 @@ defineProps({
 <template>
   <div class="w-full flex flex-col bg-transparent">
     <div class="flex-1 overflow-y-auto space-y-4 pr-1 custom-scrollbar">
-      <HospitalCard v-for="item in events" :key="item.id" :hospital="item" />
+      <HospitalCard v-for="item in hospitals" :key="item.id" :hospital="item" />
     </div>
   </div>
 </template>
