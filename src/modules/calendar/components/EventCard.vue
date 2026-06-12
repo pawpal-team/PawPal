@@ -1,54 +1,66 @@
 <template>
-  <div class="bg-white rounded-2xl p-4 mb-3 shadow-sm border border-gray-100">
-    <div class="flex items-start gap-3">
-      <!-- 日期區塊 -->
-      <div class="flex flex-col items-center min-w-[44px]">
-        <span class="text-sm font-semibold text-gray-800 leading-tight">
+  <div class="bg-white rounded-2xl p-4 md:p-5 mb-3 shadow-sm border border-gray-100">
+    <div class="flex items-start gap-3 md:gap-4">
+      <div class="flex flex-col items-center min-w-[44px] md:min-w-[56px]">
+        <span class="text-sm md:text-base font-semibold text-gray-800 leading-tight">
           {{ formattedMonth }}/{{ formattedDay }}
         </span>
         <span class="text-xs text-gray-400 mt-0.5">{{ weekday }}</span>
       </div>
 
-      <!-- 類型 Icon -->
       <div
-        class="flex items-center justify-center w-8 h-8 rounded-full mt-0.5 flex-shrink-0"
+        class="flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full mt-0.5 flex-shrink-0"
         :class="typeIconBg"
       >
-        <img :src="typeIconSrc" alt="" class="w-4 h-4" />
+        <img :src="typeIconSrc" alt="" class="w-4 h-4 md:w-5 md:h-5" />
       </div>
 
-      <!-- 行程資訊 -->
       <div class="flex-1 min-w-0">
-        <!-- 寵物名稱 + 行程名稱 -->
-        <p class="text-sm font-semibold text-gray-900 leading-snug">
+        <p class="text-sm md:text-base font-semibold text-gray-900 leading-snug">
           {{ event.petName }} - {{ event.title }}
         </p>
 
-        <!-- 時間 -->
-        <div class="flex items-center gap-1 mt-1">
+        <div class="flex items-center gap-1 mt-1 flex-wrap">
           <img src="@/assets/icons/clock-icon.svg" alt="" class="w-3 h-3" />
-          <span class="text-xs text-gray-500">{{ event.time }}</span>
+          <span class="text-xs md:text-sm text-gray-500">{{ event.time }}</span>
           <span v-if="event.location" class="flex items-center gap-0.5 ml-1">
             <img src="@/assets/icons/location-dot.svg" alt="" class="w-3 h-3" />
-            <span class="text-xs text-gray-400">{{ event.location }}</span>
+            <span class="text-xs md:text-sm text-gray-400">{{ event.location }}</span>
           </span>
         </div>
 
-        <!-- 備註說明 -->
-        <p v-if="event.note" class="text-xs text-gray-400 mt-1 leading-relaxed">
+        <p v-if="event.note" class="text-xs md:text-sm text-gray-400 mt-1 leading-relaxed">
           {{ event.note }}
         </p>
 
-        <!-- Tag -->
-        <div class="mt-2">
+        <div class="mt-2 md:hidden">
           <span class="inline-block text-xs px-2 py-0.5 rounded-full font-medium" :class="tagStyle">
             {{ event.tag }}
           </span>
         </div>
       </div>
 
-      <!-- 操作按鈕 -->
-      <div class="flex flex-col gap-2 flex-shrink-0 ml-1">
+      <div class="hidden md:flex items-center gap-3 flex-shrink-0">
+        <span class="inline-block text-xs px-3 py-1 rounded-full font-medium" :class="tagStyle">
+          {{ event.tag }}
+        </span>
+        <button
+          @click="$emit('edit', event)"
+          class="cursor-pointer hover:opacity-70 text-gray-400 hover:text-blue-500 transition-colors p-1"
+          aria-label="編輯"
+        >
+          <img src="@/assets/icons/edit-icon.svg" alt="編輯" class="w-4 h-4" />
+        </button>
+        <button
+          @click="$emit('delete', event)"
+          class="cursor-pointer hover:opacity-70 text-gray-400 hover:text-red-500 transition-colors p-1"
+          aria-label="刪除"
+        >
+          <img src="@/assets/icons/delete-icon.svg" alt="刪除" class="w-4 h-4" />
+        </button>
+      </div>
+
+      <div class="flex flex-col gap-2 flex-shrink-0 ml-1 md:hidden">
         <button
           @click="$emit('edit', event)"
           class="cursor-pointer text-gray-400 hover:text-blue-500 transition-colors p-1"
@@ -106,8 +118,8 @@ const typeIconBg = computed(() => TYPE_MAP[props.event.type]?.bg ?? 'bg-gray-100
 
 const TAG_STYLE_MAP = {
   回診: 'bg-purple-100 text-purple-600',
-  疫苗: 'bg-indigo-50 text-blue-400',
-  服藥: 'bg-yellow-50 text-yellow-500',
+  疫苗: 'bg-indigo-50  text-blue-400',
+  服藥: 'bg-yellow-50  text-yellow-500',
   美容: 'bg-teal-100   text-teal-600',
   除蟲: 'bg-green-100  text-green-600',
   用藥提醒: 'bg-red-100    text-red-500',
