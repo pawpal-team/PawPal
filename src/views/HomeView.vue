@@ -53,7 +53,7 @@ const getIconUrl = (name) => {
 <template>
   <Header />
   <main
-    class="w-full min-h-screen select-none pt-8 pb-56 pawpal-container text-brand-gray overflow-x-hidden"
+    class="w-full min-h-screen select-none overflow-x-hidden pt-[87px] pb-56 text-brand-gray lg:pt-[100px] pawpal-container"
   >
     <section class="hero-section text-center w-full">
       <span
@@ -90,9 +90,9 @@ const getIconUrl = (name) => {
           class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[150%] md:w-full h-[90%] md:h-[70%] bg-[length:100%_100%] bg-no-repeat bg-bottom z-0"
           :style="{ backgroundImage: `url(${bgImage})` }"
         ></div>
-        <div class="w-full max-w-5xl mx-auto px-4 relative z-10">
+        <div class="w-full max-w-5xl mx-auto px-4 relative z-1">
           <!-- 電腦版附近醫院卡片列表 -->
-          <div class="hidden md:grid grid-cols-3 gap-4 w-full relative z-20">
+          <div class="hidden md:grid grid-cols-3 gap-4 w-full relative z-2">
             <RouterLink
               v-for="i in 3"
               :key="i"
@@ -113,7 +113,7 @@ const getIconUrl = (name) => {
             </RouterLink>
           </div>
           <div
-            class="-mx-4 md:mx-auto w-[calc(100%+2rem)] md:max-w-[600px] lg:max-w-none lg:w-full relative z-10 -mt-6 md:-mt-12"
+            class="-mx-4 md:mx-auto w-[calc(100%+2rem)] md:max-w-[600px] lg:max-w-none lg:w-full relative z-1 -mt-6 md:-mt-12"
           >
             <img
               :src="visualImage"
@@ -123,14 +123,14 @@ const getIconUrl = (name) => {
           </div>
 
           <div
-            class="flex flex-wrap justify-center items-center gap-4 md:gap-8 mt-6 mb-8 relative z-20 text-xs md:text-sm font-medium text-brand-gray"
+            class="flex flex-wrap justify-center items-center gap-4 md:gap-8 mt-6 mb-8 relative z-2 text-xs md:text-sm font-medium text-brand-gray"
           >
             <span class="flex items-center gap-1.5">⏱️ 即時營業狀態</span>
             <span class="flex items-center gap-1.5">⭐ 真實飼主評論</span>
             <span class="flex items-center gap-1.5">🛡️ 專業急救指南</span>
           </div>
           <!-- 手機版附近醫院卡片列表 -->
-          <div class="md:hidden flex flex-col gap-3 mt-4 mb-8 relative z-20 w-full">
+          <div class="md:hidden flex flex-col gap-3 mt-4 mb-8 relative z-2 w-full">
             <RouterLink
               v-for="i in 3"
               :key="i"
@@ -160,7 +160,7 @@ const getIconUrl = (name) => {
             </RouterLink>
           </div>
           <div
-            class="w-full relative z-20 mt-4 md:mt-8 rounded-3xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between shadow-[0_12px_40px_rgba(235,140,0,0.25)] text-white gap-6 bg-gradient-to-r from-[#ffa002] to-[#ffb357]"
+            class="w-full relative z-2 mt-4 md:mt-8 rounded-3xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between shadow-[0_12px_40px_rgba(235,140,0,0.25)] text-white gap-6 bg-gradient-to-r from-[#ffa002] to-[#ffb357]"
           >
             <div class="flex items-center gap-4 text-left w-full md:w-auto">
               <div

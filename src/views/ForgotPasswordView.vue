@@ -5,7 +5,7 @@ import ForgotPasswordForm from '@/modules/auth/ForgotPasswordForm.vue'
 </script>
 
 <template>
-  <div class="flex min-h-screen flex-col">
+  <div class="flex min-h-screen flex-col pt-[55px] lg:pt-[68px]">
     <Header />
     <ForgotPasswordForm class="flex-1" />
     <Footer />
