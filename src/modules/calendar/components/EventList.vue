@@ -1,3 +1,25 @@
+<script setup>
+import { ref, computed } from 'vue'
+import EventCard from './EventCard.vue'
+
+const props = defineProps({
+  events: {
+    type: Array,
+    required: true,
+  },
+})
+
+defineEmits(['edit', 'delete', 'add'])
+
+const defaultCount = 4
+const expandedCount = 8
+const showAll = ref(false)
+
+const visibleEvents = computed(() =>
+  showAll.value ? props.events.slice(0, expandedCount) : props.events.slice(0, defaultCount),
+)
+</script>
+
 <template>
   <div
     class="w-full max-w-[1024px] mx-auto px-4 mt-6 mb-4 md:mb-6 md:bg-white md:rounded-3xl md:shadow-md md:p-6"
@@ -52,25 +74,3 @@
     </button>
   </div>
 </template>
-
-<script setup>
-import { ref, computed } from 'vue'
-import EventCard from './EventCard.vue'
-
-const props = defineProps({
-  events: {
-    type: Array,
-    required: true,
-  },
-})
-
-defineEmits(['edit', 'delete', 'add'])
-
-const defaultCount = 4
-const expandedCount = 8
-const showAll = ref(false)
-
-const visibleEvents = computed(() =>
-  showAll.value ? props.events.slice(0, expandedCount) : props.events.slice(0, defaultCount),
-)
-</script>

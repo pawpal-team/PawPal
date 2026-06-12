@@ -1,3 +1,51 @@
+<script setup>
+import { computed } from 'vue'
+import checkupIcon from '@/assets/icons/checkup-icon.svg'
+import vaccineIcon from '@/assets/icons/vaccine-icon.svg'
+import medicineIcon from '@/assets/icons/medicine-icon.svg'
+import groomingIcon from '@/assets/icons/grooming-icon.svg'
+import dewormingIcon from '@/assets/icons/bugs.svg'
+import defaultIcon from '@/assets/icons/default-icon.svg'
+
+const props = defineProps({
+  event: {
+    type: Object,
+    required: true,
+  },
+})
+
+defineEmits(['edit', 'delete'])
+
+const WEEKDAYS = ['週日', '週一', '週二', '週三', '週四', '週五', '週六']
+
+const dateObj = computed(() => new Date(props.event.date))
+const formattedMonth = computed(() => dateObj.value.getMonth() + 1)
+const formattedDay = computed(() => String(dateObj.value.getDate()).padStart(2, '0'))
+const weekday = computed(() => WEEKDAYS[dateObj.value.getDay()])
+
+const TYPE_MAP = {
+  checkup: { icon: checkupIcon, bg: 'bg-purple-100' },
+  vaccine: { icon: vaccineIcon, bg: 'bg-indigo-50' },
+  medicine: { icon: medicineIcon, bg: 'bg-yellow-50' },
+  grooming: { icon: groomingIcon, bg: 'bg-teal-100' },
+  deworming: { icon: dewormingIcon, bg: 'bg-green-100' },
+}
+
+const typeIconSrc = computed(() => TYPE_MAP[props.event.type]?.icon ?? defaultIcon)
+const typeIconBg = computed(() => TYPE_MAP[props.event.type]?.bg ?? 'bg-gray-100')
+
+const TAG_STYLE_MAP = {
+  回診: 'bg-purple-100 text-purple-600',
+  疫苗: 'bg-indigo-50  text-blue-400',
+  服藥: 'bg-yellow-50  text-yellow-500',
+  美容: 'bg-teal-100   text-teal-600',
+  除蟲: 'bg-green-100  text-green-600',
+  用藥提醒: 'bg-red-100    text-red-500',
+}
+
+const tagStyle = computed(() => TAG_STYLE_MAP[props.event.tag] ?? 'bg-gray-100 text-gray-500')
+</script>
+
 <template>
   <div class="bg-white rounded-2xl p-4 md:p-5 mb-3 shadow-sm border border-gray-100">
     <div class="flex items-start gap-3 md:gap-4">
@@ -79,51 +127,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { computed } from 'vue'
-import checkupIcon from '@/assets/icons/checkup-icon.svg'
-import vaccineIcon from '@/assets/icons/vaccine-icon.svg'
-import medicineIcon from '@/assets/icons/medicine-icon.svg'
-import groomingIcon from '@/assets/icons/grooming-icon.svg'
-import dewormingIcon from '@/assets/icons/bugs.svg'
-import defaultIcon from '@/assets/icons/default-icon.svg'
-
-const props = defineProps({
-  event: {
-    type: Object,
-    required: true,
-  },
-})
-
-defineEmits(['edit', 'delete'])
-
-const WEEKDAYS = ['週日', '週一', '週二', '週三', '週四', '週五', '週六']
-
-const dateObj = computed(() => new Date(props.event.date))
-const formattedMonth = computed(() => dateObj.value.getMonth() + 1)
-const formattedDay = computed(() => String(dateObj.value.getDate()).padStart(2, '0'))
-const weekday = computed(() => WEEKDAYS[dateObj.value.getDay()])
-
-const TYPE_MAP = {
-  checkup: { icon: checkupIcon, bg: 'bg-purple-100' },
-  vaccine: { icon: vaccineIcon, bg: 'bg-indigo-50' },
-  medicine: { icon: medicineIcon, bg: 'bg-yellow-50' },
-  grooming: { icon: groomingIcon, bg: 'bg-teal-100' },
-  deworming: { icon: dewormingIcon, bg: 'bg-green-100' },
-}
-
-const typeIconSrc = computed(() => TYPE_MAP[props.event.type]?.icon ?? defaultIcon)
-const typeIconBg = computed(() => TYPE_MAP[props.event.type]?.bg ?? 'bg-gray-100')
-
-const TAG_STYLE_MAP = {
-  回診: 'bg-purple-100 text-purple-600',
-  疫苗: 'bg-indigo-50  text-blue-400',
-  服藥: 'bg-yellow-50  text-yellow-500',
-  美容: 'bg-teal-100   text-teal-600',
-  除蟲: 'bg-green-100  text-green-600',
-  用藥提醒: 'bg-red-100    text-red-500',
-}
-
-const tagStyle = computed(() => TAG_STYLE_MAP[props.event.tag] ?? 'bg-gray-100 text-gray-500')
-</script>
