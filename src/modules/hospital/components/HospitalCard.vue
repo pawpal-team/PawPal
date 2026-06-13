@@ -1,5 +1,7 @@
 <script setup>
 import { ref } from 'vue'
+import heartFilled from '@/assets/icons/heart-filled.svg'
+import heartEmpty from '@/assets/icons/heart-empty.svg'
 
 const props = defineProps({
   hospital: {
@@ -11,10 +13,6 @@ const props = defineProps({
 const isFav = ref(props.hospital.isFavorite)
 const toggleFavorite = () => {
   isFav.value = !isFav.value
-}
-
-const getIconUrl = (name) => {
-  return new URL(`../../../assets/icons/${name}`, import.meta.url).href
 }
 </script>
 
@@ -47,7 +45,7 @@ const getIconUrl = (name) => {
       <div class="flex flex-wrap items-center text-sm text-brand-gray gap-x-2 gap-y-1 mb-2.5">
         <span class="flex items-center">
           <img
-            :src="getIconUrl('pin.svg')"
+            src="@/assets/icons/pin.svg"
             alt="位置"
             class="w-4 h-4 mr-1 object-contain opacity-80"
           />
@@ -58,7 +56,7 @@ const getIconUrl = (name) => {
         <span class="opacity-40">·</span>
         <span class="flex items-center">
           <img
-            :src="getIconUrl('clock.svg')"
+            src="@/assets/icons/clock.svg"
             alt="時間"
             class="w-4 h-4 mr-1 object-contain opacity-80"
           />
@@ -66,7 +64,7 @@ const getIconUrl = (name) => {
         </span>
       </div>
       <div class="flex items-center text-sm text-brand-gray">
-        <img :src="getIconUrl('star.svg')" alt="評分" class="w-4 h-4 mr-1.5 object-contain" />
+        <img src="@/assets/icons/star.svg" alt="評分" class="w-4 h-4 mr-1.5 object-contain" />
         <span class="font-bold text-brand-navy mr-2">{{ hospital.rating.toFixed(1) }}</span>
         <span class="opacity-40">·</span>
         <span class="ml-2">{{ hospital.reviewCount }} 則評論</span>
@@ -78,7 +76,7 @@ const getIconUrl = (name) => {
         class="cursor-pointer p-2 rounded-full bg-transparent hover:bg-red-50 transition-all duration-200 active:scale-90"
       >
         <img
-          :src="isFav ? getIconUrl('heart-filled.svg') : getIconUrl('heart-empty.svg')"
+          :src="isFav ? heartFilled : heartEmpty"
           alt="收藏按鈕"
           class="w-6 h-6 object-contain"
         />
