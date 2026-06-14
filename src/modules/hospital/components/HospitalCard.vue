@@ -18,12 +18,12 @@ const toggleFavorite = () => {
 
 <template>
   <div
-    class="group relative flex items-center justify-between bg-brand-white rounded-3xl p-4 md:p-6 border border-[#E2E8F0] shadow-[0_4px_25px_rgba(0,0,0,0.015)] transition-[shadow,border-color,background-color,transform] duration-200 lg:hover:shadow-[0_10px_30px_rgba(146,168,245,0.12)] lg:hover:border-brand-blue/30 active:bg-[#F8FAFC] active:scale-[0.999] cursor-pointer"
+    class="group relative flex items-center justify-between bg-brand-white rounded-3xl p-4 md:p-6 border border-[#E2E8F0] shadow-[0_4px_25px_rgba(0,0,0,0.015)] transition duration-200 lg:hover:shadow-[0_10px_30px_rgba(146,168,245,0.12)] lg:hover:border-brand-blue/30 active:bg-[#F8FAFC] active:scale-[0.999] cursor-pointer"
   >
     <div class="flex-1 min-w-0">
       <div class="flex flex-row flex-wrap items-center justify-start gap-1.5 mb-2.5">
         <h3
-          class="font-bold text-brand-navy text-base md:text-lg group-hover:text-brand-orange transition-colors duration-200 truncate max-w-[160px] md:max-w-none"
+          class="font-bold text-brand-navy text-base md:text-lg group-hover:text-brand-orange transition duration-200 truncate max-w-[160px] md:max-w-none"
         >
           {{ hospital.name }}
         </h3>
@@ -80,7 +80,7 @@ const toggleFavorite = () => {
       <button
         type="button"
         @click.stop="toggleFavorite"
-        class="cursor-pointer p-2 rounded-full bg-transparent hover:bg-red-50 transition-[background-color,transform] duration-200"
+        class="cursor-pointer p-2 rounded-full bg-transparent hover:bg-red-50 transition duration-200"
       >
         <img
           :src="isFav ? heartFilled : heartEmpty"
