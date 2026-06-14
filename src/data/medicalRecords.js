@@ -1,6 +1,8 @@
 export const medicalRecords = [
   {
     id: 1,
+    petId: 5,
+    petName: '麻吉',
     date: '2026-06-13',
     type: '看診',
     hospitalName: '安心動物醫院',
@@ -12,6 +14,8 @@ export const medicalRecords = [
   },
   {
     id: 2,
+    petId: 4,
+    petName: '阿橘',
     date: '2026-05-20',
     type: '疫苗',
     hospitalName: '毛孩動物醫院',
@@ -23,6 +27,8 @@ export const medicalRecords = [
   },
   {
     id: 3,
+    petId: 4,
+    petName: '阿橘',
     date: '2026-04-08',
     type: '看診',
     hospitalName: '幸福動物醫院',
@@ -34,6 +40,8 @@ export const medicalRecords = [
   },
   {
     id: 4,
+    petId: 5,
+    petName: '麻吉',
     date: '2026-03-15',
     type: '體檢',
     hospitalName: '汪喵專科醫院',
