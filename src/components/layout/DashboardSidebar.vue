@@ -21,7 +21,7 @@ const activeItem = ref('home')
 const hoverItem = ref(null)
 
 function getIcon(item) {
-  return activeItem.value === item.key || hoverItem.value === item.key ? item.activeIcon : item.icon
+  return activeItem.value === item.key ? item.activeIcon : item.icon
 }
 
 const navItems = [
@@ -231,7 +231,7 @@ const navItems = [
         <li v-for="item in navItems" :key="item.key">
           <a
             href="#"
-            class="flex items-center gap-3 px-5 py-3 text-sm font-medium hover:text-brand-orange"
+            class="flex items-center gap-3 px-5 py-3 text-sm font-medium hover:bg-[#e6eaf4]"
             :class="
               activeItem === item.key
                 ? 'text-brand-orange border-l-4 border-brand-orange bg-[#e6eaf4]'
