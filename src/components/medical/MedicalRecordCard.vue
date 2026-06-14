@@ -50,7 +50,7 @@ const images = computed(() => props.record?.images ?? [])
       <div
         v-for="(image, index) in images"
         :key="`${props.record?.id ?? 'record'}-${index}`"
-        class="h-28 w-21 overflow-hidden rounded-2xl bg-[#F5F7FB] ring-1 ring-black/5 md:h-35 md:w-27"
+        class="h-[110px] w-[84px] overflow-hidden rounded-2xl bg-[#F5F7FB] ring-1 ring-black/5 md:h-[140px] md:w-[108px]"
       >
         <img
           :src="image"
