@@ -1,7 +1,8 @@
 <script setup>
-import { ref } from 'vue'
+import { computed } from 'vue'
 import heartFilled from '@/assets/icons/heart-filled.svg'
 import heartEmpty from '@/assets/icons/heart-empty.svg'
+import { useFavoriteHospitalStore } from '@/stores/favoriteHospital'
 
 const props = defineProps({
   hospital: {
@@ -10,9 +11,11 @@ const props = defineProps({
   },
 })
 
-const isFav = ref(props.hospital.isFavorite)
+const favoriteHospitalStore = useFavoriteHospitalStore()
+const isFav = computed(() => favoriteHospitalStore.isFavorite(props.hospital.id))
+
 const toggleFavorite = () => {
-  isFav.value = !isFav.value
+  favoriteHospitalStore.toggleFavorite(props.hospital.id)
 }
 </script>
 
