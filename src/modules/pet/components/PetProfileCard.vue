@@ -1,6 +1,7 @@
 <script>
 export default {
   name: 'PetProfileCard',
+
   props: {
     pet: {
       type: Object,
@@ -8,9 +9,6 @@ export default {
     },
   },
   computed: {
-    genderLabel() {
-      return this.pet.gender === '公' ? '公' : '母'
-    },
     neuteredLabel() {
       return this.pet.neutered ? '已結紮' : '未結紮'
     },
@@ -26,34 +24,25 @@ export default {
   <div class="pet-profile-card max-w-[1024px] mx-auto px-4 flex justify-center">
     <div class="md:hidden bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
       <div class="flex items-center gap-4 p-4 border-b border-gray-200">
-        <div class="w-16 h-16 rounded-full overflow-hidden bg-gray-100 flex-shrink-0">
+        <div
+          class="w-16 h-16 rounded-full overflow-hidden bg-gray-100 flex-shrink-0 flex items-center justify-center"
+        >
           <img
             v-if="pet.photoUrl"
             :src="pet.photoUrl"
             :alt="pet.name"
             class="w-full h-full object-cover"
           />
-          <div v-else class="w-full h-full flex items-center justify-center text-gray-300 text-2xl">
-            🐾
-          </div>
+          <img v-else src="@/assets/icons/paw.svg" class="w-8 h-8 opacity-30" alt="寵物" />
         </div>
         <div>
           <div class="flex items-center gap-2">
             <span class="text-lg text-gray-800">{{ pet.name }}</span>
-            <button class="text-gray-400 hover:text-orange-500 transition-colors" aria-label="編輯">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="w-4 h-4"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-              </svg>
+            <button
+              class="cursor-pointer hover:opacity-70 transition-opacity p-1"
+              aria-label="編輯"
+            >
+              <img src="@/assets/icons/edit-icon.svg" class="w-4 h-4" alt="編輯" />
             </button>
           </div>
           <p class="text-xs text-gray-500">{{ pet.breed }}・{{ pet.gender }}</p>
@@ -93,34 +82,25 @@ export default {
       class="hidden md:inline-flex gap-10 p-6 bg-white rounded-2xl shadow-sm border border-gray-100"
     >
       <div class="flex flex-col items-start gap-2 min-w-[160px]">
-        <div class="w-32 h-32 rounded-full overflow-hidden bg-gray-100 flex-shrink-0">
+        <div
+          class="w-32 h-32 rounded-full overflow-hidden bg-gray-100 flex-shrink-0 flex items-center justify-center"
+        >
           <img
             v-if="pet.photoUrl"
             :src="pet.photoUrl"
             :alt="pet.name"
             class="w-full h-full object-cover"
           />
-          <div v-else class="w-full h-full flex items-center justify-center text-gray-300 text-4xl">
-            🐾
-          </div>
+          <img v-else src="@/assets/icons/paw.svg" class="w-12 h-12 opacity-30" alt="寵物" />
         </div>
         <div class="mt-2">
           <div class="flex items-center gap-2">
             <span class="text-2xl text-gray-800">{{ pet.name }}</span>
-            <button class="text-gray-400 hover:text-orange-500 transition-colors" aria-label="編輯">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="w-4 h-4"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-              </svg>
+            <button
+              class="cursor-pointer hover:opacity-70 transition-opacity p-1"
+              aria-label="編輯"
+            >
+              <img src="@/assets/icons/edit-icon.svg" class="w-4 h-4" alt="編輯" />
             </button>
           </div>
           <p class="text-sm text-gray-500 mt-0.5">{{ pet.breed }}</p>
