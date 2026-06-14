@@ -48,11 +48,11 @@ const matchedCount = computed(() => {
     </label>
 
     <div class="mt-9 space-y-3">
-      <label class="flex items-center justify-between gap-4 text-[14px] font-normal text-brand-navy">
+      <div class="flex items-center justify-between gap-4 text-[14px] font-normal text-brand-navy">
         <span>只顯示營業中</span>
         <button
           type="button"
-          class="relative h-5 w-10 rounded-full transition"
+          class="relative h-5 w-10 cursor-pointer rounded-full transition"
           :class="isOpenOnly ? 'bg-brand-blue' : 'bg-brand-gray/30'"
           aria-label="只顯示營業中"
           @click="isOpenOnly = !isOpenOnly"
@@ -62,13 +62,13 @@ const matchedCount = computed(() => {
             :class="isOpenOnly ? 'left-[22px]' : 'left-0.5'"
           ></span>
         </button>
-      </label>
+      </div>
 
-      <label class="flex items-center justify-between gap-4 text-[14px] font-normal text-brand-navy">
+      <div class="flex items-center justify-between gap-4 text-[14px] font-normal text-brand-navy">
         <span>24 小時急診</span>
         <button
           type="button"
-          class="relative h-5 w-10 rounded-full transition"
+          class="relative h-5 w-10 cursor-pointer rounded-full transition"
           :class="isEmergencyOnly ? 'bg-brand-blue' : 'bg-brand-gray/30'"
           aria-label="24 小時急診"
           @click="isEmergencyOnly = !isEmergencyOnly"
@@ -78,7 +78,7 @@ const matchedCount = computed(() => {
             :class="isEmergencyOnly ? 'left-[22px]' : 'left-0.5'"
           ></span>
         </button>
-      </label>
+      </div>
     </div>
 
     <div class="mt-10">
@@ -89,7 +89,7 @@ const matchedCount = computed(() => {
           v-for="category in categories"
           :key="category"
           type="button"
-          class="rounded-full border px-3 py-1.5 text-[12px] font-bold transition active:scale-95"
+          class="cursor-pointer rounded-full border px-3 py-1.5 text-[12px] font-bold transition active:scale-95"
           :class="
             selectedCategory === category
               ? 'border-brand-blue bg-brand-blue text-brand-white shadow-[0_5px_14px_rgba(146,168,245,0.35)]'
