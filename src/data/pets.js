@@ -1,4 +1,4 @@
-import petPhoto from '../assets/images/dog.png'
+import petPhoto from '@/assets/images/dog.png'
 
 export const pets = [
   {
