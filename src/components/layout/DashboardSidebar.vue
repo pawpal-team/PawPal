@@ -18,28 +18,31 @@ import setting_o from '@/assets/icons/setting_o.svg'
 
 const sidebarStore = useSidebarStore()
 const activeItem = ref('home')
+const hoverItem = ref(null)
+
+function getIcon(item) {
+  return activeItem.value === item.key || hoverItem.value === item.key ? item.activeIcon : item.icon
+}
 
 const navItems = [
   { key: 'home', icon: home, activeIcon: home_o, label: '首頁' },
   { key: 'map', icon: location, activeIcon: location_o, label: '醫院地圖' },
   { key: 'records', icon: diagnostic, activeIcon: diagnostic_o, label: '病歷紀錄' },
   { key: 'growth', icon: growth, activeIcon: growth_o, label: '成長歷程' },
-  { key: 'profile', icon: petIcon, activeIcon: petIcon_o, label: '毛孩資料' },
+  { key: 'profile', icon: petIcon, activeIcon: petIcon_o, label: '基本資料' },
   { key: 'notifications', icon: notice, activeIcon: notice_o, label: '通知中心' },
   { key: 'setting', icon: setting, activeIcon: setting_o, label: '設定' },
 ]
 </script>
 
 <template>
-  <!-- 手機版 overlay -->
+  <!-- 手機&平板 -->
   <div class="fixed inset-0 z-50 lg:hidden">
     <!-- 遮罩 -->
     <div
       class="absolute inset-0 bg-white/10 backdrop-opacity-60"
       @click="sidebarStore.closeSidebar()"
     />
-
-    <!-- 選單本體 -->
     <aside
       class="absolute right-0 top-0 flex h-full w-80 flex-col overflow-y-auto overflow-x-hidden bg-brand-white"
     >
@@ -92,11 +95,7 @@ const navItems = [
                 >緊急處置教學</a
               >
             </li>
-          </ul>
-        </section>
 
-        <section>
-          <ul class="flex flex-col gap-4">
             <li>
               <span class="text-base font-bold tracking-wider text-brand-navy">
                 寵物知識<span class="relative -top-0.5">+</span>
@@ -126,10 +125,6 @@ const navItems = [
                 >小知識測驗</a
               >
             </li>
-          </ul>
-        </section>
-        <section>
-          <ul class="flex flex-col gap-4">
             <li>
               <span class="text-base font-bold tracking-wider text-brand-navy">會員專區</span>
             </li>
@@ -179,7 +174,7 @@ const navItems = [
               <a
                 href="#"
                 class="cursor-pointer px-3 text-sm font-medium text-brand-gray active:text-brand-orange"
-                >寵物成長</a
+                >成長歷程</a
               >
             </li>
 
@@ -187,7 +182,7 @@ const navItems = [
               <a
                 href="#"
                 class="cursor-pointer px-3 text-sm font-medium text-brand-gray active:text-brand-orange"
-                >寵物資料</a
+                >基本資料</a
               >
             </li>
 
@@ -198,12 +193,11 @@ const navItems = [
                 >通知中心</a
               >
             </li>
-
-            <!-- 登出 -->
             <li>
               <div
                 class="flex items-center justify-center border-t border-brand-lightblue pt-[50px]"
               >
+                <!-- 導回首頁 -->
                 <RouterLink
                   to="/"
                   @click="sidebarStore.closeSidebar()"
@@ -230,33 +224,24 @@ const navItems = [
     </aside>
   </div>
 
-  <!-- 電腦版 sidebar -->
-  <aside class="hidden lg:flex fixed left-0 top-0 h-full w-50 flex-col bg-[#ECF1FD] z-40">
+  <!-- 電腦 -->
+  <aside class="hidden lg:flex fixed left-0 top-0 h-full w-52 flex-col bg-[#ECF1FD] z-40">
     <nav class="flex flex-1 flex-col py-6">
       <ul class="flex flex-col">
         <li v-for="item in navItems" :key="item.key">
           <a
             href="#"
-            class="group flex items-center gap-3 px-5 py-3 text-sm font-medium hover:text-brand-orange hover:bg-[#e6eaf4]"
+            class="flex items-center gap-3 px-5 py-3 text-sm font-medium hover:text-brand-orange"
             :class="
               activeItem === item.key
-                ? 'text-brand-orange border-l-4 border-brand-orange'
+                ? 'text-brand-orange border-l-4 border-brand-orange bg-[#e6eaf4]'
                 : 'text-brand-gray'
             "
             @click.prevent="activeItem = item.key"
+            @mouseenter="hoverItem = item.key"
+            @mouseleave="hoverItem = null"
           >
-            <img
-              v-if="item.icon"
-              :src="item.icon"
-              class="h-5 w-5 shrink-0"
-              :class="activeItem === item.key ? 'hidden' : 'block group-hover:hidden'"
-            />
-            <img
-              v-if="item.activeIcon"
-              :src="item.activeIcon"
-              class="h-5 w-5 shrink-0"
-              :class="activeItem === item.key ? 'block' : 'hidden group-hover:block'"
-            />
+            <img :src="getIcon(item)" :alt="item.label + ' icon'" class="h-5 w-5 shrink-0" />
             {{ item.label }}
           </a>
         </li>
