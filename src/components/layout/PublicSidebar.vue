@@ -150,14 +150,13 @@ const sidebarStore = useSidebarStore()
       </nav>
 
       <div class="px-6 pb-8">
-        <router-link
-          to="/hospital"
-          @click="sidebarStore.closeSidebar()"
+        <button
+          type="button"
           class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-brand-orange py-4 text-base font-medium text-brand-white shadow-md transition hover:bg-[#e58f00] active:bg-[#E08F00]"
         >
           <img src="@/assets/icons/search-hospital.svg" alt="Hospital Icon" class="h-5 w-5" />
           搜尋附近醫院
-        </router-link>
+        </button>
       </div>
     </aside>
   </div>

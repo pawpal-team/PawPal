@@ -86,13 +86,13 @@ const navGroups = [
         </nav>
 
         <div class="flex items-center gap-2">
-          <router-link
-            to="/hospital"
+          <a
+            href="#"
             class="flex items-center justify-center rounded-full bg-brand-orange px-4 py-2 text-white transition hover:bg-[#e58f04]"
           >
             <img src="@/assets/icons/location.svg" class="size-5" />
             搜尋附近醫院
-          </router-link>
+          </a>
           <router-link
             to="/login"
             class="flex items-center justify-center px-4 py-2 text-brand-gray transition hover:text-brand-darkgray"
