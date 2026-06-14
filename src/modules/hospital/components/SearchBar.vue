@@ -33,7 +33,7 @@ const matchedCount = computed(() => {
 
 <template>
   <section
-    class="w-full max-w-[360px] rounded-[18px] bg-brand-white px-6 py-7 text-brand-navy shadow-[0_10px_35px_rgba(31,41,55,0.16)] md:max-w-[420px] md:px-8"
+    class="w-full rounded-[18px] bg-brand-white px-6 py-7 text-brand-navy shadow-[0_10px_35px_rgba(31,41,55,0.16)] md:px-8"
   >
     <h2 class="text-[15px] font-bold tracking-wide">搜尋</h2>
 
