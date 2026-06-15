@@ -1,7 +1,7 @@
 <script setup>
 import Header from '@/components/layout/AppHeader.vue'
 import Footer from '@/components/layout/AppFooter.vue'
-import ForgotPasswordForm from '@/modules/auth/ForgotPasswordForm.vue'
+import ForgotPasswordForm from '@/components/auth/ForgotPasswordForm.vue'
 </script>
 
 <template>
