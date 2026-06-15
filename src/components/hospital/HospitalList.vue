@@ -1,6 +1,6 @@
 <script setup>
 import { hospitals } from '@/data/hospitals.js'
-import hospitalCard from '@/modules/hospital/components/HospitalCard.vue'
+import hospitalCard from '@/components/hospital/HospitalCard.vue'
 </script>
 
 <template>
