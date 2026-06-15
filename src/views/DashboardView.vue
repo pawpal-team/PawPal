@@ -74,7 +74,7 @@ function toggleCheck(id) {
   <section class="w-full relative mt-[55px] lg:mt-[68px]">
     <img
       :src="memberBanner"
-      class="w-full block min-h-[160px] object-cover object-[20%_top]"
+      class="w-full block min-h-[160px] object-cover object-[10%_top]"
       alt="banner"
     />
     <div class="absolute inset-0 flex items-center">
@@ -82,7 +82,7 @@ function toggleCheck(id) {
         <h1 class="text-lg md:text-2xl font-bold text-[var(--color-brand-navy)]">
           Hi，{{ userName }}！
         </h1>
-        <p class="text-xs md:text-sm text-[var(--color-brand-gray)]">毛孩的一切都在這裡</p>
+        <p class="text-xl md:text-xl text-[var(--color-brand-gray)]">毛孩的一切都在這裡</p>
       </div>
     </div>
   </section>
@@ -93,7 +93,7 @@ function toggleCheck(id) {
         <CalendarGrid />
       </div>
 
-      <div class="lg:w-[340px] lg:pt-[52px]">
+      <div class="lg:w-[340px] lg:pt-[85px]">
         <div class="flex items-center gap-2 mb-4">
           <span class="text-[var(--color-brand-orange)] text-xl">🔔</span>
           <h2 class="text-lg font-semibold text-[var(--color-brand-darkgray)]">近期重要提醒</h2>
