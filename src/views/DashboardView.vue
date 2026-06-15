@@ -74,7 +74,7 @@ function toggleCheck(id) {
   <section class="w-full relative mt-[55px] lg:mt-[68px]">
     <img
       :src="memberBanner"
-      class="w-full block min-h-[160px] object-cover object-[10%_top]"
+      class="w-full block min-h-[160px] object-cover object-[20%_top]"
       alt="banner"
     />
     <div class="absolute inset-0 flex items-center">
@@ -88,12 +88,12 @@ function toggleCheck(id) {
   </section>
 
   <div class="w-full max-w-[1024px] mx-auto px-4 flex flex-col gap-8 pb-16 mt-2 md:mt-6">
-    <section class="flex flex-col gap-6 md:flex-row">
+    <section class="flex flex-col gap-6 lg:flex-row">
       <div class="md:flex-1">
         <CalendarGrid />
       </div>
 
-      <div class="md:w-[340px] md:pt-[85px]">
+      <div class="lg:w-[340px] lg:pt-[52px]">
         <div class="flex items-center gap-2 mb-4">
           <span class="text-[var(--color-brand-orange)] text-xl">🔔</span>
           <h2 class="text-lg font-semibold text-[var(--color-brand-darkgray)]">近期重要提醒</h2>
