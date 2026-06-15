@@ -18,7 +18,6 @@ import setting_o from '@/assets/icons/setting_o.svg'
 
 const sidebarStore = useSidebarStore()
 const activeItem = ref('home')
-const hoverItem = ref(null)
 
 function getIcon(item) {
   return activeItem.value === item.key ? item.activeIcon : item.icon
@@ -238,8 +237,6 @@ const navItems = [
                 : 'text-brand-gray'
             "
             @click.prevent="activeItem = item.key"
-            @mouseenter="hoverItem = item.key"
-            @mouseleave="hoverItem = null"
           >
             <img :src="getIcon(item)" :alt="item.label + ' icon'" class="h-5 w-5 shrink-0" />
             {{ item.label }}
