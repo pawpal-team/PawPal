@@ -18,5 +18,3 @@ export const pets = [
     photoUrl: petPhoto,
   },
 ]
-
-export default pets

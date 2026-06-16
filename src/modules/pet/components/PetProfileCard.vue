@@ -1,23 +1,19 @@
-<script>
-export default {
-  name: 'PetProfileCard',
+<script setup>
+import { computed } from 'vue'
 
-  props: {
-    pet: {
-      type: Object,
-      required: true,
-    },
+const props = defineProps({
+  pet: {
+    type: Object,
+    required: true,
   },
-  computed: {
-    neuteredLabel() {
-      return this.pet.neutered ? '已結紮' : '未結紮'
-    },
-    weightDisplay() {
-      if (!this.pet.weight) return '—'
-      return `${this.pet.weight} kg`
-    },
-  },
-}
+})
+
+const neuteredLabel = computed(() => (props.pet.neutered ? '已結紮' : '未結紮'))
+
+const weightDisplay = computed(() => {
+  if (!props.pet.weight) return '—'
+  return `${props.pet.weight} kg`
+})
 </script>
 
 <template>
