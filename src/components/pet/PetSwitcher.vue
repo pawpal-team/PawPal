@@ -24,10 +24,10 @@ const { setSelectedPet } = petStore
             : 'border-white'
         "
       >
-        <img v-if="pet.image" :src="pet.image" :alt="pet.name" class="h-full w-full object-cover" />
+        <img v-if="pet.photoUrl" :src="pet.photoUrl" :alt="pet.name" class="h-full w-full object-cover" />
       </div>
       <span
-        class="text-xs md:text-sm"
+        class="text-xs md:text-sm lg:text-base"
         :class="selectedPetId === pet.id ? 'text-brand-orange' : 'text-brand-gray'"
       >
         {{ pet.name }}
@@ -43,7 +43,7 @@ const { setSelectedPet } = petStore
       >
         <span class="text-xl leading-none">+</span>
       </div>
-      <span class="text-xs text-brand-gray md:text-sm">新增寵物</span>
+      <span class="text-xs text-brand-gray md:text-sm lg:text-base">新增寵物</span>
     </button>
   </div>
 </template>

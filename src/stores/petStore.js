@@ -1,13 +1,10 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import { pets as petsData } from '@/data/pets.js'
 
 export const usePetStore = defineStore('pet', () => {
-  const pets = ref([
-    { id: 1, name: '阿肥', image: '#' },
-    { id: 2, name: '學妹', image: '#' },
-    { id: 3, name: '卡比', image: '#' },
-  ])
-  const selectedPetId = ref(1)
+  const pets = ref(petsData)
+  const selectedPetId = ref(petsData[0]?.id ?? null)
 
   const currentPet = computed(() => pets.value.find((p) => p.id === selectedPetId.value) ?? null)
 
