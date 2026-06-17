@@ -9,8 +9,10 @@ const router = useRouter()
 const authStore = useAuthStore()
 
 function handleLogin(payload) {
-  authStore.login(payload.email, payload.password)
-  router.push('/dashboard')
+  const success = authStore.login(payload.email, payload.password)
+  if (success) {
+    router.push('/dashboard')
+  }
 }
 </script>
 
