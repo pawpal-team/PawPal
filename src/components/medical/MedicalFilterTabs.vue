@@ -7,7 +7,7 @@ const tabs = ['全部', '看診', '疫苗', '手術', '用藥', '體檢']
 
 <template>
   <div
-    class="flex w-full items-center gap-2 overflow-x-auto rounded-xl bg-brand-white px-3 py-3 shadow-[0_4px_18px_rgba(31,41,55,0.12)] md:gap-4 md:px-5 md:py-4"
+    class="flex w-full items-center gap-2 overflow-x-auto rounded-xl px-3 py-3 md:gap-4 md:px-5 md:py-4"
   >
     <button
       v-for="tab in tabs"
