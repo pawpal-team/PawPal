@@ -75,7 +75,7 @@ function toggleCheck(id) {
 
 <template>
   <AppHeader />
-  <div class="dashboard-sidebar-wrapper">
+  <div class="dashboard-sidebar-wrapper hidden lg:block">
     <DashboardSidebar />
   </div>
 
