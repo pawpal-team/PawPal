@@ -11,7 +11,7 @@ import AddMedicalButton from '@/components/medical/AddMedicalButton.vue'
         <AddMedicalButton />
       </div>
       <div
-        class="overflow-hidden rounded-[28px] border border-brand-lightblue bg-brand-white shadow-[0_8px_28px_rgba(61,74,122,0.08)]"
+        class="overflow-hidden rounded-[24px] border border-brand-lightblue bg-brand-white shadow-[0_8px_28px_rgba(61,74,122,0.08)]"
       >
         <div class="border-b border-brand-lightblue bg-brand-lightblue px-2 py-1 md:px-8">
           <MedicalFilterTabs />

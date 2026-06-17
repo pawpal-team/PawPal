@@ -5,7 +5,7 @@ const emit = defineEmits(['click'])
 <template>
   <button
     type="button"
-    class="flex cursor-pointer items-center gap-0.5 md:gap-1 rounded-full bg-[#3dba6e] px-2 py-1 md:px-2.5 md:py-1.5 lg:px-3 lg:py-2 text-xs md:text-sm lg:text-base font-medium text-white transition hover:bg-[#34a660] active:bg-[#2d9455]"
+    class="flex cursor-pointer items-center gap-1 md:gap-1 rounded-full bg-brand-orange px-3 py-2 md:px-2.5 md:py-1.5 lg:px-3 lg:py-2 text-xs md:text-sm lg:text-base font-medium text-white transition hover:bg-[#ee9300] active:scale-95"
     @click="emit('click')"
   >
     <img
