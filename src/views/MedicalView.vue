@@ -9,15 +9,13 @@ import AddMedicalButton from '@/components/medical/AddMedicalButton.vue'
 
 <template>
   <div class="min-h-screen bg-brand-white">
-    <div class="relative z-50">
-      <AppHeader />
-    </div>
-    <div class="medical-dashboard-sidebar hidden lg:block">
+    <AppHeader />
+    <div class="hidden lg:block">
       <DashboardSidebar />
     </div>
     <div class="relative z-0 flex min-h-screen flex-col pt-14 lg:pt-17 lg:pl-52">
       <main class="min-w-0 flex-1 px-4 py-6 md:px-8 lg:px-10">
-        <section class="medical-record-section mx-auto w-full">
+        <section class="mx-auto w-full">
           <div class="mb-2 flex items-center justify-between gap-4 md:mb-6">
             <h1 class="text-xl font-bold text-brand-navy md:text-2xl">病歷紀錄</h1>
             <AddMedicalButton />

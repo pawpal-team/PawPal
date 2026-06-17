@@ -27,7 +27,7 @@ const navGroups = [
 </script>
 
 <template>
-  <header class="fixed inset-x-0 top-0 z-5 bg-white shadow-sm">
+  <header class="fixed inset-x-0 top-0 z-50 bg-white shadow-sm">
     <!-- 手機版與平板版 -->
     <div class="lg:hidden">
       <div class="mx-auto flex h-[55px] items-center justify-between px-6 md:px-4">
