@@ -34,6 +34,9 @@ const router = createRouter({
       path: '/medical',
       name: 'Medical',
       component: Medical,
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: '/dashboard',
