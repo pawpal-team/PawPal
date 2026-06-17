@@ -38,10 +38,3 @@ import AddMedicalButton from '@/components/medical/AddMedicalButton.vue'
     <AppFooter class="lg:hidden" />
   </div>
 </template>
-
-<style scoped>
-.medical-dashboard-sidebar :deep(aside) {
-  top: 68px;
-  height: calc(100vh - 68px);
-}
-</style>

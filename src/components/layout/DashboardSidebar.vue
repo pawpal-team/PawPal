@@ -224,13 +224,15 @@ const navItems = [
   </div>
 
   <!-- 電腦 -->
-  <aside class="hidden lg:flex fixed left-0 top-0 h-full w-52 flex-col bg-[#ECF1FD] z-40">
+  <aside
+    class="hidden lg:flex fixed left-0 top-[68px] h-[calc(100vh-68px)] w-52 flex-col bg-[#ECF1FD] z-40"
+  >
     <nav class="flex flex-1 flex-col py-6">
       <ul class="flex flex-col">
         <li v-for="item in navItems" :key="item.key">
           <a
             href="#"
-            class="flex items-center gap-3 px-5 py-3 text-sm font-medium hover:bg-[#e6eaf4]"
+            class="flex items-center gap-3 px-5 py-3 text-base font-medium hover:bg-[#e6eaf4]"
             :class="
               activeItem === item.key
                 ? 'text-brand-orange border-l-4 border-brand-orange bg-[#e6eaf4]'
