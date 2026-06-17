@@ -168,7 +168,7 @@ function toggleCheck(id) {
   </div>
 
   <div class="relative z-50">
-    <AppFooter />
+    <AppFooter class="lg:hidden" />
   </div>
 </template>
 
