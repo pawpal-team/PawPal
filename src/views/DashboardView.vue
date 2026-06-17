@@ -75,7 +75,7 @@ function toggleCheck(id) {
     <DashboardSidebar />
   </div>
 
-  <div class="lg:pl-52">
+  <div>
     <section class="w-full relative mt-[55px] lg:mt-[68px]">
       <img
         :src="memberBanner"
@@ -95,14 +95,18 @@ function toggleCheck(id) {
     </section>
 
     <div
-      class="w-full max-w-[1024px] mx-auto lg:mx-0 lg:max-w-none lg:px-8 px-4 flex flex-col gap-8 pb-16 mt-2 md:mt-6"
+      class="w-full max-w-[1024px] mx-auto lg:mx-0 lg:max-w-none lg:px-8 px-4 pb-16 mt-2 md:mt-6"
     >
-      <section class="flex flex-col gap-6 lg:flex-row">
-        <div class="md:flex-1">
+      <div
+        class="lg:max-w-[calc(1024px_+_1.5rem_+_340px)] lg:mx-auto grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-6 lg:gap-x-6 lg:gap-y-8"
+      >
+        <div class="lg:col-start-1 lg:row-start-1">
           <CalendarGrid />
         </div>
 
-        <div class="lg:w-[340px] lg:pt-[52px]">
+        <div
+          class="overflow-hidden rounded-3xl border border-brand-lightblue bg-brand-white shadow-[0_8px_28px_rgba(61,74,122,0.08)] p-4"
+        >
           <div class="flex items-center gap-2 mb-4">
             <span class="text-[var(--color-brand-orange)] text-xl">🔔</span>
             <h2 class="text-lg font-semibold text-[var(--color-brand-darkgray)]">近期重要提醒</h2>
@@ -112,7 +116,7 @@ function toggleCheck(id) {
             <div
               v-for="event in upcomingEvents"
               :key="event.id"
-              class="flex items-center justify-between rounded-2xl px-4 py-3"
+              class="flex items-center justify-between rounded-2xl px-6 py-4"
               :class="colorMap[event.theme]"
             >
               <div class="flex items-center gap-4">
@@ -142,24 +146,24 @@ function toggleCheck(id) {
             </div>
           </div>
         </div>
-      </section>
 
-      <section>
-        <div class="flex items-center gap-2 mb-4">
-          <span class="text-[var(--color-brand-orange)] text-xl">🐾</span>
-          <h2 class="text-lg font-semibold text-[var(--color-brand-darkgray)]">寵物健康護照</h2>
-        </div>
+        <section class="lg:col-start-1 lg:row-start-2">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="text-[var(--color-brand-orange)] text-xl">🐾</span>
+            <h2 class="text-lg font-semibold text-[var(--color-brand-darkgray)]">寵物健康護照</h2>
+          </div>
 
-        <div class="flex flex-col gap-3 md:flex-row md:gap-4 md:w-full">
-          <PetCard
-            v-for="(pet, index) in pets"
-            :key="pet.id"
-            :pet="pet"
-            :theme="themeColors[index % themeColors.length]"
-            class="md:flex-1"
-          />
-        </div>
-      </section>
+          <div class="flex flex-col gap-3 md:flex-row md:gap-4 md:w-full">
+            <PetCard
+              v-for="(pet, index) in pets"
+              :key="pet.id"
+              :pet="pet"
+              :theme="themeColors[index % themeColors.length]"
+              class="md:flex-1"
+            />
+          </div>
+        </section>
+      </div>
     </div>
 
     <div class="relative z-50">
@@ -167,10 +171,3 @@ function toggleCheck(id) {
     </div>
   </div>
 </template>
-
-<style scoped>
-.dashboard-sidebar-wrapper :deep(aside) {
-  top: 68px;
-  height: calc(100% - 68px);
-}
-</style>
