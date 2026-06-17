@@ -75,7 +75,7 @@ function toggleCheck(id) {
     <DashboardSidebar />
   </div>
 
-  <div>
+  <div class="lg:pl-52">
     <section class="w-full relative mt-[55px] lg:mt-[68px]">
       <img
         :src="memberBanner"
@@ -165,9 +165,18 @@ function toggleCheck(id) {
         </section>
       </div>
     </div>
+  </div>
 
-    <div class="relative z-50">
-      <AppFooter />
-    </div>
+  <div class="relative z-50">
+    <AppFooter />
   </div>
 </template>
+
+<style scoped>
+@media (min-width: 1024px) {
+  .dashboard-sidebar-wrapper :deep(aside) {
+    top: 68px;
+    height: calc(100% - 68px);
+  }
+}
+</style>
