@@ -1,8 +1,20 @@
+<script setup>
+import { ref } from 'vue'
+const emit = defineEmits(['login'])
+const email = ref('')
+const password = ref('')
+
+function handleSubmit() {
+  emit('login', { email: email.value, password: password.value })
+}
+</script>
+
 <template>
   <main class="login-form-page flex h-full items-center justify-center px-4 py-8 my-10">
     <form
       class="w-full max-w-[360px] rounded-[18px] bg-white px-8 py-7 shadow-[0_10px_35px_rgba(31,41,55,0.16)]"
       action="submit"
+      @submit.prevent="handleSubmit"
     >
       <header class="mb-7 flex flex-col items-center text-center">
         <img src="@/assets/images/PawPal_logo.PNG" alt="PawPal" class="mb-5 h-10 w-auto" />
@@ -20,6 +32,7 @@
             type="email"
             placeholder="you@example.com"
             autocomplete="email"
+            v-model="email"
           />
         </label>
 
@@ -30,6 +43,7 @@
             type="password"
             placeholder="••••••••"
             autocomplete="current-password"
+            v-model="password"
           />
         </label>
       </div>
