@@ -1,6 +1,8 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { calendarEvents } from '@/data/calendarEvents'
+import { pets as rawPets } from '@/data/pets'
+import { mockUsers } from '@/data/user'
 import PetCard from '@/components/pet/PetCard.vue'
 import CalendarGrid from '@/components/calendar/CalendarGrid.vue'
 import AppHeader from '@/components/layout/AppHeader.vue'
@@ -28,14 +30,14 @@ const circleFillMap = {
   blue: 'bg-[var(--color-brand-blue)]',
 }
 
-const pets = [
-  { id: 1, name: '阿肥', breed: '柴犬', age: '2', ageUnit: '歲', image: null },
-  { id: 2, name: '學妹', breed: '貴賓犬', age: '2', ageUnit: '歲', image: null },
-  { id: 3, name: '小白', breed: '哈士奇', age: '2', ageUnit: '歲', image: null },
-]
+const dashboardPets = rawPets.slice(0, 3).map((p) => ({
+  ...p,
+  image: p.photoUrl ?? null,
+  ageUnit: '',
+}))
 
 const checkedIds = ref([])
-const userName = ref('Xxx')
+const userName = ref(mockUsers[0]?.name ?? '使用者')
 
 const upcomingEvents = computed(() => {
   const today = new Date()
@@ -155,7 +157,7 @@ function toggleCheck(id) {
 
           <div class="flex flex-col gap-3 md:flex-row md:gap-4 md:w-full">
             <PetCard
-              v-for="(pet, index) in pets"
+              v-for="(pet, index) in dashboardPets"
               :key="pet.id"
               :pet="pet"
               :theme="themeColors[index % themeColors.length]"
@@ -167,9 +169,7 @@ function toggleCheck(id) {
     </div>
   </div>
 
-  <div class="relative z-50">
-    <AppFooter class="lg:hidden" />
-  </div>
+  <AppFooter class="lg:hidden" />
 </template>
 
 <style scoped>
