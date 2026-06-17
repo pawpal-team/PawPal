@@ -30,11 +30,13 @@ const circleFillMap = {
   blue: 'bg-[var(--color-brand-blue)]',
 }
 
-const dashboardPets = rawPets.slice(0, 3).map((p) => ({
+const dashboardPets = rawPets.map((p) => ({
   ...p,
   image: p.photoUrl ?? null,
   ageUnit: '',
 }))
+
+const isScrollable = dashboardPets.length > 5
 
 const checkedIds = ref([])
 const userName = ref(mockUsers[0]?.name ?? '使用者')
@@ -149,19 +151,26 @@ function toggleCheck(id) {
           </div>
         </div>
 
-        <section class="lg:col-start-1 lg:row-start-2">
+        <section class="lg:col-start-1 lg:row-start-2 lg:col-span-2 min-w-0">
           <div class="flex items-center gap-2 mb-4">
             <span class="text-[var(--color-brand-orange)] text-xl">🐾</span>
             <h2 class="text-lg font-semibold text-[var(--color-brand-darkgray)]">寵物健康護照</h2>
           </div>
 
-          <div class="flex flex-col gap-3 md:flex-row md:gap-4 md:w-full">
+          <div
+            class="flex gap-3 md:gap-4"
+            :class="
+              isScrollable
+                ? 'w-full flex-col overflow-y-auto max-h-[360px] md:flex-row md:overflow-y-hidden md:overflow-x-auto md:max-h-none pb-2'
+                : 'flex-col md:flex-row md:w-full'
+            "
+          >
             <PetCard
               v-for="(pet, index) in dashboardPets"
               :key="pet.id"
               :pet="pet"
               :theme="themeColors[index % themeColors.length]"
-              class="md:flex-1"
+              :class="isScrollable ? 'md:shrink-0 md:w-[132px]' : 'md:flex-1'"
             />
           </div>
         </section>
