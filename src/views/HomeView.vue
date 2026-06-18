@@ -51,7 +51,7 @@ const getIconUrl = (name) => {
 </script>
 
 <template>
-  <Header />
+  <Header variant="public" />
   <main
     class="w-full min-h-screen select-none overflow-x-hidden pt-[87px] pb-56 text-brand-gray lg:pt-[100px] pawpal-container"
   >
