@@ -1,5 +1,4 @@
 <script setup>
-import { computed, ref } from 'vue'
 import { calendarEvents } from '@/data/calendarEvents'
 import { pets as rawPets } from '@/data/pets'
 import { mockUsers } from '@/data/user'
@@ -18,15 +17,7 @@ const dashboardPets = rawPets.map((p) => ({
   ageUnit: '',
 }))
 
-const userName = ref(mockUsers[0]?.name ?? '使用者')
-
-const upcomingEvents = computed(() => {
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
-  return calendarEvents
-    .filter((e) => new Date(e.date) >= today)
-    .sort((a, b) => new Date(a.date) - new Date(b.date))
-})
+const userName = mockUsers[0]?.name ?? '使用者'
 </script>
 
 <template>
@@ -56,7 +47,7 @@ const upcomingEvents = computed(() => {
         <div
           class="min-h-0 min-w-0 overflow-y-auto overflow-x-hidden rounded-3xl border border-brand-lightblue bg-brand-white shadow-[0_8px_28px_rgba(61,74,122,0.08)] p-4"
         >
-          <EventList :events="upcomingEvents" :compact="true" />
+          <EventList :events="calendarEvents" :compact="true" />
         </div>
 
         <section class="lg:col-span-2 min-w-0">
