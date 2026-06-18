@@ -4,6 +4,7 @@ import Login from '@/views/LoginView.vue'
 import Register from '@/views/RegisterView.vue'
 import ForgotPassword from '@/views/ForgotPasswordView.vue'
 import Home from '@/views/HomeView.vue'
+import Medical from '@/views/MedicalView.vue'
 import Dashboard from '@/views/DashboardView.vue'
 
 const router = createRouter({
@@ -28,6 +29,14 @@ const router = createRouter({
       path: '/forgot-password',
       name: 'ForgotPassword',
       component: ForgotPassword,
+    },
+    {
+      path: '/medical',
+      name: 'Medical',
+      component: Medical,
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: '/dashboard',

@@ -1,8 +1,20 @@
 <script setup>
-import Sidebar from '@/components/layout/PublicSidebar.vue'
+import { computed } from 'vue'
+import PublicSidebar from '@/components/layout/PublicSidebar.vue'
+import DashboardSidebar from '@/components/layout/DashboardSidebar.vue'
 import { useSidebarStore } from '@/stores/sidebar'
 
+const props = defineProps({
+  variant: {
+    type: String,
+    default: 'public',
+    validator: (value) => ['public', 'member'].includes(value),
+  },
+})
+
 const sidebarStore = useSidebarStore()
+
+const isMemberVariant = computed(() => props.variant === 'member')
 
 const navGroups = [
   {
@@ -108,9 +120,11 @@ const navGroups = [
     </div>
   </header>
 
+  <DashboardSidebar v-if="isMemberVariant" />
+
   <!-- Sidebar Overlay -->
   <div
-    v-if="sidebarStore.isOpen"
+    v-if="sidebarStore.isOpen && !isMemberVariant"
     class="fixed inset-0 z-40 bg-black/50 lg:hidden"
     @click="sidebarStore.closeSidebar()"
   />
@@ -118,10 +132,10 @@ const navGroups = [
   <!-- Sidebar -->
   <transition name="slide">
     <div
-      v-if="sidebarStore.isOpen"
+      v-if="sidebarStore.isOpen && !isMemberVariant"
       class="fixed inset-y-0 right-0 z-50 overflow-y-auto bg-white lg:hidden"
     >
-      <Sidebar />
+      <PublicSidebar />
     </div>
   </transition>
 </template>

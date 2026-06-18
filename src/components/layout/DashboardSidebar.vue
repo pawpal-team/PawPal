@@ -36,7 +36,7 @@ const navItems = [
 
 <template>
   <!-- 手機&平板 -->
-  <div class="fixed inset-0 z-50 lg:hidden">
+  <div v-if="sidebarStore.isOpen" class="fixed inset-0 z-50 lg:hidden">
     <!-- 遮罩 -->
     <div
       class="absolute inset-0 bg-white/10 backdrop-opacity-60"

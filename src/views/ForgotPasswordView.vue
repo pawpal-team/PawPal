@@ -6,7 +6,7 @@ import ForgotPasswordForm from '@/components/auth/ForgotPasswordForm.vue'
 
 <template>
   <div class="flex min-h-screen flex-col pt-[55px] lg:pt-[68px]">
-    <Header />
+    <Header variant="public" />
     <ForgotPasswordForm class="flex-1" />
     <Footer />
   </div>

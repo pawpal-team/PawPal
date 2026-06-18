@@ -10,6 +10,9 @@ import AppHeader from '@/components/layout/AppHeader.vue'
 import AppFooter from '@/components/layout/AppFooter.vue'
 import DashboardSidebar from '@/components/layout/DashboardSidebar.vue'
 import memberBanner from '@/assets/images/member_banner_dashboard.png'
+import { useRouter } from 'vue-router'
+import AppHeader from '@/components/layout/AppHeader.vue'
+import { useAuthStore } from '@/stores/auth.js'
 
 const themeColors = ['green', 'orange', 'blue']
 

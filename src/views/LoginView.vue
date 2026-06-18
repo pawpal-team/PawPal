@@ -18,7 +18,7 @@ function handleLogin(payload) {
 
 <template>
   <div class="flex min-h-screen flex-col pt-[55px] lg:pt-[68px]">
-    <Header />
+    <Header variant="public" />
     <LoginForm class="flex-1" @login="handleLogin" />
     <Footer />
   </div>

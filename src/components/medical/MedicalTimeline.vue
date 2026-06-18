@@ -4,7 +4,7 @@ import { medicalRecords } from '@/data/medicalRecords.js'
 </script>
 
 <template>
-  <div class="w-full max-w-4xl mx-auto px-4 py-6">
+  <div class="w-full px-2 py-4 md:px-6 md:py-6">
     <div class="relative w-full pb-8">
       <div
         class="absolute top-2 bottom-0 left-[7px] md:left-[148px] w-[2px] bg-brand-blue/30 z-0"
