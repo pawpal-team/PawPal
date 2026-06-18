@@ -180,12 +180,3 @@ function toggleCheck(id) {
 
   <AppFooter class="lg:hidden" />
 </template>
-
-<style scoped>
-@media (min-width: 1024px) {
-  .dashboard-sidebar-wrapper :deep(aside) {
-    top: 68px;
-    height: calc(100% - 68px);
-  }
-}
-</style>
