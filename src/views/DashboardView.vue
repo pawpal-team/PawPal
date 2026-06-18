@@ -5,30 +5,13 @@ import { pets as rawPets } from '@/data/pets'
 import { mockUsers } from '@/data/user'
 import PetCard from '@/components/pet/PetCard.vue'
 import CalendarGrid from '@/components/calendar/CalendarGrid.vue'
+import EventList from '@/components/calendar/EventList.vue'
 import AppHeader from '@/components/layout/AppHeader.vue'
 import AppFooter from '@/components/layout/AppFooter.vue'
 import DashboardSidebar from '@/components/layout/DashboardSidebar.vue'
 import memberBanner from '@/assets/images/member_banner_dashboard.png'
 
 const themeColors = ['green', 'orange', 'blue']
-
-const colorMap = {
-  green: 'bg-[var(--color-brand-green)] border-l-4 border-[#7BC67E]',
-  orange: 'bg-[#FFF3E0] border-l-4 border-[var(--color-brand-orange)]',
-  blue: 'bg-[var(--color-brand-lightblue)] border-l-4 border-[var(--color-brand-blue)]',
-}
-
-const circleBorderMap = {
-  green: 'border-[#7BC67E]',
-  orange: 'border-[var(--color-brand-orange)]',
-  blue: 'border-[var(--color-brand-blue)]',
-}
-
-const circleFillMap = {
-  green: 'bg-[#7BC67E]',
-  orange: 'bg-[var(--color-brand-orange)]',
-  blue: 'bg-[var(--color-brand-blue)]',
-}
 
 const dashboardPets = rawPets.map((p) => ({
   ...p,
@@ -38,7 +21,6 @@ const dashboardPets = rawPets.map((p) => ({
 
 const isScrollable = dashboardPets.length > 5
 
-const checkedIds = ref([])
 const userName = ref(mockUsers[0]?.name ?? '使用者')
 
 const upcomingEvents = computed(() => {
@@ -47,30 +29,7 @@ const upcomingEvents = computed(() => {
   return calendarEvents
     .filter((e) => new Date(e.date) >= today)
     .sort((a, b) => new Date(a.date) - new Date(b.date))
-    .slice(0, 3)
-    .map((e) => ({
-      ...e,
-      theme: themeColors[(e.petId - 1) % themeColors.length],
-    }))
 })
-
-function formatDate(dateStr) {
-  return dateStr.replace(/-/g, ' - ')
-}
-
-function formatTime(timeStr) {
-  const [h, m] = timeStr.split(':')
-  const hour = parseInt(h)
-  const period = hour < 12 ? 'AM' : 'PM'
-  const displayHour = hour % 12 || 12
-  return `${period} ${String(displayHour).padStart(2, '0')} : ${m}`
-}
-
-function toggleCheck(id) {
-  checkedIds.value.includes(id)
-    ? (checkedIds.value = checkedIds.value.filter((i) => i !== id))
-    : checkedIds.value.push(id)
-}
 </script>
 
 <template>
@@ -98,60 +57,24 @@ function toggleCheck(id) {
       </div>
     </section>
 
-    <div
-      class="w-full max-w-[1024px] mx-auto lg:mx-0 lg:max-w-none lg:px-8 px-4 pb-16 mt-2 md:mt-6"
-    >
-      <div
-        class="lg:max-w-[calc(1024px_+_1.5rem_+_340px)] lg:mx-auto grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-6 lg:gap-x-6 lg:gap-y-8"
-      >
-        <div class="lg:col-start-1 lg:row-start-1">
-          <CalendarGrid />
-        </div>
+    <div class="w-full px-4 lg:px-8 pb-16 mt-2 md:mt-6">
+      <div class="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-6 lg:gap-x-6 lg:gap-y-8">
+        <CalendarGrid />
 
+        <!-- EventList wrapper：提供 card 樣式、高度對齊 CalendarGrid、內容可捲動 -->
         <div
-          class="overflow-hidden rounded-3xl border border-brand-lightblue bg-brand-white shadow-[0_8px_28px_rgba(61,74,122,0.08)] p-4"
+          class="min-h-0 min-w-0 overflow-y-auto overflow-x-hidden rounded-3xl border border-brand-lightblue bg-brand-white shadow-[0_8px_28px_rgba(61,74,122,0.08)] p-4"
         >
-          <div class="flex items-center gap-2 mb-4">
-            <span class="text-[var(--color-brand-orange)] text-xl">🔔</span>
-            <h2 class="text-lg font-semibold text-[var(--color-brand-darkgray)]">近期重要提醒</h2>
-          </div>
-
-          <div class="flex flex-col gap-3">
-            <div
-              v-for="event in upcomingEvents"
-              :key="event.id"
-              class="flex items-center justify-between rounded-2xl px-6 py-4"
-              :class="colorMap[event.theme]"
-            >
-              <div class="flex items-center gap-4">
-                <div class="text-xs text-[var(--color-brand-gray)] leading-5 shrink-0">
-                  <p>{{ formatDate(event.date) }}</p>
-                  <p>{{ formatTime(event.time) }}</p>
-                </div>
-                <div class="flex flex-col gap-0.5">
-                  <p class="text-sm font-semibold text-[var(--color-brand-darkgray)]">
-                    {{ event.petName }}
-                  </p>
-                  <p class="text-sm text-[var(--color-brand-gray)]">
-                    {{ event.title }}
-                  </p>
-                </div>
-              </div>
-
-              <button
-                class="w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 transition-all cursor-pointer"
-                :class="[
-                  circleBorderMap[event.theme],
-                  checkedIds.includes(event.id) ? circleFillMap[event.theme] : 'bg-transparent',
-                ]"
-                @click="toggleCheck(event.id)"
-                :aria-label="`標記 ${event.petName} ${event.title}`"
-              />
-            </div>
-          </div>
+          <EventList
+            :events="upcomingEvents"
+            :compact="true"
+            @edit="() => {}"
+            @delete="() => {}"
+            @add="() => {}"
+          />
         </div>
 
-        <section class="lg:col-start-1 lg:row-start-2 lg:col-span-2 min-w-0">
+        <section class="lg:col-span-2 min-w-0">
           <div class="flex items-center gap-2 mb-4">
             <span class="text-[var(--color-brand-orange)] text-xl">🐾</span>
             <h2 class="text-lg font-semibold text-[var(--color-brand-darkgray)]">寵物健康護照</h2>
