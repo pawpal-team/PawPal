@@ -8,11 +8,7 @@ import CalendarGrid from '@/components/calendar/CalendarGrid.vue'
 import EventList from '@/components/calendar/EventList.vue'
 import AppHeader from '@/components/layout/AppHeader.vue'
 import AppFooter from '@/components/layout/AppFooter.vue'
-import DashboardSidebar from '@/components/layout/DashboardSidebar.vue'
 import memberBanner from '@/assets/images/member_banner_dashboard.png'
-import { useRouter } from 'vue-router'
-import AppHeader from '@/components/layout/AppHeader.vue'
-import { useAuthStore } from '@/stores/auth.js'
 
 const themeColors = ['green', 'orange', 'blue']
 
@@ -34,10 +30,7 @@ const upcomingEvents = computed(() => {
 </script>
 
 <template>
-  <AppHeader />
-  <div class="hidden lg:block">
-    <DashboardSidebar />
-  </div>
+  <AppHeader variant="member" />
 
   <div class="lg:pl-52">
     <section class="w-full relative mt-[55px] lg:mt-[68px]">
