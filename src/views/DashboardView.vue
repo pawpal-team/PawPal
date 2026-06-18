@@ -19,8 +19,6 @@ const dashboardPets = rawPets.map((p) => ({
   ageUnit: '',
 }))
 
-const isScrollable = dashboardPets.length > 5
-
 const userName = ref(mockUsers[0]?.name ?? '使用者')
 
 const upcomingEvents = computed(() => {
@@ -34,7 +32,7 @@ const upcomingEvents = computed(() => {
 
 <template>
   <AppHeader />
-  <div class="dashboard-sidebar-wrapper hidden lg:block">
+  <div class="hidden lg:block">
     <DashboardSidebar />
   </div>
 
@@ -46,9 +44,7 @@ const upcomingEvents = computed(() => {
         alt="banner"
       />
       <div class="absolute inset-0 flex items-center">
-        <div
-          class="ml-[50%] -translate-x-1/2 md:ml-[22%] md:translate-x-0 text-center md:text-left"
-        >
+        <div class="mx-auto md:ml-[22%] md:translate-x-0 text-center md:text-left">
           <h1 class="text-lg md:text-2xl font-bold text-[var(--color-brand-navy)]">
             Hi，{{ userName }}！
           </h1>
@@ -61,39 +57,27 @@ const upcomingEvents = computed(() => {
       <div class="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-6 lg:gap-x-6 lg:gap-y-8">
         <CalendarGrid />
 
-        <!-- EventList wrapper：提供 card 樣式、高度對齊 CalendarGrid、內容可捲動 -->
         <div
           class="min-h-0 min-w-0 overflow-y-auto overflow-x-hidden rounded-3xl border border-brand-lightblue bg-brand-white shadow-[0_8px_28px_rgba(61,74,122,0.08)] p-4"
         >
-          <EventList
-            :events="upcomingEvents"
-            :compact="true"
-            @edit="() => {}"
-            @delete="() => {}"
-            @add="() => {}"
-          />
+          <EventList :events="upcomingEvents" :compact="true" />
         </div>
 
         <section class="lg:col-span-2 min-w-0">
           <div class="flex items-center gap-2 mb-4">
-            <span class="text-[var(--color-brand-orange)] text-xl">🐾</span>
+            <span class="text-xl">🐾</span>
             <h2 class="text-lg font-semibold text-[var(--color-brand-darkgray)]">寵物健康護照</h2>
           </div>
 
           <div
-            class="flex gap-3 md:gap-4"
-            :class="
-              isScrollable
-                ? 'w-full flex-col overflow-y-auto max-h-[360px] md:flex-row md:overflow-y-hidden md:overflow-x-auto md:max-h-none pb-2'
-                : 'flex-col md:flex-row md:w-full'
-            "
+            class="flex flex-col md:flex-row gap-3 md:gap-4 overflow-y-auto max-h-[360px] md:overflow-y-hidden md:overflow-x-auto md:max-h-none pb-2"
           >
             <PetCard
               v-for="(pet, index) in dashboardPets"
               :key="pet.id"
               :pet="pet"
               :theme="themeColors[index % themeColors.length]"
-              :class="isScrollable ? 'md:shrink-0 md:w-[132px]' : 'md:flex-1'"
+              class="md:min-w-[132px] md:flex-1"
             />
           </div>
         </section>
