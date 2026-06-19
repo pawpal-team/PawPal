@@ -21,8 +21,9 @@ export async function register(req, res) {
 
   const trimmedName = name.trim()
   const normalizedEmail = email.trim().toLowerCase()
+  const trimmedPassword = password.trim()
 
-  if (!trimmedName || !normalizedEmail || !password) {
+  if (!trimmedName || !normalizedEmail || !trimmedPassword) {
     return res.status(400).json({
       message: 'name, email, password are required',
     })
@@ -43,7 +44,7 @@ export async function register(req, res) {
       })
     }
 
-    const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS)
+    const hashedPassword = await bcrypt.hash(trimmedPassword, SALT_ROUNDS)
     const user = await createUser({
       name: trimmedName,
       email: normalizedEmail,
