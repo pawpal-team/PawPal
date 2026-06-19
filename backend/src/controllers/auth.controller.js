@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs'
 import { createUser, findUserByEmail } from '../services/auth.service.js'
 
 const SALT_ROUNDS = 10
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export async function register(req, res) {
   const { name, email, password } = req.body
@@ -24,6 +25,12 @@ export async function register(req, res) {
   if (!trimmedName || !normalizedEmail || !password) {
     return res.status(400).json({
       message: 'name, email, password are required',
+    })
+  }
+
+  if (!emailRegex.test(normalizedEmail)) {
+    return res.status(400).json({
+      message: 'invalid email format',
     })
   }
 
