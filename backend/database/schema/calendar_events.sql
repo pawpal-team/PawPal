@@ -1,0 +1,38 @@
+CREATE TYPE event_type AS ENUM (
+  'vet', 'vaccine', 'grooming', 'medication', 'bath', 'training', 'other'
+);
+
+CREATE TABLE IF NOT EXISTS calendar_events (
+  id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  pet_id INTEGER NOT NULL,
+  title VARCHAR(255) NOT NULL
+    CHECK (char_length(trim(title)) > 0),
+  event_date DATE NOT NULL,
+  event_time TIME,
+  type event_type NOT NULL,
+  location VARCHAR(255),
+  notes TEXT CHECK (
+  notes IS NULL
+  OR char_length(notes) <= 100
+),
+  day_of_week SMALLINT GENERATED ALWAYS AS (EXTRACT(DOW FROM event_date)::SMALLINT) STORED,
+  is_completed BOOLEAN NOT NULL DEFAULT FALSE,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_calendar_events_pet
+    FOREIGN KEY (pet_id)
+    REFERENCES pets(id) ON DELETE CASCADE
+);
+
+CREATE OR REPLACE FUNCTION update_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.updated_at = CURRENT_TIMESTAMP;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE TRIGGER trigger_calendar_events_updated_at
+  BEFORE UPDATE ON calendar_events
+  FOR EACH ROW
+  EXECUTE FUNCTION update_updated_at_column();
