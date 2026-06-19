@@ -1,8 +1,9 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
+import userRoutes from './routes/user.routes.js'
 
-dotenv.config()
+dotenv.config({ quiet: true })
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -14,6 +15,7 @@ app.use(
   }),
 )
 app.use(express.json())
+app.use('/api/users', userRoutes)
 
 app.get('/', (req, res) => {
   res.json({
