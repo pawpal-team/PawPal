@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS medical_records (
   symptoms TEXT,
   diagnosis TEXT,
   prescription TEXT,
+  image_url TEXT[],
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT fk_medical_records_pet
     FOREIGN KEY (pet_id)
