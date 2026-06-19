@@ -42,9 +42,10 @@ export async function register(req, res) {
       user,
     })
   } catch (error) {
+    console.error(error)
+
     return res.status(500).json({
       message: 'Failed to register user',
-      error: error.message,
     })
   }
 }
