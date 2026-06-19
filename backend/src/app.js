@@ -30,7 +30,11 @@ app.use((error, req, res, next) => {
     })
   }
 
-  return next(error)
+  console.error(error)
+
+  return res.status(500).json({
+    message: 'Internal server error',
+  })
 })
 
 app.listen(PORT, () => {
