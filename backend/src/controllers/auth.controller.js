@@ -4,18 +4,25 @@ import { createUser, findUserByEmail } from '../services/auth.service.js'
 const SALT_ROUNDS = 10
 
 export async function register(req, res) {
-  const name = req.body.name?.trim()
-  const email = req.body.email?.trim().toLowerCase()
-  const password = req.body.password
+  const { name, email, password } = req.body
 
-  if (!name || !email || !password) {
+  if (typeof name !== 'string' || typeof email !== 'string' || typeof password !== 'string') {
+    return res.status(400).json({
+      message: 'name, email, password must be strings',
+    })
+  }
+
+  const trimmedName = name.trim()
+  const normalizedEmail = email.trim().toLowerCase()
+
+  if (!trimmedName || !normalizedEmail || !password) {
     return res.status(400).json({
       message: 'name, email, password are required',
     })
   }
 
   try {
-    const existingUser = await findUserByEmail(email)
+    const existingUser = await findUserByEmail(normalizedEmail)
 
     if (existingUser) {
       return res.status(409).json({
@@ -24,7 +31,11 @@ export async function register(req, res) {
     }
 
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS)
-    const user = await createUser({ name, email, password: hashedPassword })
+    const user = await createUser({
+      name: trimmedName,
+      email: normalizedEmail,
+      password: hashedPassword,
+    })
 
     return res.status(201).json({
       message: 'Register successful',
