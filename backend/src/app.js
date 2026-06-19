@@ -23,6 +23,16 @@ app.get('/', (req, res) => {
   })
 })
 
+app.use((error, req, res, next) => {
+  if (error instanceof SyntaxError && error.status === 400 && 'body' in error) {
+    return res.status(400).json({
+      message: 'Invalid JSON format',
+    })
+  }
+
+  return next(error)
+})
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
