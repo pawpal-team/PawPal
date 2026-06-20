@@ -12,6 +12,10 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  compact: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 defineEmits(['edit', 'delete'])
@@ -49,16 +53,33 @@ const tagStyle = computed(() => TAG_STYLE_MAP[props.event.tag] ?? 'bg-gray-100 t
 <template>
   <div class="bg-white rounded-2xl p-4 md:p-5 mb-3 shadow-sm border border-gray-100">
     <div class="flex items-start gap-3 md:gap-4">
+      <!-- 日期欄：compact 時 icon + tag 只在 md+ 搬入此欄 -->
       <div class="flex flex-col items-center min-w-[44px] md:min-w-[56px]">
         <span class="text-sm md:text-base font-semibold text-gray-800 leading-tight">
           {{ formattedMonth }}/{{ formattedDay }}
         </span>
         <span class="text-xs text-gray-400 mt-0.5">{{ weekday }}</span>
+
+        <template v-if="compact">
+          <div
+            class="hidden md:flex items-center justify-center w-8 h-8 rounded-full mt-2 flex-shrink-0"
+            :class="typeIconBg"
+          >
+            <img :src="typeIconSrc" alt="" class="w-4 h-4" />
+          </div>
+          <span
+            class="hidden md:inline-block mt-1.5 text-xs px-1.5 py-0.5 rounded-full font-medium text-center whitespace-nowrap"
+            :class="tagStyle"
+          >
+            {{ event.tag }}
+          </span>
+        </template>
       </div>
 
+      <!-- icon：compact 時 md+ 隱藏（已搬至日期欄），手機維持顯示 -->
       <div
         class="flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full mt-0.5 flex-shrink-0"
-        :class="typeIconBg"
+        :class="[typeIconBg, compact ? 'md:hidden' : '']"
       >
         <img :src="typeIconSrc" alt="" class="w-4 h-4 md:w-5 md:h-5" />
       </div>
@@ -81,6 +102,7 @@ const tagStyle = computed(() => TAG_STYLE_MAP[props.event.tag] ?? 'bg-gray-100 t
           {{ event.note }}
         </p>
 
+        <!-- tag：手機版顯示在此（md+ 一律隱藏，compact 時已在日期欄顯示） -->
         <div class="mt-2 md:hidden">
           <span class="inline-block text-xs px-2 py-0.5 rounded-full font-medium" :class="tagStyle">
             {{ event.tag }}
@@ -88,7 +110,8 @@ const tagStyle = computed(() => TAG_STYLE_MAP[props.event.tag] ?? 'bg-gray-100 t
         </div>
       </div>
 
-      <div class="hidden md:flex items-center gap-3 flex-shrink-0">
+      <!-- 桌面版按鈕區：compact=true 時不渲染 -->
+      <div v-if="!compact" class="hidden md:flex items-center gap-3 flex-shrink-0">
         <span class="inline-block text-xs px-3 py-1 rounded-full font-medium" :class="tagStyle">
           {{ event.tag }}
         </span>
@@ -108,7 +131,14 @@ const tagStyle = computed(() => TAG_STYLE_MAP[props.event.tag] ?? 'bg-gray-100 t
         </button>
       </div>
 
-      <div class="flex flex-col gap-2 flex-shrink-0 ml-1 md:hidden">
+      <!-- 手機版按鈕區：compact=true 時永遠顯示，否則 md+ 隱藏 -->
+      <div
+        :class="
+          compact
+            ? 'flex flex-col gap-2 flex-shrink-0 ml-1'
+            : 'flex flex-col gap-2 flex-shrink-0 ml-1 md:hidden'
+        "
+      >
         <button
           @click="$emit('edit', event)"
           class="cursor-pointer text-gray-400 hover:text-blue-500 transition-colors p-1"
