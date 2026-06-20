@@ -67,7 +67,7 @@ export const growthRecords = [
       { date: '週一', value: 1 },
       { date: '週二', value: 2 },
       { date: '週三', value: 1 },
-      { date: '週四', value: 0 }, // 模擬週四沒便便
+      { date: '週四', value: 0 },
       { date: '週五', value: 2 },
       { date: '週六', value: 1 },
       { date: '週日', value: 1 },
