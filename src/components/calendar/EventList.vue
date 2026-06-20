@@ -7,24 +7,38 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+  compact: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 defineEmits(['edit', 'delete', 'add'])
 
 const defaultCount = 4
-const expandedCount = 8
 const showAll = ref(false)
 
-const visibleEvents = computed(() =>
-  showAll.value ? props.events.slice(0, expandedCount) : props.events.slice(0, defaultCount),
-)
+const visibleEvents = computed(() => {
+  if (props.compact) return props.events
+  return showAll.value ? props.events : props.events.slice(0, defaultCount)
+})
 </script>
 
 <template>
   <div
-    class="w-full max-w-[1024px] mx-auto px-4 mt-6 mb-4 md:mb-6 md:bg-white md:rounded-3xl md:shadow-md md:p-6"
+    :class="
+      compact
+        ? 'w-full'
+        : 'w-full max-w-[1024px] mx-auto px-4 mt-6 mb-4 md:mb-6 md:bg-white md:rounded-3xl md:shadow-md md:p-6'
+    "
   >
-    <div class="flex items-center justify-between mt-6 mb-4 md:mb-6">
+    <div
+      :class="
+        compact
+          ? 'flex items-center justify-between mb-4'
+          : 'flex items-center justify-between mt-6 mb-4 md:mb-6'
+      "
+    >
       <div class="flex items-center gap-2">
         <div
           class="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-xl bg-purple-100"
@@ -50,17 +64,22 @@ const visibleEvents = computed(() =>
     </div>
 
     <template v-else>
-      <EventCard
-        v-for="event in visibleEvents"
-        :key="event.id"
-        :event="event"
-        @edit="$emit('edit', $event)"
-        @delete="$emit('delete', $event)"
-      />
+      <!-- compact：固定高度，超過 4 筆捲動；非 compact：無高度限制 -->
+      <div :class="compact ? 'overflow-y-auto max-h-[620px] pr-1' : ''">
+        <EventCard
+          v-for="event in visibleEvents"
+          :key="event.id"
+          :event="event"
+          :compact="compact"
+          @edit="$emit('edit', $event)"
+          @delete="$emit('delete', $event)"
+        />
+      </div>
     </template>
 
+    <!-- 「查看完整行程」只在非 compact 模式顯示 -->
     <button
-      v-if="events.length > defaultCount"
+      v-if="!compact && events.length > defaultCount"
       @click="showAll = !showAll"
       class="hover:text-[#FFA002] flex items-center justify-center gap-1 w-full mt-2 py-3 text-sm text-gray-400 transition-colors cursor-pointer"
     >

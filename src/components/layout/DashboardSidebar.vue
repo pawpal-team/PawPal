@@ -38,10 +38,7 @@ const navItems = [
   <!-- 手機&平板 -->
   <div v-if="sidebarStore.isOpen" class="fixed inset-0 z-50 lg:hidden">
     <!-- 遮罩 -->
-    <div
-      class="absolute inset-0 bg-white/10 backdrop-opacity-60"
-      @click="sidebarStore.closeSidebar()"
-    />
+    <div class="absolute inset-0 bg-black/50" @click="sidebarStore.closeSidebar()" />
     <aside
       class="absolute right-0 top-0 flex h-full w-80 flex-col overflow-y-auto overflow-x-hidden bg-brand-white"
     >
