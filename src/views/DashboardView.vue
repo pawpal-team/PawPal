@@ -1,27 +1,76 @@
 <script setup>
-import { useRouter } from 'vue-router'
+import { calendarEvents } from '@/data/calendarEvents'
+import { pets as rawPets } from '@/data/pets'
+import { mockUsers } from '@/data/user'
+import PetCard from '@/components/pet/PetCard.vue'
+import CalendarGrid from '@/components/calendar/CalendarGrid.vue'
+import EventList from '@/components/calendar/EventList.vue'
 import AppHeader from '@/components/layout/AppHeader.vue'
-import { useAuthStore } from '@/stores/auth.js'
+import AppFooter from '@/components/layout/AppFooter.vue'
+import memberBanner from '@/assets/images/member_banner_dashboard.png'
 
-const router = useRouter()
-const authStore = useAuthStore()
+const themeColors = ['green', 'orange', 'blue']
 
-function handleLogout() {
-  authStore.logout()
-  router.push('/login')
-}
+const dashboardPets = rawPets.map((p) => ({
+  ...p,
+  image: p.photoUrl ?? null,
+  ageUnit: '',
+}))
+
+const userName = mockUsers[0]?.name ?? '使用者'
 </script>
 
 <template>
   <AppHeader variant="member" />
-  <main class="min-h-screen pt-[55px] lg:pl-52 lg:pt-[68px]">
-    <div>Dashboard（施工中）</div>
-    <button
-      type="button"
-      class="rounded-full bg-brand-orange px-5 py-2 text-white"
-      @click="handleLogout"
-    >
-      登出
-    </button>
-  </main>
+
+  <div class="lg:pl-52">
+    <section class="w-full relative mt-[55px] lg:mt-[68px]">
+      <img
+        :src="memberBanner"
+        class="w-full block min-h-[160px] object-cover object-[20%_top]"
+        alt="banner"
+      />
+      <div class="absolute inset-0 flex items-center">
+        <div class="mx-auto md:ml-[22%] md:translate-x-0 text-center md:text-left">
+          <h1 class="text-lg md:text-2xl font-bold text-[var(--color-brand-navy)]">
+            Hi，{{ userName }}！
+          </h1>
+          <p class="text-xs md:text-sm text-[var(--color-brand-gray)]">毛孩的一切都在這裡</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="w-full px-4 lg:px-8 pb-16 mt-2 md:mt-6">
+      <div class="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-6 lg:gap-x-6 lg:gap-y-8">
+        <CalendarGrid />
+
+        <div
+          class="min-h-0 min-w-0 overflow-y-auto overflow-x-hidden rounded-3xl border border-brand-lightblue bg-brand-white shadow-[0_8px_28px_rgba(61,74,122,0.08)] p-4"
+        >
+          <EventList :events="calendarEvents" :compact="true" />
+        </div>
+
+        <section class="lg:col-span-2 min-w-0">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="text-xl">🐾</span>
+            <h2 class="text-lg font-semibold text-[var(--color-brand-darkgray)]">寵物健康護照</h2>
+          </div>
+
+          <div
+            class="flex flex-col md:flex-row gap-3 md:gap-4 overflow-y-auto max-h-[360px] md:overflow-y-hidden md:overflow-x-auto md:max-h-none pb-2"
+          >
+            <PetCard
+              v-for="(pet, index) in dashboardPets"
+              :key="pet.id"
+              :pet="pet"
+              :theme="themeColors[index % themeColors.length]"
+              class="md:min-w-[132px] md:flex-1"
+            />
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <AppFooter class="lg:hidden" />
 </template>

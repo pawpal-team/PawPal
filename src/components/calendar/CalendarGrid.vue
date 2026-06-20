@@ -123,7 +123,7 @@ function selectCell(index) {
 <template>
   <!-- 外層容器 -->
   <div
-    class="max-w-5xl mx-auto bg-white rounded-xl shadow-[0_4px_24px_rgba(146,168,245,0.12)] p-3 md:p-4 lg:p-6"
+    class="overflow-hidden rounded-3xl border border-brand-lightblue bg-brand-white shadow-[0_8px_28px_rgba(61,74,122,0.08)] p-3 md:p-4 lg:p-6"
   >
     <!-- 寵物篩選按鈕 -->
     <div class="flex flex-wrap gap-2 mb-5">
