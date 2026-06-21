@@ -24,6 +24,9 @@ CREATE TABLE IF NOT EXISTS calendar_events (
     REFERENCES pets(id) ON DELETE CASCADE
 );
 
+CREATE INDEX idx_calendar_events_pet_date
+ON calendar_events (pet_id, event_date);
+
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
 BEGIN
