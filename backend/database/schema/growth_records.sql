@@ -9,5 +9,8 @@ CREATE TABLE IF NOT EXISTS growth_records (
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT fk_growth_records_pet
     FOREIGN KEY (pet_id)
-    REFERENCES pets(id)
+    REFERENCES pets(id) ON DELETE CASCADE
 );
+
+CREATE INDEX idx_growth_records_pet_id ON growth_records(pet_id);
+
