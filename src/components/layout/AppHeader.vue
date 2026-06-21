@@ -52,14 +52,14 @@ const navGroups = [
           class="flex h-10 w-10 items-center justify-end"
           @click="sidebarStore.toggleSidebar()"
         >
-          <img src="@/assets/icons/header-bars.svg" alt="menu" class="h-5 w-5 object-contain" />
+          <img src="@/assets/icons/header-bars.svg" alt="menu" class="h-8 w-8 object-contain" />
         </button>
       </div>
     </div>
 
     <!-- 電腦版 -->
     <div class="mx-auto hidden h-17 items-center px-4 lg:flex lg:justify-between">
-      <router-link to="/" class="flex items-center">
+      <router-link to="/" class="flex items-center pl-4">
         <img src="@/assets/images/PawPal_logo.PNG" alt="logo" class="h-12 w-auto" />
       </router-link>
 
