@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS medical_records (
   pet_id INTEGER NOT NULL,
   record_type VARCHAR(50) NOT NULL,
   hospital_name VARCHAR(100),
-  title VARCHAR(200) NOT NULL,
+  title VARCHAR(200) NOT NULL CHECK (char_length(trim(title)) > 0),
   record_date DATE NOT NULL,
   symptoms TEXT,
   diagnosis TEXT,
@@ -13,5 +13,7 @@ CREATE TABLE IF NOT EXISTS medical_records (
   CONSTRAINT fk_medical_records_pet
     FOREIGN KEY (pet_id)
     REFERENCES pets(id)
+    ON DELETE CASCADE
 );
 
+CREATE INDEX IF NOT EXISTS idx_medical_records_pet_id ON medical_records(pet_id);
