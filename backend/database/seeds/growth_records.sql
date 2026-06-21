@@ -8,7 +8,7 @@ INSERT INTO growth_records (
     )
 SELECT
     pets.id,
-    growth.metric_type,
+    growth.metric_type::metric_type_enum,
     growth.value,
     growth.unit,
     growth.recorded_at,
