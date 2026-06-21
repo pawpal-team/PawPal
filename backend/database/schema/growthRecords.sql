@@ -1,5 +1,6 @@
 CREATE TYPE metric_type_enum AS ENUM (
   'weight',
+  'length',
   'water_frequency',
   'food_intake',
   'urination',
