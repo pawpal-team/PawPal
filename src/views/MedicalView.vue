@@ -5,6 +5,7 @@ import AppFooter from '@/components/layout/AppFooter.vue'
 import MedicalFilterTabs from '@/components/medical/MedicalFilterTabs.vue'
 import MedicalTimeline from '@/components/medical/MedicalTimeline.vue'
 import AddMedicalButton from '@/components/medical/AddMedicalButton.vue'
+import PetSwitcher from '@/components/pet/PetSwitcher.vue'
 </script>
 
 <template>
@@ -16,6 +17,7 @@ import AddMedicalButton from '@/components/medical/AddMedicalButton.vue'
     <div class="relative z-0 flex min-h-screen flex-col pt-14 lg:pt-17 lg:pl-52">
       <main class="min-w-0 flex-1 px-4 py-6 md:px-8 lg:px-10">
         <section class="mx-auto w-full">
+          <PetSwitcher />
           <div class="mb-2 flex items-center justify-between gap-4 md:mb-6">
             <h1 class="text-xl font-bold text-brand-navy md:text-2xl">病歷紀錄</h1>
             <AddMedicalButton />

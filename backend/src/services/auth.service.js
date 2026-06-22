@@ -1,7 +1,16 @@
 import { pool } from '../config/db.js'
 
 export async function findUserByEmail(email) {
-  const result = await pool.query('SELECT id, email FROM users WHERE email = $1 LIMIT 1', [email])
+  const result = await pool.query(
+    `
+      SELECT id, name, email, password, avatar_url, created_at
+      FROM users
+      WHERE email = $1
+      LIMIT 1
+    `,
+    [email],
+  )
+
   return result.rows[0] ?? null
 }
 
