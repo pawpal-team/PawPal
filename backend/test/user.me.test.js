@@ -23,7 +23,7 @@ test('returns the current user without exposing password', async () => {
     },
   }
   const res = {
-    statusCode: 200,
+    statusCode: null,
     body: null,
     status(code) {
       this.statusCode = code
@@ -68,4 +68,36 @@ test('returns 404 when the current user does not exist', async () => {
 
   assert.equal(res.statusCode, 404)
   assert.deepEqual(res.body, { message: 'User not found' })
+})
+
+test('returns 500 when fetching the current user fails', async (t) => {
+  t.mock.method(console, 'error', () => {})
+
+  const req = {
+    userId: 1,
+    services: {
+      userService: {
+        findUserById: async () => {
+          throw new Error('Database unavailable')
+        },
+      },
+    },
+  }
+  const res = {
+    statusCode: null,
+    body: null,
+    status(code) {
+      this.statusCode = code
+      return this
+    },
+    json(payload) {
+      this.body = payload
+      return this
+    },
+  }
+
+  await getCurrentUser(req, res)
+
+  assert.equal(res.statusCode, 500)
+  assert.deepEqual(res.body, { message: 'Failed to get current user' })
 })
