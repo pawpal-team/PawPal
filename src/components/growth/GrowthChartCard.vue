@@ -40,8 +40,8 @@ const displayRecords = computed(() => {
   return growthRecords
     .map((record) => ({
       ...record,
-      chartType: uiConfig[record.id]?.type || 'line',
-      themeColor: uiConfig[record.id]?.color || '#cbd5e1',
+      chartType: uiConfig[record.metric_type]?.type || 'line',
+      themeColor: uiConfig[record.metric_type]?.color || '#cbd5e1',
     }))
     .filter((record) => {
       return record.history.some((item) => item.value > 0)
@@ -97,9 +97,9 @@ const getChartOptions = (record) => ({
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 w-full p-4">
     <div
       v-for="record in displayRecords"
-      :key="record.id"
+      :key="record.metric_type"
       class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 flex flex-col h-full"
-      :class="{ 'md:col-span-2': record.id === 'weight' }"
+      :class="{ 'md:col-span-2': record.metric_type === 'weight' }"
     >
       <div class="flex justify-between items-start mb-4">
         <div class="flex items-center gap-2">
