@@ -1,4 +1,4 @@
-import { verifyJwt } from '../utils/jwt.js'
+import jwt from 'jsonwebtoken'
 
 function getBearerToken(authorizationHeader) {
   if (!authorizationHeader) {
@@ -16,20 +16,21 @@ function getBearerToken(authorizationHeader) {
 
 export function authenticateToken(req, res, next) {
   const token = getBearerToken(req.headers.authorization)
+  const jwtSecret = process.env.JWT_SECRET
 
-  if (!token) {
+  if (!token || !jwtSecret) {
     return res.status(401).json({ message: 'Unauthorized' })
   }
 
   try {
-    const payload = verifyJwt(token, process.env.JWT_SECRET || 'test-secret')
-    const userId = payload.userId || payload.id || payload.sub
+    const payload = jwt.verify(token, jwtSecret)
+    const userId = Number(payload.sub)
 
-    if (!userId) {
+    if (!Number.isSafeInteger(userId) || userId <= 0) {
       return res.status(401).json({ message: 'Unauthorized' })
     }
 
-    req.userId = Number(userId)
+    req.userId = userId
     return next()
   } catch {
     return res.status(401).json({ message: 'Unauthorized' })

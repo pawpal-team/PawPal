@@ -1,8 +1,10 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
+import jwt from 'jsonwebtoken'
 
 import { authenticateToken } from '../src/middleware/auth.middleware.js'
-import { signJwt } from '../src/utils/jwt.js'
+
+const JWT_SECRET = 'middleware-test-secret'
 
 function createResponse() {
   return {
@@ -48,7 +50,8 @@ test('rejects invalid JWT tokens', () => {
 })
 
 test('stores user id and continues when JWT token is valid', () => {
-  const token = signJwt({ userId: 42 }, process.env.JWT_SECRET || 'test-secret')
+  process.env.JWT_SECRET = JWT_SECRET
+  const token = jwt.sign({ sub: 42 }, JWT_SECRET)
   const req = { headers: { authorization: `Bearer ${token}` } }
   const res = createResponse()
   let nextCalled = false
@@ -60,4 +63,36 @@ test('stores user id and continues when JWT token is valid', () => {
   assert.equal(req.userId, 42)
   assert.equal(res.statusCode, 200)
   assert.equal(nextCalled, true)
+})
+
+test('rejects a valid JWT without a positive integer sub claim', () => {
+  process.env.JWT_SECRET = JWT_SECRET
+  const token = jwt.sign({ sub: 'not-a-user-id' }, JWT_SECRET)
+  const req = { headers: { authorization: `Bearer ${token}` } }
+  const res = createResponse()
+  let nextCalled = false
+
+  authenticateToken(req, res, () => {
+    nextCalled = true
+  })
+
+  assert.equal(res.statusCode, 401)
+  assert.deepEqual(res.body, { message: 'Unauthorized' })
+  assert.equal(nextCalled, false)
+})
+
+test('rejects tokens when JWT_SECRET is not configured', () => {
+  delete process.env.JWT_SECRET
+  const token = jwt.sign({ sub: 42 }, 'test-secret')
+  const req = { headers: { authorization: `Bearer ${token}` } }
+  const res = createResponse()
+  let nextCalled = false
+
+  authenticateToken(req, res, () => {
+    nextCalled = true
+  })
+
+  assert.equal(res.statusCode, 401)
+  assert.deepEqual(res.body, { message: 'Unauthorized' })
+  assert.equal(nextCalled, false)
 })
