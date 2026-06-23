@@ -45,6 +45,28 @@ DB_PASSWORD=your_password
 
 ---
 
+## 建立資料庫
+
+進入 backend 資料夾：
+
+```bash
+cd backend
+```
+
+確認 PostgreSQL 已啟動且 .env 設定正確後，執行：
+
+```bash
+npm run db:setup
+```
+
+此指令會自動依照外鍵依賴順序執行所有 `schema` 與 `seed` 檔案，取代過去手動在 pgAdmin 逐一執行 SQL 的方式。
+
+若增加新資料表，只要在 `setup-db.js` 的 `TABLES_IN_ORDER` 陣列加上表名即可，不用調整其他邏輯。
+
+注意：每次執行都會清除現有資料並重建，請勿在正式環境使用。
+
+---
+
 ## 啟動後端
 
 ```bash
