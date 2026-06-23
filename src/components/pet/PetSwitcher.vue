@@ -8,7 +8,7 @@ const { setSelectedPet } = petStore
 </script>
 
 <template>
-  <div class="flex gap-0.5 overflow-x-auto px-1 py-2 md:gap-1 lg:gap-2">
+  <div class="flex gap-0.5 overflow-x-auto px-1 py-2 md:gap-1 lg:gap-2 mb-4">
     <button
       v-for="pet in pets"
       :key="pet.id"
@@ -24,10 +24,15 @@ const { setSelectedPet } = petStore
             : 'border-white'
         "
       >
-        <img v-if="pet.photoUrl" :src="pet.photoUrl" :alt="pet.name" class="h-full w-full object-cover" />
+        <img
+          v-if="pet.photoUrl"
+          :src="pet.photoUrl"
+          :alt="pet.name"
+          class="h-full w-full object-cover"
+        />
       </div>
       <span
-        class="text-xs md:text-sm lg:text-base"
+        class="text-sm md:text-base lg:text-lg"
         :class="selectedPetId === pet.id ? 'text-brand-orange' : 'text-brand-gray'"
       >
         {{ pet.name }}
@@ -43,7 +48,7 @@ const { setSelectedPet } = petStore
       >
         <span class="text-xl leading-none">+</span>
       </div>
-      <span class="text-xs text-brand-gray md:text-sm lg:text-base">新增寵物</span>
+      <span class="text-sm text-brand-gray md:text-base lg:text-lg">新增寵物</span>
     </button>
   </div>
 </template>

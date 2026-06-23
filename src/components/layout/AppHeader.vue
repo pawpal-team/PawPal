@@ -42,29 +42,29 @@ const navGroups = [
   <header class="fixed inset-x-0 top-0 z-50 bg-white shadow-sm">
     <!-- 手機版與平板版 -->
     <div class="lg:hidden">
-      <div class="mx-auto flex h-[55px] items-center justify-between px-6 md:px-4">
+      <div class="mx-auto flex h-[55px] items-center justify-between px-4">
         <router-link to="/" class="items-center">
           <img src="@/assets/images/PawPal_logo.PNG" alt="logo" class="h-10 w-auto md:h-8" />
         </router-link>
 
         <button
           type="button"
-          class="flex h-10 w-10 items-center justify-center"
+          class="flex h-10 w-10 items-center justify-end"
           @click="sidebarStore.toggleSidebar()"
         >
-          <img src="@/assets/icons/header-bars.svg" alt="menu" class="h-5 w-5 object-contain" />
+          <img src="@/assets/icons/header-bars.svg" alt="menu" class="h-8 w-8 object-contain" />
         </button>
       </div>
     </div>
 
     <!-- 電腦版 -->
-    <div class="mx-auto hidden h-17 max-w-7xl items-center px-4 lg:flex lg:justify-between">
-      <router-link to="/" class="flex items-center">
+    <div class="mx-auto hidden h-17 items-center px-4 lg:flex lg:justify-between">
+      <router-link to="/" class="flex items-center pl-4">
         <img src="@/assets/images/PawPal_logo.PNG" alt="logo" class="h-12 w-auto" />
       </router-link>
 
       <div class="flex items-center gap-5 lg:contents">
-        <nav class="flex items-center gap-5 text-brand-gray">
+        <nav class="flex items-center gap-5 lg:gap-16 text-brand-gray">
           <a href="#" class="transition hover:text-[#FFA002]">關於我們</a>
 
           <div v-for="group in navGroups" :key="group.id" class="group relative">
