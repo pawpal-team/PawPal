@@ -5,6 +5,7 @@ import AppFooter from '@/components/layout/AppFooter.vue'
 import PetSwitcher from '@/components/pet/PetSwitcher.vue'
 import GrowthRangeTabs from '@/components/growth/GrowthRangeTabs.vue'
 import AddGrowthButton from '@/components/growth/AddGrowthButton.vue'
+import GrowthChartCard from '@/components/growth/GrowthChartCard.vue'
 </script>
 
 <template>
@@ -28,7 +29,7 @@ import AddGrowthButton from '@/components/growth/AddGrowthButton.vue'
               <GrowthRangeTabs />
             </div>
             <div class="py-3 md:py-6">
-              <!-- GrowthChartCard will be added once merged -->
+              <GrowthChartCard />
             </div>
           </div>
         </section>
