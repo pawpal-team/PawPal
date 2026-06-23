@@ -3,42 +3,13 @@ import jwt from 'jsonwebtoken'
 import { createUser, findUserByEmail } from '../services/auth.service.js'
 
 const SALT_ROUNDS = 10
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const JWT_SECRET = process.env.JWT_SECRET
 
 export async function register(req, res) {
   const { name, email, password } = req.body
 
-  if (name == null || email == null || password == null) {
-    return res.status(400).json({
-      message: 'name, email, password are required',
-    })
-  }
-
-  if (typeof name !== 'string' || typeof email !== 'string' || typeof password !== 'string') {
-    return res.status(400).json({
-      message: 'name, email, password must be strings',
-    })
-  }
-
-  const trimmedName = name.trim()
-  const normalizedEmail = email.trim().toLowerCase()
-  const trimmedPassword = password.trim()
-
-  if (!trimmedName || !normalizedEmail || !trimmedPassword) {
-    return res.status(400).json({
-      message: 'name, email, password are required',
-    })
-  }
-
-  if (!emailRegex.test(normalizedEmail)) {
-    return res.status(400).json({
-      message: 'invalid email format',
-    })
-  }
-
   try {
-    const existingUser = await findUserByEmail(normalizedEmail)
+    const existingUser = await findUserByEmail(email)
 
     if (existingUser) {
       return res.status(409).json({
@@ -46,10 +17,10 @@ export async function register(req, res) {
       })
     }
 
-    const hashedPassword = await bcrypt.hash(trimmedPassword, SALT_ROUNDS)
+    const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS)
     const user = await createUser({
-      name: trimmedName,
-      email: normalizedEmail,
+      name,
+      email,
       password: hashedPassword,
     })
 
@@ -69,29 +40,8 @@ export async function register(req, res) {
 export async function login(req, res) {
   const { email, password } = req.body
 
-  if (email == null || password == null) {
-    return res.status(400).json({
-      message: 'email, password are required',
-    })
-  }
-
-  if (typeof email !== 'string' || typeof password !== 'string') {
-    return res.status(400).json({
-      message: 'email, password must be strings',
-    })
-  }
-
-  const normalizedEmail = email.trim().toLowerCase()
-  const trimmedPassword = password.trim()
-
-  if (!normalizedEmail || !trimmedPassword) {
-    return res.status(400).json({
-      message: 'email, password are required',
-    })
-  }
-
   try {
-    const user = await findUserByEmail(normalizedEmail)
+    const user = await findUserByEmail(email)
 
     if (!user) {
       return res.status(401).json({
@@ -99,7 +49,7 @@ export async function login(req, res) {
       })
     }
 
-    const isPasswordValid = await bcrypt.compare(trimmedPassword, user.password)
+    const isPasswordValid = await bcrypt.compare(password, user.password)
 
     if (!isPasswordValid) {
       return res.status(401).json({
