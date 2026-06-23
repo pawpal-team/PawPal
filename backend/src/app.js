@@ -1,13 +1,9 @@
 import express from 'express'
 import cors from 'cors'
-import dotenv from 'dotenv'
 import userRoutes from './routes/user.routes.js'
 import authRoutes from './routes/auth.routes.js'
 
-dotenv.config({ quiet: true })
-
 const app = express()
-const PORT = process.env.PORT || 3000
 const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || 'http://localhost:5173'
 
 app.use(
@@ -39,6 +35,4 @@ app.use((error, req, res, next) => {
   })
 })
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
-})
+export default app
