@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import authRoutes from './routes/auth.routes.js'
+import petRoutes from './routes/pet.routes.js'
 
 const app = express()
 const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || 'http://localhost:5173'
@@ -12,6 +13,7 @@ app.use(
 )
 app.use(express.json())
 app.use('/api/auth', authRoutes)
+app.use('/api/pets', petRoutes)
 
 app.get('/', (req, res) => {
   res.json({
