@@ -19,7 +19,7 @@ import GrowthChartCard from '@/components/growth/GrowthChartCard.vue'
         <section class="mx-auto w-full">
           <PetSwitcher />
           <div class="mb-2 flex items-center justify-between gap-4 md:mb-6">
-            <h1 class="text-xl font-bold text-brand-navy md:text-2xl">生長紀錄</h1>
+            <h1 class="text-xl font-bold text-brand-navy md:text-2xl">成長歷程</h1>
             <AddGrowthButton />
           </div>
           <div
