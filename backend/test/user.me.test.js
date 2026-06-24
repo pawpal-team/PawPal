@@ -1,7 +1,13 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import { getCurrentUser } from '../src/controllers/user.controller.js'
+import * as userController from '../src/controllers/user.controller.js'
+
+function createTestController(findUserById) {
+  assert.equal(typeof userController.createGetCurrentUser, 'function')
+
+  return userController.createGetCurrentUser({ findUserById })
+}
 
 test('應回傳目前使用者資料，且不暴露密碼', async () => {
   const user = {
@@ -11,17 +17,11 @@ test('應回傳目前使用者資料，且不暴露密碼', async () => {
     avatar_url: null,
     created_at: new Date('2026-06-18T00:00:00Z'),
   }
-  const req = {
-    userId: 1,
-    services: {
-      userService: {
-        findUserById: async (id) => {
-          assert.equal(id, 1)
-          return user
-        },
-      },
-    },
-  }
+  const getCurrentUser = createTestController(async (id) => {
+    assert.equal(id, 1)
+    return user
+  })
+  const req = { userId: 1 }
   const res = {
     statusCode: null,
     body: null,
@@ -43,14 +43,8 @@ test('應回傳目前使用者資料，且不暴露密碼', async () => {
 })
 
 test('目前使用者不存在時應回傳 404', async () => {
-  const req = {
-    userId: 999,
-    services: {
-      userService: {
-        findUserById: async () => null,
-      },
-    },
-  }
+  const getCurrentUser = createTestController(async () => null)
+  const req = { userId: 999 }
   const res = {
     statusCode: 200,
     body: null,
@@ -73,16 +67,10 @@ test('目前使用者不存在時應回傳 404', async () => {
 test('取得目前使用者資料失敗時應回傳 500', async (t) => {
   t.mock.method(console, 'error', () => {})
 
-  const req = {
-    userId: 1,
-    services: {
-      userService: {
-        findUserById: async () => {
-          throw new Error('Database unavailable')
-        },
-      },
-    },
-  }
+  const getCurrentUser = createTestController(async () => {
+    throw new Error('Database unavailable')
+  })
+  const req = { userId: 1 }
   const res = {
     statusCode: null,
     body: null,
