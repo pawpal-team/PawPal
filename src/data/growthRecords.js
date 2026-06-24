@@ -1,6 +1,6 @@
 export const growthRecords = [
   {
-    id: 'weight',
+    metric_type: 'weight',
     metric: '體重趨勢',
     currentValue: 5.2,
     unit: 'kg',
@@ -14,7 +14,7 @@ export const growthRecords = [
     ],
   },
   {
-    id: 'food_intake',
+    metric_type: 'food_intake',
     metric: '每日進食量',
     currentValue: 125,
     unit: 'g',
@@ -29,7 +29,7 @@ export const growthRecords = [
     ],
   },
   {
-    id: 'water_frequency',
+    metric_type: 'water_frequency',
     metric: '飲水次數',
     currentValue: 4,
     unit: '次',
@@ -44,7 +44,7 @@ export const growthRecords = [
     ],
   },
   {
-    id: 'urination',
+    metric_type: 'urination',
     metric: '排尿次數',
     currentValue: 3,
     unit: '次',
@@ -59,7 +59,7 @@ export const growthRecords = [
     ],
   },
   {
-    id: 'defecation',
+    metric_type: 'defecation',
     metric: '排便次數',
     currentValue: 1,
     unit: '次',
