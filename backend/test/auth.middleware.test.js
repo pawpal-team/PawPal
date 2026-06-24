@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import { test } from 'node:test'
 import jwt from 'jsonwebtoken'
 
-import { authenticateToken } from '../src/middleware/auth.middleware.js'
+import { authenticateToken } from '../src/middlewares/auth.middleware.js'
 
 const JWT_SECRET = 'middleware-test-secret'
 
