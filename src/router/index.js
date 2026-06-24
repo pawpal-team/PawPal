@@ -6,6 +6,7 @@ import ForgotPassword from '@/views/ForgotPasswordView.vue'
 import Home from '@/views/HomeView.vue'
 import Medical from '@/views/MedicalView.vue'
 import Dashboard from '@/views/DashboardView.vue'
+import Growth from '@/views/GrowthView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -42,6 +43,14 @@ const router = createRouter({
       path: '/dashboard',
       name: 'Dashboard',
       component: Dashboard,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/growth',
+      name: 'Growth',
+      component: Growth,
       meta: {
         requiresAuth: true,
       },
