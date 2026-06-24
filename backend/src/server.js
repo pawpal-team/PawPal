@@ -2,8 +2,8 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-// DB_PASSWORD 不列為必填，因為 macOS 本機 PostgreSQL 開發環境常見無密碼設定。
-const requiredEnvVars = ['DB_HOST', 'DB_PORT', 'DB_NAME', 'DB_USER', 'JWT_SECRET']
+// Supabase PostgreSQL 為遠端連線，需提供完整資料庫憑證。
+const requiredEnvVars = ['DB_HOST', 'DB_PORT', 'DB_NAME', 'DB_USER', 'DB_PASSWORD', 'JWT_SECRET']
 
 const missingEnvVars = requiredEnvVars.filter((envVar) => {
   const value = process.env[envVar]
