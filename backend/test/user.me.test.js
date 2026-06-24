@@ -3,7 +3,7 @@ import { test } from 'node:test'
 
 import { getCurrentUser } from '../src/controllers/user.controller.js'
 
-test('returns the current user without exposing password', async () => {
+test('應回傳目前使用者資料，且不暴露密碼', async () => {
   const user = {
     id: 1,
     email: 'alice@example.com',
@@ -42,7 +42,7 @@ test('returns the current user without exposing password', async () => {
   assert.equal(Object.hasOwn(res.body.user, 'password'), false)
 })
 
-test('returns 404 when the current user does not exist', async () => {
+test('目前使用者不存在時應回傳 404', async () => {
   const req = {
     userId: 999,
     services: {
@@ -70,7 +70,7 @@ test('returns 404 when the current user does not exist', async () => {
   assert.deepEqual(res.body, { message: 'User not found' })
 })
 
-test('returns 500 when fetching the current user fails', async (t) => {
+test('取得目前使用者資料失敗時應回傳 500', async (t) => {
   t.mock.method(console, 'error', () => {})
 
   const req = {

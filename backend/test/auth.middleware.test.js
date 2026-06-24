@@ -21,7 +21,7 @@ function createResponse() {
   }
 }
 
-test('rejects requests without an Authorization token', () => {
+test('缺少 Authorization token 時應拒絕請求', () => {
   const req = { headers: {} }
   const res = createResponse()
   let nextCalled = false
@@ -35,7 +35,7 @@ test('rejects requests without an Authorization token', () => {
   assert.equal(nextCalled, false)
 })
 
-test('rejects invalid JWT tokens', () => {
+test('JWT token 無效時應拒絕請求', () => {
   const req = { headers: { authorization: 'Bearer invalid-token' } }
   const res = createResponse()
   let nextCalled = false
@@ -49,7 +49,7 @@ test('rejects invalid JWT tokens', () => {
   assert.equal(nextCalled, false)
 })
 
-test('stores user id and continues when JWT token is valid', () => {
+test('JWT token 有效時應儲存使用者 ID 並繼續處理請求', () => {
   process.env.JWT_SECRET = JWT_SECRET
   const token = jwt.sign({ sub: 42 }, JWT_SECRET)
   const req = { headers: { authorization: `Bearer ${token}` } }
@@ -65,7 +65,7 @@ test('stores user id and continues when JWT token is valid', () => {
   assert.equal(nextCalled, true)
 })
 
-test('rejects a valid JWT without a positive integer sub claim', () => {
+test('JWT 的 sub 欄位不是正整數時應拒絕請求', () => {
   process.env.JWT_SECRET = JWT_SECRET
   const token = jwt.sign({ sub: 'not-a-user-id' }, JWT_SECRET)
   const req = { headers: { authorization: `Bearer ${token}` } }
@@ -81,7 +81,7 @@ test('rejects a valid JWT without a positive integer sub claim', () => {
   assert.equal(nextCalled, false)
 })
 
-test('rejects tokens when JWT_SECRET is not configured', () => {
+test('未設定 JWT_SECRET 時應拒絕 token', () => {
   delete process.env.JWT_SECRET
   const token = jwt.sign({ sub: 42 }, 'test-secret')
   const req = { headers: { authorization: `Bearer ${token}` } }

@@ -3,7 +3,7 @@ import { test } from 'node:test'
 
 import userRoutes from '../src/routes/user.routes.js'
 
-test('registers GET /me route for current user API', () => {
+test('應註冊取得目前使用者資料的 GET /me 路由', () => {
   const route = userRoutes.stack.find((layer) => layer.route?.path === '/me')
 
   assert.ok(route)
