@@ -1,17 +1,12 @@
 import jwt from 'jsonwebtoken'
 
 function getBearerToken(authorizationHeader) {
-  if (!authorizationHeader) {
+  if (typeof authorizationHeader !== 'string') {
     return null
   }
 
-  const [scheme, token] = authorizationHeader.split(' ')
-
-  if (scheme !== 'Bearer' || !token) {
-    return null
-  }
-
-  return token
+  const match = authorizationHeader.match(/^Bearer\s+(\S+)$/i)
+  return match?.[1] ?? null
 }
 
 export function authenticateToken(req, res, next) {

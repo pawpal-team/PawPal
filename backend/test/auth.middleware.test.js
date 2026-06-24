@@ -65,6 +65,22 @@ test('JWT token 有效時應儲存使用者 ID 並繼續處理請求', () => {
   assert.equal(nextCalled, true)
 })
 
+test('Bearer 大小寫不同且包含多個空白時仍應通過驗證', () => {
+  process.env.JWT_SECRET = JWT_SECRET
+  const token = jwt.sign({ sub: 42 }, JWT_SECRET)
+  const req = { headers: { authorization: `bearer   ${token}` } }
+  const res = createResponse()
+  let nextCalled = false
+
+  authenticateToken(req, res, () => {
+    nextCalled = true
+  })
+
+  assert.equal(req.userId, 42)
+  assert.equal(res.statusCode, 200)
+  assert.equal(nextCalled, true)
+})
+
 test('JWT 的 sub 欄位不是正整數時應拒絕請求', () => {
   process.env.JWT_SECRET = JWT_SECRET
   const token = jwt.sign({ sub: 'not-a-user-id' }, JWT_SECRET)
