@@ -17,7 +17,6 @@ function handleSubmit() {
       @submit.prevent="handleSubmit"
     >
       <header class="mb-7 flex flex-col items-center text-center">
-        <img src="@/assets/images/PawPal_logo.PNG" alt="PawPal" class="mb-5 h-10 w-auto" />
         <h1 class="text-[22px] font-bold leading-tight text-brand-navy">歡迎回來</h1>
         <p class="mt-2 text-[13px] font-normal leading-relaxed text-brand-gray">
           登入以查看寵物健康提醒與行事曆
