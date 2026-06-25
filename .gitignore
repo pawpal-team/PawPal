@@ -42,3 +42,6 @@ __screenshots__/
 # Backend
 backend/node_modules
 backend/.env
+
+# Frontend env
+.env

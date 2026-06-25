@@ -15,6 +15,9 @@ const pool = new Pool({
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   database: process.env.DB_NAME,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 })
 
 const TABLES_IN_ORDER = ['users', 'pets', 'calendar_events', 'medical_records', 'growth_records']
@@ -36,9 +39,11 @@ async function setup() {
       await runSqlFile(filePath)
     }
 
-    for (const table of TABLES_IN_ORDER) {
-      const filePath = path.join(__dirname, '../database/seeds', `${table}.sql`)
-      await runSqlFile(filePath)
+    if (process.env.SEED_DB === 'true') {
+      for (const table of TABLES_IN_ORDER) {
+        const filePath = path.join(__dirname, '../database/seeds', `${table}.sql`)
+        await runSqlFile(filePath)
+      }
     }
   } catch (error) {
     console.error('Database setup failed:', error.message)
