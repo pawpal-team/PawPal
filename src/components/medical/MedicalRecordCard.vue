@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, defineEmits } from 'vue'
 
 const props = defineProps({
   record: {
@@ -8,12 +8,13 @@ const props = defineProps({
   },
 })
 
-const images = computed(() => props.record?.images ?? [])
+const emit = defineEmits(['edit-record', 'delete-record'])
+const images = computed(() => props.record?.image_url ?? [])
 </script>
 
 <template>
   <article
-    class="flex w-full flex-col gap-6 rounded-[28px] border border-black/5 bg-white p-6 shadow-[0_8px_28px_rgba(31,41,55,0.08)] md:flex-row md:items-center md:justify-between md:gap-8 md:px-10 md:py-9"
+    class="relative flex w-full flex-col gap-6 rounded-[28px] border border-black/5 bg-white p-6 pb-12 shadow-[0_8px_28px_rgba(31,41,55,0.08)] md:flex-row md:items-center md:justify-between md:gap-8 md:px-10 md:py-9 md:pb-9"
   >
     <div class="min-w-0 flex-1">
       <div class="space-y-4 md:space-y-6">
@@ -45,8 +46,10 @@ const images = computed(() => props.record?.images ?? [])
         </div>
       </div>
     </div>
-
-    <div v-if="images.length > 0" class="flex shrink-0 items-center gap-3 overflow-x-auto md:gap-4">
+    <div
+      v-if="images.length > 0"
+      class="flex shrink-0 items-center gap-3 overflow-x-auto mb-6 md:mb-0 md:gap-4"
+    >
       <div
         v-for="(image, index) in images"
         :key="`${props.record?.id ?? 'record'}-${index}`"
@@ -58,6 +61,24 @@ const images = computed(() => props.record?.images ?? [])
           class="h-full w-full object-cover"
         />
       </div>
+    </div>
+    <div class="absolute right-4 bottom-4 flex items-center gap-2 md:hidden z-20">
+      <button
+        @click="emit('edit-record', props.record)"
+        type="button"
+        class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full transition active:bg-brand-blue/20 active:scale-98"
+        title="編輯"
+      >
+        <img class="w-5 h-5" src="@/assets/icons/edit_b.svg" alt="編輯" />
+      </button>
+      <button
+        @click="emit('delete-record', props.record?.id)"
+        type="button"
+        class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full transition active:bg-red-500/20 active:scale-98"
+        title="刪除"
+      >
+        <img class="w-5 h-5" src="@/assets/icons/delete_r.svg" alt="刪除" />
+      </button>
     </div>
   </article>
 </template>

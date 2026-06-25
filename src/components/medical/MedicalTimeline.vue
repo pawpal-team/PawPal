@@ -1,6 +1,8 @@
 <script setup>
 import MedicalRecordCard from '@/components/medical/MedicalRecordCard.vue'
 import { medicalRecords } from '@/data/medicalRecords.js'
+
+const emit = defineEmits(['edit-record', 'delete-record'])
 </script>
 
 <template>
@@ -37,15 +39,35 @@ import { medicalRecords } from '@/data/medicalRecords.js'
             </div>
           </div>
           <div class="pl-7 md:pl-0 w-full min-w-0">
-            <div class="hidden md:flex items-center gap-2 mb-3 text-base text-brand-navy">
-              <span
-                class="px-2 py-0.5 text-xs bg-brand-blue text-brand-white rounded font-bold whitespace-nowrap"
-              >
-                {{ record.type }}
-              </span>
-              <span class="font-bold">{{ record.hospitalName }}</span>
-              <span class="opacity-40 text-brand-navy">|</span>
-              <span class="text-brand-navy font-medium">{{ record.title }}</span>
+            <div
+              class="hidden md:flex items-center justify-between gap-2 mb-3 text-base text-brand-navy w-full"
+            >
+              <div class="flex items-center gap-2">
+                <span
+                  class="px-2 py-0.5 text-xs bg-brand-blue text-brand-white rounded font-bold whitespace-nowrap"
+                >
+                  {{ record.type }}
+                </span>
+                <span class="font-bold">{{ record.hospitalName }}</span>
+                <span class="opacity-40 text-brand-navy">|</span>
+                <span class="text-brand-navy font-medium">{{ record.title }}</span>
+              </div>
+              <div class="flex items-center gap-1 pr-2 shrink-0">
+                <button
+                  @click="emit('edit-record', record)"
+                  type="button"
+                  class="flex h-7 w-9 cursor-pointer items-center justify-center gap-1 rounded-full transition hover:bg-brand-blue/15 hover:scale-103 active:scale-95"
+                >
+                  <img class="w-5 h-5" src="@/assets/icons/edit_b.svg" alt="編輯" />
+                </button>
+                <button
+                  @click="emit('delete-record', record.id)"
+                  type="button"
+                  class="flex h-7 w-9 cursor-pointer items-center justify-center gap-1 rounded-full transition hover:bg-red-500/15 hover:scale-103 active:scale-95"
+                >
+                  <img class="w-5 h-5" src="@/assets/icons/delete_r.svg" alt="編輯" />
+                </button>
+              </div>
             </div>
             <MedicalRecordCard :record="record" />
           </div>
