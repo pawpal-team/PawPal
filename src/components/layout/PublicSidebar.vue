@@ -123,14 +123,15 @@ const authStore = useAuthStore()
               <div
                 class="flex items-center justify-center gap-20 border-t border-brand-lightblue pt-[50px]"
               >
-                <a
-                  href="#"
+                <router-link
+                  to="/register"
+                  @click="sidebarStore.closeSidebar()"
                   class="cursor-pointer flex items-center gap-1.5 text-base font-medium text-brand-gray active:text-brand-orange"
                 >
                   <img src="@/assets/icons/register.svg" alt="Register Icon" class="h-4 w-4" />
 
                   註冊
-                </a>
+                </router-link>
 
                 <router-link
                   to="/login"
