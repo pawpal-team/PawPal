@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.js'
+import { useSidebarStore } from '@/stores/sidebar.js'
 import Login from '@/views/LoginView.vue'
 import Register from '@/views/RegisterView.vue'
 import ForgotPassword from '@/views/ForgotPasswordView.vue'
@@ -68,6 +69,11 @@ router.beforeEach((to) => {
   if (to.path === '/login' && authStore.isLoggedIn) {
     return '/dashboard'
   }
+})
+
+router.afterEach(() => {
+  const sidebarStore = useSidebarStore()
+  sidebarStore.closeSidebar()
 })
 
 export default router
