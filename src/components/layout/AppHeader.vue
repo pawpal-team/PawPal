@@ -125,7 +125,7 @@ const navGroups = [
   <!-- Sidebar Overlay -->
   <div
     v-if="sidebarStore.isOpen && !isMemberVariant"
-    class="fixed inset-0 z-40 bg-black/50 lg:hidden"
+    class="fixed inset-0 z-[60] bg-black/50 lg:hidden"
     @click="sidebarStore.closeSidebar()"
   />
 
@@ -133,7 +133,7 @@ const navGroups = [
   <transition name="slide">
     <div
       v-if="sidebarStore.isOpen && !isMemberVariant"
-      class="fixed inset-y-0 right-0 z-50 overflow-y-auto bg-white lg:hidden"
+      class="fixed inset-y-0 right-0 z-[70] overflow-y-auto bg-white lg:hidden"
     >
       <PublicSidebar />
     </div>
