@@ -7,7 +7,7 @@ import {
 
 const VALID_TYPES = ['vet', 'vaccine', 'grooming', 'medication', 'bath', 'training', 'other']
 
-export async function getEvents(req, res) {
+export async function getCalendarEvents(req, res) {
   const userId = req.userId
   try {
     const events = await getEventsByUserId(userId)
@@ -87,6 +87,6 @@ export async function deleteCalendarEvent(req, res) {
     return res.status(204).send()
   } catch (error) {
     console.error(error)
-    return res.status(500).json({ message: '刪除行事曆事件失敗' })
+    return res.status(500).json({ message: '刪除行事曆行程失敗' })
   }
 }
