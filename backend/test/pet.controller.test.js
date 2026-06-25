@@ -1,13 +1,26 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import {
-  createPet,
-  deletePet,
-  getPet,
-  listPets,
-  updatePet,
-} from '../src/controllers/pet.controller.js'
+import { createPetController } from '../src/controllers/pet.controller.js'
+
+test('exports a pet controller factory for dependency injection', () => {
+  assert.equal(typeof createPetController, 'function')
+})
+
+function createTestController(overrides = {}) {
+  const notImplemented = async () => {
+    throw new Error('service method should not be called')
+  }
+
+  return createPetController({
+    findPetsByUserId: notImplemented,
+    findPetByIdAndUserId: notImplemented,
+    createPetForUser: notImplemented,
+    updatePetByIdAndUserId: notImplemented,
+    deletePetByIdAndUserId: notImplemented,
+    ...overrides,
+  })
+}
 
 function createResponse() {
   return {
@@ -32,17 +45,13 @@ function createResponse() {
 
 test('lists pets for the authenticated user', async () => {
   const pets = [{ id: 1, user_id: 42, name: 'Momo', species: 'Dog' }]
-  const req = {
-    userId: 42,
-    services: {
-      petService: {
-        findPetsByUserId: async (userId) => {
-          assert.equal(userId, 42)
-          return pets
-        },
-      },
+  const { listPets } = createTestController({
+    findPetsByUserId: async (userId) => {
+      assert.equal(userId, 42)
+      return pets
     },
-  }
+  })
+  const req = { userId: 42 }
   const res = createResponse()
 
   await listPets(req, res)
@@ -53,18 +62,16 @@ test('lists pets for the authenticated user', async () => {
 
 test('gets one pet by id for the authenticated user', async () => {
   const pet = { id: 2, user_id: 42, name: 'Luna', species: 'Cat' }
+  const { getPet } = createTestController({
+    findPetByIdAndUserId: async (id, userId) => {
+      assert.equal(id, 2)
+      assert.equal(userId, 42)
+      return pet
+    },
+  })
   const req = {
     userId: 42,
     params: { id: '2' },
-    services: {
-      petService: {
-        findPetByIdAndUserId: async (id, userId) => {
-          assert.equal(id, 2)
-          assert.equal(userId, 42)
-          return pet
-        },
-      },
-    },
   }
   const res = createResponse()
 
@@ -75,14 +82,12 @@ test('gets one pet by id for the authenticated user', async () => {
 })
 
 test('returns 404 when the pet does not belong to the authenticated user', async () => {
+  const { getPet } = createTestController({
+    findPetByIdAndUserId: async () => null,
+  })
   const req = {
     userId: 42,
     params: { id: '99' },
-    services: {
-      petService: {
-        findPetByIdAndUserId: async () => null,
-      },
-    },
   }
   const res = createResponse()
 
@@ -94,6 +99,18 @@ test('returns 404 when the pet does not belong to the authenticated user', async
 
 test('creates a pet for the authenticated user', async () => {
   const createdPet = { id: 3, user_id: 42, name: 'Oreo', species: 'Dog' }
+  const { createPet } = createTestController({
+    createPetForUser: async (userId, petData) => {
+      assert.equal(userId, 42)
+      assert.deepEqual(petData, {
+        name: 'Oreo',
+        species: 'Dog',
+        breed: 'Border Collie',
+        neutered: false,
+      })
+      return createdPet
+    },
+  })
   const req = {
     userId: 42,
     body: {
@@ -101,20 +118,6 @@ test('creates a pet for the authenticated user', async () => {
       species: ' Dog ',
       breed: 'Border Collie',
       neutered: false,
-    },
-    services: {
-      petService: {
-        createPetForUser: async (userId, petData) => {
-          assert.equal(userId, 42)
-          assert.deepEqual(petData, {
-            name: 'Oreo',
-            species: 'Dog',
-            breed: 'Border Collie',
-            neutered: false,
-          })
-          return createdPet
-        },
-      },
     },
   }
   const res = createResponse()
@@ -126,16 +129,10 @@ test('creates a pet for the authenticated user', async () => {
 })
 
 test('rejects creating a pet without required fields', async () => {
+  const { createPet } = createTestController()
   const req = {
     userId: 42,
     body: { name: 'Momo' },
-    services: {
-      petService: {
-        createPetForUser: async () => {
-          throw new Error('service should not be called')
-        },
-      },
-    },
   }
   const res = createResponse()
 
@@ -147,20 +144,18 @@ test('rejects creating a pet without required fields', async () => {
 
 test('updates a pet owned by the authenticated user', async () => {
   const updatedPet = { id: 4, user_id: 42, name: 'Nana', species: 'Rabbit', weight: '1.90' }
+  const { updatePet } = createTestController({
+    updatePetByIdAndUserId: async (id, userId, petData) => {
+      assert.equal(id, 4)
+      assert.equal(userId, 42)
+      assert.deepEqual(petData, { weight: 1.9 })
+      return updatedPet
+    },
+  })
   const req = {
     userId: 42,
     params: { id: '4' },
     body: { weight: 1.9 },
-    services: {
-      petService: {
-        updatePetByIdAndUserId: async (id, userId, petData) => {
-          assert.equal(id, 4)
-          assert.equal(userId, 42)
-          assert.deepEqual(petData, { weight: 1.9 })
-          return updatedPet
-        },
-      },
-    },
   }
   const res = createResponse()
 
@@ -171,18 +166,16 @@ test('updates a pet owned by the authenticated user', async () => {
 })
 
 test('deletes a pet owned by the authenticated user', async () => {
+  const { deletePet } = createTestController({
+    deletePetByIdAndUserId: async (id, userId) => {
+      assert.equal(id, 5)
+      assert.equal(userId, 42)
+      return true
+    },
+  })
   const req = {
     userId: 42,
     params: { id: '5' },
-    services: {
-      petService: {
-        deletePetByIdAndUserId: async (id, userId) => {
-          assert.equal(id, 5)
-          assert.equal(userId, 42)
-          return true
-        },
-      },
-    },
   }
   const res = createResponse()
 
