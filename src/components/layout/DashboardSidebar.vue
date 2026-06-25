@@ -147,10 +147,11 @@ const navItems = [
             </li>
 
             <li>
-              <a
-                href="#"
+              <RouterLink
+                to="/dashboard"
+                @click="sidebarStore.closeSidebar()"
                 class="cursor-pointer px-3 text-sm font-medium text-brand-gray active:text-brand-orange"
-                >首頁</a
+                >首頁</RouterLink
               >
             </li>
 
