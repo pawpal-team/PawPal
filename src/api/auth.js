@@ -1,35 +1,25 @@
+import axios from 'axios'
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 
 async function request(path, payload) {
   try {
-    const response = await fetch(`${API_BASE_URL}${path}`, {
-      method: 'POST',
+    const response = await axios.post(`${API_BASE_URL}${path}`, payload, {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(payload),
     })
-
-    const data = await response.json().catch(() => ({}))
-
-    if (!response.ok) {
-      return {
-        success: false,
-        message: data.message || 'Request failed',
-        data,
-      }
-    }
 
     return {
       success: true,
-      message: data.message || 'Request successful',
-      data,
+      message: response.data?.message || 'Request successful',
+      data: response.data,
     }
-  } catch {
+  } catch (error) {
     return {
       success: false,
-      message: 'Unable to connect to server',
-      data: null,
+      message: error.response?.data?.message || 'Unable to connect to server',
+      data: error.response?.data || null,
     }
   }
 }
