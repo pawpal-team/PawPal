@@ -1,19 +1,5 @@
 import { pool } from '../config/db.js'
 
-export async function getEventsByPetId(petId) {
-  const result = await pool.query(
-    `
-      SELECT *
-      FROM calendar_events
-      WHERE pet_id = $1
-      ORDER BY event_date, event_time
-    `,
-    [petId],
-  )
-
-  return result.rows
-}
-
 export async function getEventsByUserId(userId) {
   const result = await pool.query(
     `
@@ -42,7 +28,7 @@ export async function createEvent({ petId, title, eventDate, eventTime, type, lo
   return result.rows[0]
 }
 
-export async function updateEvent(id, fields) {
+export async function updateEvent(id, fields, userId) {
   const allowed = ['title', 'event_date', 'event_time', 'type', 'location', 'notes', 'is_completed']
 
   const setClauses = []
@@ -57,14 +43,20 @@ export async function updateEvent(id, fields) {
 
   if (setClauses.length === 0) return null
 
+  const idIndex = values.length + 1
   values.push(id)
+  const userIdIndex = values.length + 1
+  values.push(userId)
 
   const result = await pool.query(
     `
-      UPDATE calendar_events
+      UPDATE calendar_events ce
       SET ${setClauses.join(', ')}
-      WHERE id = $${values.length}
-      RETURNING *
+      FROM pets p
+      WHERE ce.id = $${idIndex}
+        AND ce.pet_id = p.id
+        AND p.owner_id = $${userIdIndex}
+      RETURNING ce.*
     `,
     values,
   )
@@ -72,14 +64,17 @@ export async function updateEvent(id, fields) {
   return result.rows[0] ?? null
 }
 
-export async function deleteEvent(id) {
+export async function deleteEvent(id, userId) {
   const result = await pool.query(
     `
-      DELETE FROM calendar_events
-      WHERE id = $1
-      RETURNING id
+      DELETE FROM calendar_events ce
+      USING pets p
+      WHERE ce.id = $1
+        AND ce.pet_id = p.id
+        AND p.owner_id = $2
+      RETURNING ce.id
     `,
-    [id],
+    [id, userId],
   )
 
   return result.rows[0] ?? null
