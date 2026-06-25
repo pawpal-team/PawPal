@@ -6,7 +6,7 @@ export async function getEventsByUserId(userId) {
       SELECT ce.*
       FROM calendar_events ce
       JOIN pets p ON ce.pet_id = p.id
-      WHERE p.owner_id = $1
+      WHERE p.user_id = $1
       ORDER BY ce.event_date, ce.event_time
     `,
     [userId],
@@ -55,7 +55,7 @@ export async function updateEvent(id, fields, userId) {
       FROM pets p
       WHERE ce.id = $${idIndex}
         AND ce.pet_id = p.id
-        AND p.owner_id = $${userIdIndex}
+        AND p.user_id = $${userIdIndex}
       RETURNING ce.*
     `,
     values,
@@ -71,7 +71,7 @@ export async function deleteEvent(id, userId) {
       USING pets p
       WHERE ce.id = $1
         AND ce.pet_id = p.id
-        AND p.owner_id = $2
+        AND p.user_id = $2
       RETURNING ce.id
     `,
     [id, userId],
