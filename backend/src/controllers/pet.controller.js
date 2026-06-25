@@ -21,12 +21,6 @@ const writableFields = [
   'avatar_url',
 ]
 
-function getCurrentUserId() {
-  // TODO(#85): Replace temporary userId with req.user.id after JWT middleware is mounted on pets routes.
-  const userId = 1
-  return userId
-}
-
 function getPetService(req) {
   return {
     findPetsByUserId: req.services?.petService?.findPetsByUserId || findPetsByUserId,
@@ -106,7 +100,7 @@ function normalizePetData(body, { requireCreateFields = false } = {}) {
 
 export async function listPets(req, res) {
   try {
-    const userId = getCurrentUserId()
+    const userId = req.userId
     const petService = getPetService(req)
     const pets = await petService.findPetsByUserId(userId)
 
@@ -126,7 +120,7 @@ export async function getPet(req, res) {
   }
 
   try {
-    const userId = getCurrentUserId()
+    const userId = req.userId
     const petService = getPetService(req)
     const pet = await petService.findPetByIdAndUserId(id, userId)
 
@@ -150,7 +144,7 @@ export async function createPet(req, res) {
   }
 
   try {
-    const userId = getCurrentUserId()
+    const userId = req.userId
     const petService = getPetService(req)
     const pet = await petService.createPetForUser(userId, normalized.petData)
 
@@ -176,7 +170,7 @@ export async function updatePet(req, res) {
   }
 
   try {
-    const userId = getCurrentUserId()
+    const userId = req.userId
     const petService = getPetService(req)
     const pet = await petService.updatePetByIdAndUserId(id, userId, normalized.petData)
 
@@ -200,7 +194,7 @@ export async function deletePet(req, res) {
   }
 
   try {
-    const userId = getCurrentUserId()
+    const userId = req.userId
     const petService = getPetService(req)
     const deleted = await petService.deletePetByIdAndUserId(id, userId)
 
