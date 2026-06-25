@@ -7,7 +7,8 @@
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
     "test": "node --test",
-    "db:setup": "node scripts/setup-db.js"
+    "db:setup": "node scripts/setup-db.js",
+    "db:setup:seed": "SEED_DB=true node scripts/setup-db.js"
   },
   "keywords": [],
   "author": "",
