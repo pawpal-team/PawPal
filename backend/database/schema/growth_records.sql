@@ -1,3 +1,5 @@
+DROP TYPE IF EXISTS metric_type_enum CASCADE;
+
 CREATE TYPE metric_type_enum AS ENUM (
   'weight',
   'length',
@@ -21,4 +23,4 @@ CREATE TABLE IF NOT EXISTS growth_records (
     REFERENCES pets(id) ON DELETE CASCADE
 );
 
-CREATE INDEX idx_growth_records_pet_id ON growth_records(pet_id);
+CREATE INDEX IF NOT EXISTS idx_growth_records_pet_id ON growth_records(pet_id);

@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { useRoute } from 'vue-router'
 import { useSidebarStore } from '@/stores/sidebar'
 import home from '@/assets/icons/home.svg'
 import home_o from '@/assets/icons/home_o.svg'
@@ -17,17 +17,21 @@ import setting from '@/assets/icons/setting.svg'
 import setting_o from '@/assets/icons/setting_o.svg'
 
 const sidebarStore = useSidebarStore()
-const activeItem = ref('home')
+const route = useRoute()
+
+function isActive(item) {
+  return route.path === item.to
+}
 
 function getIcon(item) {
-  return activeItem.value === item.key ? item.activeIcon : item.icon
+  return isActive(item) ? item.activeIcon : item.icon
 }
 
 const navItems = [
-  { key: 'home', icon: home, activeIcon: home_o, label: '首頁' },
+  { key: 'home', icon: home, activeIcon: home_o, label: '首頁', to: '/dashboard' },
   { key: 'map', icon: location, activeIcon: location_o, label: '醫院地圖' },
-  { key: 'records', icon: diagnostic, activeIcon: diagnostic_o, label: '病歷紀錄' },
-  { key: 'growth', icon: growth, activeIcon: growth_o, label: '成長歷程' },
+  { key: 'records', icon: diagnostic, activeIcon: diagnostic_o, label: '病歷紀錄', to: '/medical' },
+  { key: 'growth', icon: growth, activeIcon: growth_o, label: '成長歷程', to: '/growth' },
   { key: 'profile', icon: petIcon, activeIcon: petIcon_o, label: '基本資料' },
   { key: 'notifications', icon: notice, activeIcon: notice_o, label: '通知中心' },
   { key: 'setting', icon: setting, activeIcon: setting_o, label: '設定' },
@@ -159,18 +163,18 @@ const navItems = [
             </li>
 
             <li>
-              <a
-                href="#"
-                class="cursor-pointer px-3 text-sm font-medium text-brand-gray active:text-brand-orange"
-                >病歷紀錄</a
+              <router-link
+                to="/medical"
+                class="px-3 text-sm font-medium text-brand-gray active:text-brand-orange"
+                >病歷紀錄</router-link
               >
             </li>
 
             <li>
-              <a
-                href="#"
-                class="cursor-pointer px-3 text-sm font-medium text-brand-gray active:text-brand-orange"
-                >成長歷程</a
+              <router-link
+                to="/growth"
+                class="px-3 text-sm font-medium text-brand-gray active:text-brand-orange"
+                >成長歷程</router-link
               >
             </li>
 
@@ -227,19 +231,18 @@ const navItems = [
     <nav class="flex flex-1 flex-col py-6">
       <ul class="flex flex-col">
         <li v-for="item in navItems" :key="item.key">
-          <a
-            href="#"
+          <router-link
+            :to="item.to"
             class="flex items-center gap-3 px-5 py-3 text-base font-medium hover:bg-[#e6eaf4]"
             :class="
-              activeItem === item.key
+              isActive(item)
                 ? 'text-brand-orange border-l-4 border-brand-orange bg-[#e6eaf4]'
                 : 'text-brand-gray'
             "
-            @click.prevent="activeItem = item.key"
           >
             <img :src="getIcon(item)" :alt="item.label + ' icon'" class="h-5 w-5 shrink-0" />
             {{ item.label }}
-          </a>
+          </router-link>
         </li>
       </ul>
     </nav>
