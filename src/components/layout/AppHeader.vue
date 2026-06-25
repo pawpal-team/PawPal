@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import PublicSidebar from '@/components/layout/PublicSidebar.vue'
 import DashboardSidebar from '@/components/layout/DashboardSidebar.vue'
+import { useAuthStore } from '@/stores/auth'
 import { useSidebarStore } from '@/stores/sidebar'
 
 const props = defineProps({
@@ -13,6 +14,7 @@ const props = defineProps({
 })
 
 const sidebarStore = useSidebarStore()
+const authStore = useAuthStore()
 
 const isMemberVariant = computed(() => props.variant === 'member')
 
@@ -94,7 +96,12 @@ const navGroups = [
             </div>
           </div>
 
-          <a href="#" class="transition hover:text-brand-orange">會員專區</a>
+          <a
+            v-if="authStore.isLoggedIn"
+            href="#"
+            class="transition hover:text-brand-orange"
+            >會員專區</a
+          >
         </nav>
 
         <div class="flex items-center gap-2">
