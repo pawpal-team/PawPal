@@ -15,7 +15,16 @@ export async function getEventsByUserId(userId) {
   return result.rows
 }
 
-export async function createEvent({ petId, userId, title, eventDate, eventTime, type, location, notes }) {
+export async function createEvent({
+  petId,
+  userId,
+  title,
+  eventDate,
+  eventTime,
+  type,
+  location,
+  notes,
+}) {
   const result = await pool.query(
     `
       INSERT INTO calendar_events (pet_id, title, event_date, event_time, type, location, notes)
@@ -43,7 +52,7 @@ export async function updateEvent(id, fields, userId) {
     }
   }
 
-  if (setClauses.length === 0) return { noFields: true }
+  if (setClauses.length === 0) return null
 
   const idIndex = values.length + 1
   values.push(id)

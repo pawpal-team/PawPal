@@ -26,9 +26,18 @@ export function createCreateCalendarEvent({ createEvent }) {
     if (!userId) return res.status(401).json({ message: 'Unauthorized' })
     const { petId, title, eventDate, eventTime, type, location, notes } = req.body
     try {
-      const event = await createEvent({ petId, userId, title, eventDate, eventTime, type, location, notes })
+      const event = await createEvent({
+        petId,
+        userId,
+        title,
+        eventDate,
+        eventTime,
+        type,
+        location,
+        notes,
+      })
       if (!event) {
-        return res.status(403).json({ message: '無此寵物的操作權限' })
+        return res.status(404).json({ message: '無此寵物的操作權限' })
       }
       return res.status(201).json({ message: '行事曆行程新增成功', data: event })
     } catch (error) {
