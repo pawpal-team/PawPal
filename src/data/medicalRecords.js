@@ -10,7 +10,11 @@ export const medicalRecords = [
     symptoms: '腹部有紅疹，持續搔抓',
     diagnosis: '疑似過敏性皮膚炎',
     prescription: '抗生素、止癢藥',
-    images: [],
+    image_url: [
+      'https://images.pexels.com/photos/6202748/pexels-photo-6202748.jpeg',
+      'https://images.pexels.com/photos/5723882/pexels-photo-5723882.jpeg',
+      'https://images.pexels.com/photos/7580292/pexels-photo-7580292.jpeg',
+    ],
   },
   {
     id: 2,
@@ -23,7 +27,7 @@ export const medicalRecords = [
     symptoms: '',
     diagnosis: '健康狀況良好',
     prescription: '無',
-    images: [],
+    image_url: [],
   },
   {
     id: 3,
@@ -36,7 +40,7 @@ export const medicalRecords = [
     symptoms: '食慾下降，偶爾嘔吐',
     diagnosis: '輕微腸胃炎',
     prescription: '腸胃藥、益生菌',
-    images: [],
+    image_url: ['https://images.pexels.com/photos/7580292/pexels-photo-7580292.jpeg'],
   },
   {
     id: 4,
@@ -49,6 +53,6 @@ export const medicalRecords = [
     symptoms: '',
     diagnosis: '各項數值正常',
     prescription: '無',
-    images: [],
+    image_url: [],
   },
 ]

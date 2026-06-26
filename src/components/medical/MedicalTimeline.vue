@@ -69,7 +69,11 @@ const emit = defineEmits(['edit-record', 'delete-record'])
                 </button>
               </div>
             </div>
-            <MedicalRecordCard :record="record" />
+            <MedicalRecordCard
+              :record="record"
+              @edit-record="(rec) => emit('edit-record', rec)"
+              @delete-record="(id) => emit('delete-record', id)"
+            />
           </div>
         </div>
       </div>
