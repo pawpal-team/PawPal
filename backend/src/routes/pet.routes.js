@@ -8,7 +8,7 @@ const router = Router()
 router.get('/', authenticateToken, listPets)
 router.get('/:id', authenticateToken, getPet)
 router.post('/', authenticateToken, createPet)
-router.put('/:id', authenticateToken, updatePet)
+router.patch('/:id', authenticateToken, updatePet)
 router.delete('/:id', authenticateToken, deletePet)
 
 export default router

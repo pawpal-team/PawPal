@@ -18,7 +18,7 @@ test('protects every pets CRUD route with JWT authentication', () => {
       { path: '/', methods: ['get'] },
       { path: '/:id', methods: ['get'] },
       { path: '/', methods: ['post'] },
-      { path: '/:id', methods: ['put'] },
+      { path: '/:id', methods: ['patch'] },
       { path: '/:id', methods: ['delete'] },
     ],
   )
