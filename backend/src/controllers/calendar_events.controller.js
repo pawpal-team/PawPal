@@ -8,6 +8,7 @@ import {
 export function createGetCalendarEvents({ getEventsByUserId }) {
   return async function getCalendarEvents(req, res) {
     const userId = req.userId
+    if (!userId) return res.status(401).json({ message: 'Unauthorized' })
     try {
       const events = await getEventsByUserId(userId)
       return res.status(200).json({ data: events })
@@ -21,9 +22,14 @@ export const getCalendarEvents = createGetCalendarEvents({ getEventsByUserId })
 
 export function createCreateCalendarEvent({ createEvent }) {
   return async function createCalendarEvent(req, res) {
+    const userId = req.userId
+    if (!userId) return res.status(401).json({ message: 'Unauthorized' })
     const { petId, title, eventDate, eventTime, type, location, notes } = req.body
     try {
-      const event = await createEvent({ petId, title, eventDate, eventTime, type, location, notes })
+      const event = await createEvent({ petId, userId, title, eventDate, eventTime, type, location, notes })
+      if (!event) {
+        return res.status(403).json({ message: '無此寵物的操作權限' })
+      }
       return res.status(201).json({ message: '行事曆行程新增成功', data: event })
     } catch (error) {
       console.error(error)
@@ -47,6 +53,10 @@ export function createUpdateCalendarEvent({ updateEvent }) {
       ...(location !== undefined && { location }),
       ...(notes !== undefined && { notes }),
       ...(isCompleted !== undefined && { is_completed: isCompleted }),
+    }
+
+    if (Object.keys(fields).length === 0) {
+      return res.status(400).json({ message: '請提供至少一個要更新的欄位' })
     }
 
     try {

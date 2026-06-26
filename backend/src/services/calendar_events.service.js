@@ -15,17 +15,19 @@ export async function getEventsByUserId(userId) {
   return result.rows
 }
 
-export async function createEvent({ petId, title, eventDate, eventTime, type, location, notes }) {
+export async function createEvent({ petId, userId, title, eventDate, eventTime, type, location, notes }) {
   const result = await pool.query(
     `
       INSERT INTO calendar_events (pet_id, title, event_date, event_time, type, location, notes)
-      VALUES ($1, $2, $3, $4, $5, $6, $7)
+      SELECT $1, $2, $3, $4, $5, $6, $7
+      FROM pets
+      WHERE id = $1 AND user_id = $8
       RETURNING *
     `,
-    [petId, title, eventDate, eventTime ?? null, type, location ?? null, notes ?? null],
+    [petId, title, eventDate, eventTime ?? null, type, location ?? null, notes ?? null, userId],
   )
 
-  return result.rows[0]
+  return result.rows[0] ?? null
 }
 
 export async function updateEvent(id, fields, userId) {
@@ -41,7 +43,7 @@ export async function updateEvent(id, fields, userId) {
     }
   }
 
-  if (setClauses.length === 0) return null
+  if (setClauses.length === 0) return { noFields: true }
 
   const idIndex = values.length + 1
   values.push(id)

@@ -30,7 +30,7 @@ export const createCalendarEventSchema = z.object({
 })
 
 export const updateCalendarEventSchema = z.object({
-  title: z.string().optional(),
+  title: z.string().trim().min(1, { error: 'title 不得為空' }).optional(),
   eventDate: z
     .string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, { error: 'eventDate 格式必須為 YYYY-MM-DD' })
