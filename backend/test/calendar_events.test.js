@@ -52,7 +52,9 @@ test('取得行事曆行程：成功回傳 events 陣列', async () => {
 test('取得行事曆行程失敗時應回傳 500', async (t) => {
   t.mock.method(console, 'error', () => {})
   const getCalendarEvents = createGetCalendarEvents({
-    getEventsByUserId: async () => { throw new Error('DB error') },
+    getEventsByUserId: async () => {
+      throw new Error('DB error')
+    },
   })
 
   const req = { userId: 1 }
@@ -65,7 +67,13 @@ test('取得行事曆行程失敗時應回傳 500', async (t) => {
 
 // POST /
 test('新增行事曆行程：成功回傳 201 與新資料', async () => {
-  const newEvent = { id: 3, pet_id: 1, title: '施打疫苗', type: 'vaccine', event_date: '2026-07-10' }
+  const newEvent = {
+    id: 3,
+    pet_id: 1,
+    title: '施打疫苗',
+    type: 'vaccine',
+    event_date: '2026-07-10',
+  }
   const createCalendarEvent = createCreateCalendarEvent({
     createEvent: async (data) => {
       assert.equal(data.petId, 1)
@@ -74,7 +82,10 @@ test('新增行事曆行程：成功回傳 201 與新資料', async () => {
     },
   })
 
-  const req = { body: { petId: 1, title: '施打疫苗', eventDate: '2026-07-10', type: 'vaccine' } }
+  const req = {
+    userId: 1,
+    body: { petId: 1, title: '施打疫苗', eventDate: '2026-07-10', type: 'vaccine' },
+  }
   const res = createRes()
   await createCalendarEvent(req, res)
 
@@ -85,10 +96,15 @@ test('新增行事曆行程：成功回傳 201 與新資料', async () => {
 test('新增行事曆行程失敗時應回傳 500', async (t) => {
   t.mock.method(console, 'error', () => {})
   const createCalendarEvent = createCreateCalendarEvent({
-    createEvent: async () => { throw new Error('DB error') },
+    createEvent: async () => {
+      throw new Error('DB error')
+    },
   })
 
-  const req = { body: { petId: 1, title: '施打疫苗', eventDate: '2026-07-10', type: 'vaccine' } }
+  const req = {
+    userId: 1,
+    body: { petId: 1, title: '施打疫苗', eventDate: '2026-07-10', type: 'vaccine' },
+  }
   const res = createRes()
   await createCalendarEvent(req, res)
 
@@ -132,7 +148,9 @@ test('更新行事曆行程：找不到行程時應回傳 404', async () => {
 test('更新行事曆行程失敗時應回傳 500', async (t) => {
   t.mock.method(console, 'error', () => {})
   const updateCalendarEvent = createUpdateCalendarEvent({
-    updateEvent: async () => { throw new Error('DB error') },
+    updateEvent: async () => {
+      throw new Error('DB error')
+    },
   })
 
   const req = { params: { id: '1' }, userId: 2, body: { title: '複診' } }
@@ -177,7 +195,9 @@ test('刪除行事曆行程：找不到行程時應回傳 404', async () => {
 test('刪除行事曆行程失敗時應回傳 500', async (t) => {
   t.mock.method(console, 'error', () => {})
   const deleteCalendarEvent = createDeleteCalendarEvent({
-    deleteEvent: async () => { throw new Error('DB error') },
+    deleteEvent: async () => {
+      throw new Error('DB error')
+    },
   })
 
   const req = { params: { id: '1' }, userId: 2 }
