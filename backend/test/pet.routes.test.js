@@ -5,7 +5,7 @@ import app from '../src/app.js'
 import { authenticateToken } from '../src/middlewares/auth.middleware.js'
 import petRoutes from '../src/routes/pet.routes.js'
 
-test('protects every pets CRUD route with JWT authentication', () => {
+test('每個寵物 CRUD 路由都應使用 JWT 驗證保護', () => {
   const routes = petRoutes.stack.map((layer) => ({
     path: layer.route?.path,
     methods: Object.keys(layer.route?.methods ?? {}),
@@ -24,12 +24,28 @@ test('protects every pets CRUD route with JWT authentication', () => {
   )
 
   routes.forEach(({ middleware }) => {
-    assert.equal(middleware.length, 2)
+    assert.ok(middleware.length >= 2)
     assert.equal(middleware[0].handle, authenticateToken)
   })
 })
 
-test('mounts pets routes under /api/pets', () => {
+test('寵物請求 body 應在進入 controller 前驗證', () => {
+  const routes = petRoutes.stack.map((layer) => ({
+    path: layer.route?.path,
+    methods: Object.keys(layer.route?.methods ?? {}),
+    middleware: layer.route?.stack,
+  }))
+
+  const createRoute = routes.find(({ path, methods }) => path === '/' && methods.includes('post'))
+  const updateRoute = routes.find(
+    ({ path, methods }) => path === '/:id' && methods.includes('patch'),
+  )
+
+  assert.equal(createRoute.middleware.length, 3)
+  assert.equal(updateRoute.middleware.length, 3)
+})
+
+test('應將寵物路由掛載在 /api/pets', () => {
   const hasPetsRouter = app.router.stack.some((layer) => layer.handle === petRoutes)
 
   assert.equal(hasPetsRouter, true)

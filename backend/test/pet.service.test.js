@@ -10,7 +10,7 @@ import {
   updatePetByIdAndUserId,
 } from '../src/services/pet.service.js'
 
-test('findPetsByUserId selects only pets owned by the user', async (t) => {
+test('findPetsByUserId 應只查詢使用者擁有的寵物', async (t) => {
   const rows = [{ id: 1, user_id: 1, name: 'Momo' }]
   const query = t.mock.method(pool, 'query', async (text, values) => {
     assert.match(text, /WHERE user_id = \$1/)
@@ -24,7 +24,7 @@ test('findPetsByUserId selects only pets owned by the user', async (t) => {
   assert.deepEqual(pets, rows)
 })
 
-test('findPetByIdAndUserId requires both pet id and user id', async (t) => {
+test('findPetByIdAndUserId 應同時使用寵物 ID 與使用者 ID 查詢', async (t) => {
   const row = { id: 2, user_id: 1, name: 'Luna' }
   t.mock.method(pool, 'query', async (text, values) => {
     assert.match(text, /WHERE id = \$1/)
@@ -38,7 +38,7 @@ test('findPetByIdAndUserId requires both pet id and user id', async (t) => {
   assert.deepEqual(pet, row)
 })
 
-test('createPetForUser inserts user_id from the current user', async (t) => {
+test('createPetForUser 應寫入目前使用者的 user_id', async (t) => {
   const row = { id: 3, user_id: 1, name: 'Oreo', species: 'Dog' }
   t.mock.method(pool, 'query', async (text, values) => {
     assert.match(text, /INSERT INTO pets/)
@@ -59,7 +59,7 @@ test('createPetForUser inserts user_id from the current user', async (t) => {
   assert.deepEqual(pet, row)
 })
 
-test('updatePetByIdAndUserId updates only pets owned by the user', async (t) => {
+test('updatePetByIdAndUserId 應只更新使用者擁有的寵物', async (t) => {
   const row = { id: 4, user_id: 1, name: 'Nana', species: 'Rabbit', weight: '1.90' }
   t.mock.method(pool, 'query', async (text, values) => {
     assert.match(text, /UPDATE pets/)
@@ -74,7 +74,7 @@ test('updatePetByIdAndUserId updates only pets owned by the user', async (t) => 
   assert.deepEqual(pet, row)
 })
 
-test('deletePetByIdAndUserId deletes only pets owned by the user', async (t) => {
+test('deletePetByIdAndUserId 應只刪除使用者擁有的寵物', async (t) => {
   t.mock.method(pool, 'query', async (text, values) => {
     assert.match(text, /DELETE FROM pets/)
     assert.match(text, /WHERE id = \$1 AND user_id = \$2/)

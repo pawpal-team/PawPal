@@ -3,7 +3,7 @@ import { test } from 'node:test'
 
 import { createPetController } from '../src/controllers/pet.controller.js'
 
-test('exports a pet controller factory for dependency injection', () => {
+test('應匯出可注入相依服務的寵物 controller factory', () => {
   assert.equal(typeof createPetController, 'function')
 })
 
@@ -43,7 +43,7 @@ function createResponse() {
   }
 }
 
-test('lists pets for the authenticated user', async () => {
+test('應列出已驗證使用者的寵物', async () => {
   const pets = [{ id: 1, user_id: 42, name: 'Momo', species: 'Dog' }]
   const { listPets } = createTestController({
     findPetsByUserId: async (userId) => {
@@ -60,7 +60,7 @@ test('lists pets for the authenticated user', async () => {
   assert.deepEqual(res.body, { pets })
 })
 
-test('gets one pet by id for the authenticated user', async () => {
+test('應依 ID 取得已驗證使用者的單一寵物', async () => {
   const pet = { id: 2, user_id: 42, name: 'Luna', species: 'Cat' }
   const { getPet } = createTestController({
     findPetByIdAndUserId: async (id, userId) => {
@@ -81,7 +81,7 @@ test('gets one pet by id for the authenticated user', async () => {
   assert.deepEqual(res.body, { pet })
 })
 
-test('returns 404 when the pet does not belong to the authenticated user', async () => {
+test('寵物不屬於已驗證使用者時應回傳 404', async () => {
   const { getPet } = createTestController({
     findPetByIdAndUserId: async () => null,
   })
@@ -97,7 +97,7 @@ test('returns 404 when the pet does not belong to the authenticated user', async
   assert.deepEqual(res.body, { message: 'Pet not found' })
 })
 
-test('creates a pet for the authenticated user', async () => {
+test('應為已驗證使用者建立寵物', async () => {
   const createdPet = { id: 3, user_id: 42, name: 'Oreo', species: 'Dog' }
   const { createPet } = createTestController({
     createPetForUser: async (userId, petData) => {
@@ -114,8 +114,8 @@ test('creates a pet for the authenticated user', async () => {
   const req = {
     userId: 42,
     body: {
-      name: ' Oreo ',
-      species: ' Dog ',
+      name: 'Oreo',
+      species: 'Dog',
       breed: 'Border Collie',
       neutered: false,
     },
@@ -128,21 +128,7 @@ test('creates a pet for the authenticated user', async () => {
   assert.deepEqual(res.body, { pet: createdPet })
 })
 
-test('rejects creating a pet without required fields', async () => {
-  const { createPet } = createTestController()
-  const req = {
-    userId: 42,
-    body: { name: 'Momo' },
-  }
-  const res = createResponse()
-
-  await createPet(req, res)
-
-  assert.equal(res.statusCode, 400)
-  assert.deepEqual(res.body, { message: 'name and species are required' })
-})
-
-test('updates a pet owned by the authenticated user', async () => {
+test('應更新已驗證使用者擁有的寵物', async () => {
   const updatedPet = { id: 4, user_id: 42, name: 'Nana', species: 'Rabbit', weight: '1.90' }
   const { updatePet } = createTestController({
     updatePetByIdAndUserId: async (id, userId, petData) => {
@@ -165,7 +151,7 @@ test('updates a pet owned by the authenticated user', async () => {
   assert.deepEqual(res.body, { pet: updatedPet })
 })
 
-test('deletes a pet owned by the authenticated user', async () => {
+test('應刪除已驗證使用者擁有的寵物', async () => {
   const { deletePet } = createTestController({
     deletePetByIdAndUserId: async (id, userId) => {
       assert.equal(id, 5)

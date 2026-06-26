@@ -1,20 +1,5 @@
 import * as defaultPetService from '../services/pet.service.js'
 
-const writableFields = [
-  'name',
-  'species',
-  'breed',
-  'gender',
-  'birthday',
-  'weight',
-  'microchip_number',
-  'neutered',
-  'blood_type',
-  'fur_color',
-  'notes',
-  'avatar_url',
-]
-
 function parsePetId(id) {
   const parsedId = Number(id)
 
@@ -23,61 +8,6 @@ function parsePetId(id) {
   }
 
   return parsedId
-}
-
-function normalizePetData(body, { requireCreateFields = false } = {}) {
-  const petData = {}
-
-  writableFields.forEach((field) => {
-    if (Object.hasOwn(body, field)) {
-      petData[field] = typeof body[field] === 'string' ? body[field].trim() : body[field]
-    }
-  })
-
-  if (
-    requireCreateFields &&
-    (typeof petData.name !== 'string' ||
-      petData.name.length === 0 ||
-      typeof petData.species !== 'string' ||
-      petData.species.length === 0)
-  ) {
-    return {
-      ok: false,
-      message: 'name and species are required',
-    }
-  }
-
-  if (
-    Object.hasOwn(petData, 'name') &&
-    (typeof petData.name !== 'string' || petData.name.length === 0)
-  ) {
-    return {
-      ok: false,
-      message: 'name must be a non-empty string',
-    }
-  }
-
-  if (
-    Object.hasOwn(petData, 'species') &&
-    (typeof petData.species !== 'string' || petData.species.length === 0)
-  ) {
-    return {
-      ok: false,
-      message: 'species must be a non-empty string',
-    }
-  }
-
-  if (!requireCreateFields && Object.keys(petData).length === 0) {
-    return {
-      ok: false,
-      message: 'At least one pet field is required',
-    }
-  }
-
-  return {
-    ok: true,
-    petData,
-  }
 }
 
 export function createPetController(petService) {
@@ -116,14 +46,8 @@ export function createPetController(petService) {
   }
 
   async function createPet(req, res) {
-    const normalized = normalizePetData(req.body, { requireCreateFields: true })
-
-    if (!normalized.ok) {
-      return res.status(400).json({ message: normalized.message })
-    }
-
     try {
-      const pet = await petService.createPetForUser(req.userId, normalized.petData)
+      const pet = await petService.createPetForUser(req.userId, req.body)
 
       return res.status(201).json({ pet })
     } catch (error) {
@@ -140,14 +64,8 @@ export function createPetController(petService) {
       return res.status(400).json({ message: 'Invalid pet id' })
     }
 
-    const normalized = normalizePetData(req.body)
-
-    if (!normalized.ok) {
-      return res.status(400).json({ message: normalized.message })
-    }
-
     try {
-      const pet = await petService.updatePetByIdAndUserId(id, req.userId, normalized.petData)
+      const pet = await petService.updatePetByIdAndUserId(id, req.userId, req.body)
 
       if (!pet) {
         return res.status(404).json({ message: 'Pet not found' })
