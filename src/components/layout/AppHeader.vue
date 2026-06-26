@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import PublicSidebar from '@/components/layout/PublicSidebar.vue'
 import DashboardSidebar from '@/components/layout/DashboardSidebar.vue'
+import { useAuthStore } from '@/stores/auth'
 import { useSidebarStore } from '@/stores/sidebar'
 
 const props = defineProps({
@@ -13,6 +14,7 @@ const props = defineProps({
 })
 
 const sidebarStore = useSidebarStore()
+const authStore = useAuthStore()
 
 const isMemberVariant = computed(() => props.variant === 'member')
 
@@ -94,7 +96,12 @@ const navGroups = [
             </div>
           </div>
 
-          <a href="#" class="transition hover:text-brand-orange">會員專區</a>
+          <a
+            v-if="authStore.isLoggedIn"
+            href="#"
+            class="transition hover:text-brand-orange"
+            >會員專區</a
+          >
         </nav>
 
         <div class="flex items-center gap-2">
@@ -125,7 +132,7 @@ const navGroups = [
   <!-- Sidebar Overlay -->
   <div
     v-if="sidebarStore.isOpen && !isMemberVariant"
-    class="fixed inset-0 z-40 bg-black/50 lg:hidden"
+    class="fixed inset-0 z-[60] bg-black/50 lg:hidden"
     @click="sidebarStore.closeSidebar()"
   />
 
@@ -133,7 +140,7 @@ const navGroups = [
   <transition name="slide">
     <div
       v-if="sidebarStore.isOpen && !isMemberVariant"
-      class="fixed inset-y-0 right-0 z-50 overflow-y-auto bg-white lg:hidden"
+      class="fixed inset-y-0 right-0 z-[70] overflow-y-auto bg-white lg:hidden"
     >
       <PublicSidebar />
     </div>
