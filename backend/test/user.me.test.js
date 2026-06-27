@@ -61,7 +61,7 @@ test('目前使用者不存在時應回傳 404', async () => {
   await getCurrentUser(req, res)
 
   assert.equal(res.statusCode, 404)
-  assert.deepEqual(res.body, { message: 'User not found' })
+  assert.deepEqual(res.body, { message: '找不到使用者' })
 })
 
 test('取得目前使用者資料失敗時應回傳 500', async (t) => {
@@ -87,5 +87,5 @@ test('取得目前使用者資料失敗時應回傳 500', async (t) => {
   await getCurrentUser(req, res)
 
   assert.equal(res.statusCode, 500)
-  assert.deepEqual(res.body, { message: 'Failed to get current user' })
+  assert.deepEqual(res.body, { message: '取得目前使用者資料失敗，請稍後再試' })
 })

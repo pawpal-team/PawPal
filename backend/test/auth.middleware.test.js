@@ -31,7 +31,7 @@ test('缺少 Authorization token 時應拒絕請求', () => {
   })
 
   assert.equal(res.statusCode, 401)
-  assert.deepEqual(res.body, { message: 'Unauthorized' })
+  assert.deepEqual(res.body, { message: '未授權，請重新登入' })
   assert.equal(nextCalled, false)
 })
 
@@ -45,7 +45,7 @@ test('JWT token 無效時應拒絕請求', () => {
   })
 
   assert.equal(res.statusCode, 401)
-  assert.deepEqual(res.body, { message: 'Unauthorized' })
+  assert.deepEqual(res.body, { message: '未授權，請重新登入' })
   assert.equal(nextCalled, false)
 })
 
@@ -93,7 +93,7 @@ test('JWT 的 sub 欄位不是正整數時應拒絕請求', () => {
   })
 
   assert.equal(res.statusCode, 401)
-  assert.deepEqual(res.body, { message: 'Unauthorized' })
+  assert.deepEqual(res.body, { message: '未授權，請重新登入' })
   assert.equal(nextCalled, false)
 })
 
@@ -109,6 +109,6 @@ test('未設定 JWT_SECRET 時應拒絕 token', () => {
   })
 
   assert.equal(res.statusCode, 401)
-  assert.deepEqual(res.body, { message: 'Unauthorized' })
+  assert.deepEqual(res.body, { message: '未授權，請重新登入' })
   assert.equal(nextCalled, false)
 })

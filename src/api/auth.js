@@ -15,20 +15,20 @@ async function request(path, payload) {
     if (!response.ok) {
       return {
         success: false,
-        message: data.message || 'Request failed',
+        message: data.message || '請求失敗，請稍後再試',
         data,
       }
     }
 
     return {
       success: true,
-      message: data.message || 'Request successful',
+      message: data.message || '請求成功',
       data,
     }
   } catch {
     return {
       success: false,
-      message: 'Unable to connect to server',
+      message: '無法連線到伺服器，請稍後再試',
       data: null,
     }
   }

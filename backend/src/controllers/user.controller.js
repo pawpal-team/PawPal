@@ -6,14 +6,14 @@ export function createGetCurrentUser({ findUserById }) {
       const user = await findUserById(req.userId)
 
       if (!user) {
-        return res.status(404).json({ message: 'User not found' })
+        return res.status(404).json({ message: '找不到使用者' })
       }
 
       return res.status(200).json({ user })
     } catch (error) {
       console.error(error)
 
-      return res.status(500).json({ message: 'Failed to get current user' })
+      return res.status(500).json({ message: '取得目前使用者資料失敗，請稍後再試' })
     }
   }
 }
