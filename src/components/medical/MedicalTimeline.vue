@@ -65,7 +65,7 @@ const emit = defineEmits(['edit-record', 'delete-record'])
                   type="button"
                   class="flex h-7 w-9 cursor-pointer items-center justify-center gap-1 rounded-full transition hover:bg-red-500/15 hover:scale-103 active:scale-95"
                 >
-                  <img class="w-5 h-5" src="@/assets/icons/delete_r.svg" alt="編輯" />
+                  <img class="w-5 h-5" src="@/assets/icons/delete_r.svg" alt="刪除" />
                 </button>
               </div>
             </div>
