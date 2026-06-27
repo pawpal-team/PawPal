@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { authenticateToken } from '../middlewares/auth.middleware.js'
 import { validate } from '../middlewares/validate.js'
 
-import { createRecordSchema, updateRecordSchema } from '../schemas/medicalRecordSchema.js'
+import { createRecordSchema, updateRecordSchema } from '../schemas/medical_record_schema.js'
 
 import {
   addRecord,

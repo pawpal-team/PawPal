@@ -102,7 +102,7 @@ test('當病歷不屬於目前使用者時應回傳 404', async () => {
   await getSingleRecord(req, res)
 
   assert.equal(res.statusCode, 404)
-  assert.deepEqual(res.body, { message: 'Medical record not found' })
+  assert.deepEqual(res.body, { message: '找不到該筆醫療紀錄' })
 })
 
 test('應成功為目前登入會員擁建立寵物醫療紀錄', async () => {
@@ -136,7 +136,7 @@ test('應成功為目前登入會員擁建立寵物醫療紀錄', async () => {
 
   assert.equal(res.statusCode, 201)
   assert.deepEqual(res.body, {
-    message: 'Medical record created successfully',
+    message: '新增醫療紀錄成功',
     data: createdRecord,
   })
 })
@@ -148,7 +148,7 @@ test('少填必填欄位時應拒絕建立醫療紀錄並回傳 400', async () =
     services: {
       medicalService: {
         checkPetOwnership: async () => {
-          throw createMockZodError('pet_id is required and must be a number')
+          throw createMockZodError('請選擇寵物')
         },
       },
     },
@@ -158,7 +158,7 @@ test('少填必填欄位時應拒絕建立醫療紀錄並回傳 400', async () =
   await addRecord(req, res)
 
   assert.equal(res.statusCode, 400)
-  assert.deepEqual(res.body, { message: 'pet_id is required and must be a number' })
+  assert.deepEqual(res.body, { message: '請選擇寵物' })
 })
 
 test('當新增醫療紀錄時，若寵物不屬於該使用者應回傳 404', async () => {
@@ -166,7 +166,7 @@ test('當新增醫療紀錄時，若寵物不屬於該使用者應回傳 404', a
     userId: 1,
     body: {
       pet_id: 999,
-      record_type: 'Outpatient',
+      record_type: '看診',
       title: '看診紀錄',
       record_date: '2026-06-24',
     },
@@ -181,7 +181,7 @@ test('當新增醫療紀錄時，若寵物不屬於該使用者應回傳 404', a
   await addRecord(req, res)
 
   assert.equal(res.statusCode, 404)
-  assert.deepEqual(res.body, { message: 'Pet not found' })
+  assert.deepEqual(res.body, { message: '找不到該寵物資訊' })
 })
 
 test('應成功修改目前使用者寵物的醫療紀錄', async () => {
@@ -211,7 +211,7 @@ test('應成功修改目前使用者寵物的醫療紀錄', async () => {
 
   assert.equal(res.statusCode, 200)
   assert.deepEqual(res.body, {
-    message: 'Medical record updated successfully',
+    message: '更新醫療紀錄成功',
     data: updatedRecord,
   })
 })
@@ -227,7 +227,7 @@ test('修改醫療紀錄時，若標題為空白應拒絕更新並回傳 400', a
           return { id: 10, pet_id: 1 }
         },
         updateRecord: async () => {
-          throw createMockZodError('title cannot be empty')
+          throw createMockZodError('標題不能為空白')
         },
       },
     },
@@ -237,7 +237,7 @@ test('修改醫療紀錄時，若標題為空白應拒絕更新並回傳 400', a
   await updateRecord(req, res)
 
   assert.equal(res.statusCode, 400)
-  assert.deepEqual(res.body, { message: 'title cannot be empty' })
+  assert.deepEqual(res.body, { message: '標題不能為空白' })
 })
 
 test('應成功刪除目前使用者寵物的醫療紀錄', async () => {
@@ -263,5 +263,5 @@ test('應成功刪除目前使用者寵物的醫療紀錄', async () => {
   await deleteRecord(req, res)
 
   assert.equal(res.statusCode, 200)
-  assert.deepEqual(res.body, { message: 'Medical record deleted successfully' })
+  assert.deepEqual(res.body, { message: '刪除醫療紀錄成功' })
 })
