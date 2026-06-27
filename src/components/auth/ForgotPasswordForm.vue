@@ -5,7 +5,6 @@
       action="submit"
     >
       <header class="mb-8 flex flex-col items-center text-center">
-        <img src="@/assets/images/PawPal_logo.PNG" alt="PawPal" class="mb-5 h-10 w-auto" />
         <h1 class="text-[22px] font-bold leading-tight text-brand-navy">忘記密碼</h1>
         <p class="mt-2 text-[13px] font-normal leading-relaxed text-brand-gray">
           輸入註冊信箱，我們將寄出重設連結
