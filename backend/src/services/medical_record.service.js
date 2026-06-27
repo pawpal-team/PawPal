@@ -82,6 +82,7 @@ export async function findRecordById(id, userId) {
 
 export async function updateRecord(id, data) {
   const {
+    pet_id,
     record_type,
     hospital_name,
     title,
@@ -99,17 +100,19 @@ export async function updateRecord(id, data) {
 
   const result = await pool.query(
     `UPDATE medical_records
-     SET record_type = COALESCE($1, record_type),
-         hospital_name = COALESCE($2, hospital_name),
-         title = COALESCE($3, title),
-         record_date = COALESCE($4, record_date),
-         symptoms = COALESCE($5, symptoms),
-         diagnosis = COALESCE($6, diagnosis),
-         prescription = COALESCE($7, prescription),
-         image_url = COALESCE($8, image_url)
-     WHERE id = $9
+     SET pet_id = COALESCE($1, pet_id),
+         record_type = COALESCE($2, record_type),
+         hospital_name = COALESCE($3, hospital_name),
+         title = COALESCE($4, title),
+         record_date = COALESCE($5, record_date),
+         symptoms = COALESCE($6, symptoms),
+         diagnosis = COALESCE($7, diagnosis),
+         prescription = COALESCE($8, prescription),
+         image_url = COALESCE($9, image_url)
+     WHERE id = $10
      RETURNING *;`,
     [
+      pet_id !== undefined ? pet_id : null,
       record_type !== undefined ? record_type : null,
       hospital_name !== undefined ? hospital_name : null,
       title !== undefined ? title : null,
