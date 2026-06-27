@@ -1,13 +1,18 @@
 import * as defaultGrowthRecordsService from '../services/growth_records.service.js'
+import { METRIC_TYPES } from '../schemas/growth_record_schema.js'
 
 export async function getGrowthRecords(req, res) {
   const service = req.services?.growthRecordsService || defaultGrowthRecordsService
-  const userId = 1 // 暫時寫死，待JWT 完成後替換為 req.userId
+  const userId = req.userId
   const petId = Number(req.query.petId)
   const { metricType } = req.query
 
   if (!Number.isSafeInteger(petId) || petId <= 0) {
     return res.status(400).json({ message: 'Invalid pet ID' })
+  }
+
+  if (metricType && !METRIC_TYPES.includes(metricType)) {
+    return res.status(400).json({ message: 'Invalid metric type' })
   }
 
   const records = await service.findGrowthRecords(userId, petId, metricType)
@@ -16,21 +21,12 @@ export async function getGrowthRecords(req, res) {
 
 export async function createGrowthRecord(req, res) {
   const service = req.services?.growthRecordsService || defaultGrowthRecordsService
-  const userId = 1 // 暫時寫死，待JWT 完成後替換為 req.userId
+  const userId = req.userId
   const { pet_id, metric_type, value, unit, recorded_at, notes } = req.body
-  const petId = Number(pet_id)
-
-  if (!Number.isSafeInteger(petId) || petId <= 0) {
-    return res.status(400).json({ message: 'Invalid pet ID' })
-  }
-
-  if (!metric_type || value === undefined || !unit || !recorded_at) {
-    return res.status(400).json({ message: 'Missing required fields' })
-  }
 
   const record = await service.createGrowthRecord({
     userId,
-    petId,
+    petId: pet_id,
     metricType: metric_type,
     value,
     unit,
@@ -47,7 +43,7 @@ export async function createGrowthRecord(req, res) {
 
 export async function updateGrowthRecord(req, res) {
   const service = req.services?.growthRecordsService || defaultGrowthRecordsService
-  const userId = 1 // 暫時寫死，待JWT 完成後替換為 req.userId
+  const userId = req.userId
   const id = Number(req.params.id)
 
   if (!Number.isSafeInteger(id) || id <= 0) {
@@ -55,10 +51,6 @@ export async function updateGrowthRecord(req, res) {
   }
 
   const { value, unit, recorded_at, notes } = req.body
-
-  if (value === undefined || !unit || !recorded_at) {
-    return res.status(400).json({ message: 'Missing required fields' })
-  }
 
   const record = await service.updateGrowthRecord(userId, id, {
     value,
@@ -76,7 +68,7 @@ export async function updateGrowthRecord(req, res) {
 
 export async function deleteGrowthRecord(req, res) {
   const service = req.services?.growthRecordsService || defaultGrowthRecordsService
-  const userId = 1 // 暫時寫死，待JWT 完成後替換為 req.userId
+  const userId = req.userId
   const id = Number(req.params.id)
 
   if (!Number.isSafeInteger(id) || id <= 0) {
