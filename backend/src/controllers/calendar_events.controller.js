@@ -8,7 +8,7 @@ import {
 export function createGetCalendarEvents({ getEventsByUserId }) {
   return async function getCalendarEvents(req, res) {
     const userId = req.userId
-    if (!userId) return res.status(401).json({ message: 'Unauthorized' })
+    if (!userId) return res.status(401).json({ message: '未授權，請重新登入' })
     try {
       const events = await getEventsByUserId(userId)
       return res.status(200).json({ data: events })
@@ -23,7 +23,7 @@ export const getCalendarEvents = createGetCalendarEvents({ getEventsByUserId })
 export function createCreateCalendarEvent({ createEvent }) {
   return async function createCalendarEvent(req, res) {
     const userId = req.userId
-    if (!userId) return res.status(401).json({ message: 'Unauthorized' })
+    if (!userId) return res.status(401).json({ message: '未授權，請重新登入' })
     const { petId, title, eventDate, eventTime, type, location, notes } = req.body
     try {
       const event = await createEvent({
