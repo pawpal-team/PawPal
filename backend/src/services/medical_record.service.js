@@ -21,7 +21,11 @@ export async function createRecord(data) {
     image_url,
   } = data
 
-  const dbImageUrl = Array.isArray(image_url) ? image_url : image_url ? [image_url] : []
+  const dbImageUrl = Array.isArray(image_url)
+    ? image_url
+    : typeof image_url === 'string' && image_url.trim()
+      ? [image_url]
+      : []
 
   const result = await pool.query(
     `INSERT INTO medical_records
@@ -31,12 +35,12 @@ export async function createRecord(data) {
     [
       pet_id,
       record_type,
-      hospital_name,
+      hospital_name || null,
       title,
       record_date,
-      symptoms,
-      diagnosis,
-      prescription,
+      symptoms || null,
+      diagnosis || null,
+      prescription || null,
       dbImageUrl,
     ],
   )
@@ -81,54 +85,72 @@ export async function findRecordById(id, userId) {
 }
 
 export async function updateRecord(id, data) {
-  const {
-    pet_id,
-    record_type,
-    hospital_name,
-    title,
-    record_date,
-    symptoms,
-    diagnosis,
-    prescription,
-    image_url,
-  } = data
+  const fields = []
+  const values = []
 
-  let dbImageUrl = undefined
-  if (image_url !== undefined) {
-    dbImageUrl = Array.isArray(image_url) ? image_url : image_url ? [image_url] : []
+  if (data.pet_id !== undefined) {
+    fields.push(`pet_id = $${values.length + 1}`)
+    values.push(data.pet_id)
   }
+  if (data.record_type !== undefined) {
+    fields.push(`record_type = $${values.length + 1}`)
+    values.push(data.record_type)
+  }
+  if (data.hospital_name !== undefined) {
+    fields.push(`hospital_name = $${values.length + 1}`)
+    values.push(data.hospital_name)
+  }
+  if (data.title !== undefined) {
+    fields.push(`title = $${values.length + 1}`)
+    values.push(data.title)
+  }
+  if (data.record_date !== undefined) {
+    fields.push(`record_date = $${values.length + 1}`)
+    values.push(data.record_date)
+  }
+  if (data.symptoms !== undefined) {
+    fields.push(`symptoms = $${values.length + 1}`)
+    values.push(data.symptoms)
+  }
+  if (data.diagnosis !== undefined) {
+    fields.push(`diagnosis = $${values.length + 1}`)
+    values.push(data.diagnosis)
+  }
+  if (data.prescription !== undefined) {
+    fields.push(`prescription = $${values.length + 1}`)
+    values.push(data.prescription)
+  }
+  if (data.image_url !== undefined) {
+    const dbImageUrl = Array.isArray(data.image_url)
+      ? data.image_url
+      : typeof data.image_url === 'string' && data.image_url.trim()
+        ? [data.image_url]
+        : []
+    fields.push(`image_url = $${values.length + 1}`)
+    values.push(dbImageUrl)
+  }
+
+  if (fields.length === 0) {
+    const error = new Error('沒有可更新欄位')
+    error.status = 400
+    throw error
+  }
+
+  const idParamIndex = values.length + 1
+  values.push(id)
 
   const result = await pool.query(
     `UPDATE medical_records
-     SET pet_id = COALESCE($1, pet_id),
-         record_type = COALESCE($2, record_type),
-         hospital_name = COALESCE($3, hospital_name),
-         title = COALESCE($4, title),
-         record_date = COALESCE($5, record_date),
-         symptoms = COALESCE($6, symptoms),
-         diagnosis = COALESCE($7, diagnosis),
-         prescription = COALESCE($8, prescription),
-         image_url = COALESCE($9, image_url)
-     WHERE id = $10
+     SET ${fields.join(', ')}
+     WHERE id = $${idParamIndex}
      RETURNING *;`,
-    [
-      pet_id !== undefined ? pet_id : null,
-      record_type !== undefined ? record_type : null,
-      hospital_name !== undefined ? hospital_name : null,
-      title !== undefined ? title : null,
-      record_date !== undefined ? record_date : null,
-      symptoms !== undefined ? symptoms : null,
-      diagnosis !== undefined ? diagnosis : null,
-      prescription !== undefined ? prescription : null,
-      dbImageUrl !== undefined ? dbImageUrl : null,
-      id,
-    ],
+    values,
   )
 
-  return result.rows[0]
+  return result.rows[0] || null
 }
 
 export async function deleteRecord(id) {
-  await pool.query(`DELETE FROM medical_records WHERE id = $1;`, [id])
-  return true
+  const result = await pool.query(`DELETE FROM medical_records WHERE id = $1;`, [id])
+  return result.rowCount > 0
 }

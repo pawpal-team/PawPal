@@ -18,6 +18,18 @@ function getUserId(req) {
   return userId
 }
 
+function parseId(id) {
+  const parsed = Number(id)
+
+  if (!Number.isSafeInteger(parsed) || parsed <= 0) {
+    const error = new Error('id 必須是正整數')
+    error.status = 400
+    throw error
+  }
+
+  return parsed
+}
+
 export async function addRecord(req, res) {
   try {
     const userId = getUserId(req)
@@ -54,8 +66,10 @@ export async function addRecord(req, res) {
 
     return res.status(201).json({ message: '新增醫療紀錄成功', data: newRecord })
   } catch (error) {
-    console.error(error)
-    return res.status(500).json({ message: '新增醫療紀錄失敗，請稍後再試' })
+    console.error(error.stack)
+    return res.status(error.status || 500).json({
+      message: error.status ? error.message : '新增醫療紀錄失敗，請稍後再試',
+    })
   }
 }
 
@@ -67,8 +81,10 @@ export async function getAllRecords(req, res) {
     const records = await medicalService.findAllRecordsByUserId(userId)
     return res.status(200).json({ data: records })
   } catch (error) {
-    console.error(error)
-    return res.status(500).json({ message: '取得醫療紀錄失敗，請稍後再試' })
+    console.error(error.stack)
+    return res.status(error.status || 500).json({
+      message: error.status ? error.message : '取得醫療紀錄失敗，請稍後再試',
+    })
   }
 }
 
@@ -78,11 +94,7 @@ export async function getPetRecords(req, res) {
     const medicalService = getService(req)
 
     const { petId } = req.params
-    const parsedPetId = Number(petId)
-
-    if (isNaN(parsedPetId)) {
-      return res.status(400).json({ message: '請求資料格式錯誤' })
-    }
+    const parsedPetId = parseId(petId)
 
     const isOwner = await medicalService.checkPetOwnership(parsedPetId, userId)
     if (!isOwner) {
@@ -92,8 +104,10 @@ export async function getPetRecords(req, res) {
     const records = await medicalService.findRecordsByPetId(parsedPetId, userId)
     return res.status(200).json({ data: records })
   } catch (error) {
-    console.error(error)
-    return res.status(500).json({ message: '取得醫療紀錄失敗，請稍後再試' })
+    console.error(error.stack)
+    return res.status(error.status || 500).json({
+      message: error.status ? error.message : '取得醫療紀錄失敗，請稍後再試',
+    })
   }
 }
 
@@ -103,14 +117,18 @@ export async function getSingleRecord(req, res) {
     const medicalService = getService(req)
     const { id } = req.params
 
-    const record = await medicalService.findRecordById(Number(id), userId)
+    const parsedId = parseId(id)
+
+    const record = await medicalService.findRecordById(parsedId, userId)
     if (!record) {
       return res.status(404).json({ message: '找不到該筆醫療紀錄' })
     }
     return res.status(200).json({ data: record })
   } catch (error) {
-    console.error(error)
-    return res.status(500).json({ message: '取得醫療紀錄失敗，請稍後再試' })
+    console.error(error.stack)
+    return res.status(error.status || 500).json({
+      message: error.status ? error.message : '取得醫療紀錄失敗，請稍後再試',
+    })
   }
 }
 
@@ -121,7 +139,9 @@ export async function updateRecord(req, res) {
     const { id } = req.params
     const updateData = req.body
 
-    const record = await medicalService.findRecordById(Number(id), userId)
+    const parsedId = parseId(id)
+
+    const record = await medicalService.findRecordById(parsedId, userId)
     if (!record) {
       return res.status(404).json({ message: '找不到該筆醫療紀錄' })
     }
@@ -133,11 +153,13 @@ export async function updateRecord(req, res) {
       }
     }
 
-    const updated = await medicalService.updateRecord(Number(id), updateData)
+    const updated = await medicalService.updateRecord(parsedId, updateData)
     return res.status(200).json({ message: '更新醫療紀錄成功', data: updated })
   } catch (error) {
-    console.error(error)
-    return res.status(500).json({ message: '更新醫療紀錄失敗，請稍後再試' })
+    console.error(error.stack)
+    return res.status(error.status || 500).json({
+      message: error.status ? error.message : '更新醫療紀錄失敗，請稍後再試',
+    })
   }
 }
 
@@ -147,15 +169,19 @@ export async function deleteRecord(req, res) {
     const medicalService = getService(req)
     const { id } = req.params
 
-    const record = await medicalService.findRecordById(Number(id), userId)
+    const parsedId = parseId(id)
+
+    const record = await medicalService.findRecordById(parsedId, userId)
     if (!record) {
       return res.status(404).json({ message: '找不到該筆醫療紀錄' })
     }
 
-    await medicalService.deleteRecord(Number(id))
+    await medicalService.deleteRecord(parsedId)
     return res.status(200).json({ message: '刪除醫療紀錄成功' })
   } catch (error) {
-    console.error(error)
-    return res.status(500).json({ message: '刪除醫療紀錄失敗，請稍後再試' })
+    console.error(error.stack)
+    return res.status(error.status || 500).json({
+      message: error.status ? error.message : '刪除醫療紀錄失敗，請稍後再試',
+    })
   }
 }

@@ -2,59 +2,85 @@ import { z } from 'zod'
 
 const dateRegex = /^\d{4}-\d{2}-\d{2}$/
 
+const RECORD_TYPES = ['看診', '疫苗', '手術', '用藥', '體檢', '其他']
+
 export const createRecordSchema = z.object({
-  pet_id: z.number({
-    required_error: '請選擇寵物',
-    invalid_type_error: '寵物 ID 必須是數字',
+  pet_id: z
+    .number({
+      error: (issue) => (issue.input === undefined ? '請選擇寵物' : '寵物 ID 必須是數字'),
+    })
+    .int({ message: '寵物 ID 必須是整數' })
+    .positive({ message: '寵物 ID 必須大於 0' }),
+  record_type: z.enum(RECORD_TYPES, {
+    error: (issue) =>
+      issue.input === undefined
+        ? '請選擇紀錄類型'
+        : '請選擇正確的紀錄類型（看診、疫苗、手術、用藥、體檢、其他）',
   }),
-  record_type: z.enum(['看診', '疫苗', '手術', '用藥', '體檢', '其他'], {
-    required_error: '請選擇紀錄類型',
-    invalid_type_error: '請選擇正確的紀錄類型（看診、疫苗、手術、用藥、體檢、其他）',
-  }),
-  hospital_name: z.string().trim().max(100, '醫院名稱太長（上限 100 字）').optional(),
+  hospital_name: z.string().trim().max(100, { message: '醫院名稱太長（上限 100 字）' }).optional(),
   title: z
-    .string({ required_error: '請填寫標題' })
+    .string({ error: '請填寫標題' })
     .trim()
-    .min(1, '標題不能為空白')
-    .max(200, '標題太長（上限 200 字）'),
+    .min(1, { message: '標題不能為空白' })
+    .max(200, { message: '標題太長（上限 200 字）' }),
   record_date: z
-    .string({ required_error: '請選擇日期' })
-    .regex(dateRegex, '請輸入正確的日期格式 (YYYY-MM-DD)')
-    .refine((val) => !isNaN(Date.parse(val)), {
-      message: '無效的日期',
-    }),
+    .string({ error: '請選擇日期' })
+    .regex(dateRegex, { message: '請輸入正確的日期格式 (YYYY-MM-DD)' })
+    .refine(
+      (val) => {
+        const date = new Date(val)
+        return !isNaN(date.getTime()) && date.toISOString().startsWith(val)
+      },
+      {
+        message: '無效的日期',
+      },
+    ),
   symptoms: z.string().trim().optional(),
   diagnosis: z.string().trim().optional(),
   prescription: z.string().trim().optional(),
-  image_url: z.array(z.string()).optional().default([]),
+  image_url: z.array(z.url({ message: 'image_url 必須是有效網址' })).optional(),
 })
 
 export const updateRecordSchema = z
   .object({
-    pet_id: z.number({ invalid_type_error: '寵物 ID 必須是數字' }).optional(),
+    pet_id: z
+      .number({ error: '寵物 ID 必須是數字' })
+      .int({ message: '寵物 ID 必須是整數' })
+      .positive({ message: '寵物 ID 必須大於 0' })
+      .optional(),
     record_type: z
-      .enum(['看診', '疫苗', '手術', '用藥', '體檢', '其他'], {
-        invalid_type_error: '請選擇正確的紀錄類型',
+      .enum(RECORD_TYPES, {
+        error: '請選擇正確的紀錄類型',
       })
       .optional(),
-    hospital_name: z.string().trim().max(100, '醫院名稱太長（上限 100 字）').optional(),
-    title: z
+    hospital_name: z
       .string()
       .trim()
-      .min(1, '標題不能為空白')
-      .max(200, '標題太長（上限 200 字）')
+      .max(100, { message: '醫院名稱太長（上限 100 字）' })
+      .optional(),
+    title: z
+      .string({ error: '請填寫標題' })
+      .trim()
+      .min(1, { message: '標題不能為空白' })
+      .max(200, { message: '標題太長（上限 200 字）' })
       .optional(),
     record_date: z
       .string()
-      .regex(dateRegex, '請輸入正確的日期格式 (YYYY-MM-DD)')
-      .refine((val) => !isNaN(Date.parse(val)), {
-        message: '無效的日期',
-      })
+      .regex(dateRegex, { message: '請輸入正確的日期格式 (YYYY-MM-DD)' })
+      .refine(
+        (val) => {
+          const date = new Date(val)
+          return !isNaN(date.getTime()) && date.toISOString().startsWith(val)
+        },
+        {
+          message: '無效的日期',
+        },
+      )
       .optional(),
     symptoms: z.string().trim().optional(),
     diagnosis: z.string().trim().optional(),
     prescription: z.string().trim().optional(),
-    image_url: z.array(z.string()).optional(),
+    image_url: z.array(z.url({ message: 'image_url 必須是有效網址' })).optional(),
   })
   .refine((value) => Object.keys(value).length > 0, {
     message: '請至少提供一個欄位進行修改',
