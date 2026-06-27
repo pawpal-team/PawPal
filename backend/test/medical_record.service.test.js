@@ -95,6 +95,7 @@ test('updateRecord 應能正確針對醫療紀錄 ID 進行更新', async (t) =>
   const row = { id: 10, title: '新標題' }
   t.mock.method(pool, 'query', async (text, values) => {
     assert.match(text, /UPDATE medical_records/i)
+    assert.equal(values[9], 10)
     return { rows: [row] }
   })
 
@@ -102,13 +103,14 @@ test('updateRecord 應能正確針對醫療紀錄 ID 進行更新', async (t) =>
   assert.deepEqual(updated, row)
 })
 
-test('updateRecord 當傳入空字串 image_url時應能正確清空為空陣列', async (t) => {
+test('updateRecord 當傳入空陣列 image_url 時應能正確保持為空陣列', async (t) => {
   const row = { id: 10, image_url: [] }
   t.mock.method(pool, 'query', async (text, values) => {
+    assert.deepEqual(values[8], [])
     return { rows: [row] }
   })
 
-  const updated = await updateRecord(10, { image_url: '' })
+  const updated = await updateRecord(10, { image_url: [] })
   assert.deepEqual(updated.image_url, [])
 })
 
