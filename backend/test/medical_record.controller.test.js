@@ -87,7 +87,7 @@ test('列出指定寵物的醫療紀錄', async () => {
   assert.deepEqual(res.body, { data: records })
 })
 
-test('當病歷不屬於目前使用者時應回傳 404', async () => {
+test('當醫療紀錄不屬於目前使用者時應回傳 404', async () => {
   const req = {
     userId: 1,
     params: { id: '99' },

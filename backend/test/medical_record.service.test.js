@@ -24,7 +24,7 @@ test('checkPetOwnership 應透過 userId 與 petId 驗證寵物所有權', async
   assert.equal(isOwner, true)
 })
 
-test('createRecord 應正確插入病歷資料並處理圖片陣列', async (t) => {
+test('createRecord 應正確插入醫療紀錄資料並處理圖片陣列', async (t) => {
   const row = { id: 10, pet_id: 1, title: '核心疫苗', image_url: ['http://example.com/cat.jpg'] }
   t.mock.method(pool, 'query', async (text, values) => {
     assert.match(text, /INSERT INTO medical_records/i)
@@ -43,7 +43,7 @@ test('createRecord 應正確插入病歷資料並處理圖片陣列', async (t) 
   assert.deepEqual(record, row)
 })
 
-test('findAllRecordsByUserId 應透過 JOIN pets 來篩選特定使用者的病歷', async (t) => {
+test('findAllRecordsByUserId 應透過 JOIN pets 來篩選特定使用者的醫療紀錄', async (t) => {
   const rows = [{ id: 1, pet_id: 1, title: '例行體檢' }]
   t.mock.method(pool, 'query', async (text, values) => {
     assert.match(text, /JOIN pets/i)
@@ -69,7 +69,7 @@ test('findRecordsByPetId 應同時篩選 pet_id 與擁有的 user_id', async (t)
   assert.deepEqual(records, rows)
 })
 
-test('findRecordById 應確保查詢單一病歷時有驗證 user_id', async (t) => {
+test('findRecordById 應確保查詢單一醫療紀錄時有驗證 user_id', async (t) => {
   const row = { id: 10, pet_id: 1, title: '核心疫苗' }
   t.mock.method(pool, 'query', async (text, values) => {
     assert.match(text, /id = \$1/i)
@@ -82,7 +82,7 @@ test('findRecordById 應確保查詢單一病歷時有驗證 user_id', async (t)
   assert.deepEqual(record, row)
 })
 
-test('findRecordById 找不到病歷時應回傳 null', async (t) => {
+test('findRecordById 找不到醫療紀錄時應回傳 null', async (t) => {
   t.mock.method(pool, 'query', async () => {
     return { rows: [] }
   })
@@ -91,7 +91,7 @@ test('findRecordById 找不到病歷時應回傳 null', async (t) => {
   assert.equal(record, null)
 })
 
-test('updateRecord 應能正確針對病歷 ID 進行更新', async (t) => {
+test('updateRecord 應能正確針對醫療紀錄 ID 進行更新', async (t) => {
   const row = { id: 10, title: '新標題' }
   t.mock.method(pool, 'query', async (text, values) => {
     assert.match(text, /UPDATE medical_records/i)
