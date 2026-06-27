@@ -14,7 +14,7 @@ export function authenticateToken(req, res, next) {
   const jwtSecret = process.env.JWT_SECRET
 
   if (!token || !jwtSecret) {
-    return res.status(401).json({ message: 'Unauthorized' })
+    return res.status(401).json({ message: '未授權，請重新登入' })
   }
 
   try {
@@ -22,12 +22,12 @@ export function authenticateToken(req, res, next) {
     const userId = Number(payload.sub)
 
     if (!Number.isSafeInteger(userId) || userId <= 0) {
-      return res.status(401).json({ message: 'Unauthorized' })
+      return res.status(401).json({ message: '未授權，請重新登入' })
     }
 
     req.userId = userId
     return next()
   } catch {
-    return res.status(401).json({ message: 'Unauthorized' })
+    return res.status(401).json({ message: '未授權，請重新登入' })
   }
 }

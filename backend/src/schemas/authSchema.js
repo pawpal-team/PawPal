@@ -1,9 +1,9 @@
 import { z } from 'zod'
 
-const registerRequiredMessage = 'name, email, password are required'
-const registerTypeMessage = 'name, email, password must be strings'
-const loginRequiredMessage = 'email, password are required'
-const loginTypeMessage = 'email, password must be strings'
+const registerRequiredMessage = '姓名、Email、密碼為必填欄位'
+const registerTypeMessage = '姓名、Email、密碼格式不正確'
+const loginRequiredMessage = 'Email、密碼為必填欄位'
+const loginTypeMessage = 'Email、密碼格式不正確'
 
 function stringFieldError(requiredMessage, typeMessage) {
   return (issue) => (issue.input === undefined ? requiredMessage : typeMessage)
@@ -14,8 +14,8 @@ function createEmailField(requiredMessage, typeMessage) {
     .string({ error: stringFieldError(requiredMessage, typeMessage) })
     .trim()
     .min(1, { error: requiredMessage })
-    .max(255, { error: 'email is too long' })
-    .email({ error: 'invalid email format' })
+    .max(255, { error: 'Email 長度過長' })
+    .email({ error: 'Email 格式錯誤' })
     .transform((value) => value.toLowerCase())
 }
 
@@ -24,7 +24,7 @@ function createPasswordField(requiredMessage, typeMessage) {
     .string({ error: stringFieldError(requiredMessage, typeMessage) })
     .trim()
     .min(1, { error: requiredMessage })
-    .max(72, { error: 'password is too long' })
+    .max(72, { error: '密碼長度過長' })
 }
 
 export const registerSchema = z.object({
@@ -32,7 +32,7 @@ export const registerSchema = z.object({
     .string({ error: stringFieldError(registerRequiredMessage, registerTypeMessage) })
     .trim()
     .min(1, { error: registerRequiredMessage })
-    .max(100, { error: 'name is too long' }),
+    .max(100, { error: '姓名長度過長' }),
   email: createEmailField(registerRequiredMessage, registerTypeMessage),
   password: createPasswordField(registerRequiredMessage, registerTypeMessage),
 })
