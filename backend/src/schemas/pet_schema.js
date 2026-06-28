@@ -10,9 +10,9 @@ function requiredStringField(message, maxLength, tooLongMessage) {
     .max(maxLength, { error: tooLongMessage })
 }
 
-function optionalStringField(maxLength, tooLongMessage) {
+function optionalStringField(maxLength, typeMessage, tooLongMessage) {
   return z
-    .string({ error: tooLongMessage })
+    .string({ error: typeMessage })
     .trim()
     .max(maxLength, { error: tooLongMessage })
     .optional()
@@ -35,20 +35,20 @@ function optionalDateField() {
 }
 
 const petFieldsSchema = {
-  name: optionalStringField(100, '寵物名稱長度過長').refine((value) => value !== '', {
+  name: optionalStringField(100, '寵物名稱格式不正確', '寵物名稱長度過長').refine((value) => value !== '', {
     error: '寵物名稱不可為空白',
   }),
-  species: optionalStringField(50, '物種字數過長').refine((value) => value !== '', {
+  species: optionalStringField(50, '物種格式不正確', '物種字數過長').refine((value) => value !== '', {
     error: '物種不可為空白',
   }),
-  breed: optionalStringField(100, '品種長度過長'),
-  gender: optionalStringField(20, '性別長度過長'),
+  breed: optionalStringField(100, '品種格式不正確', '品種長度過長'),
+  gender: optionalStringField(20, '性別格式不正確', '性別長度過長'),
   birthday: optionalDateField(),
   weight: z.number({ error: '體重格式不正確' }).nonnegative().optional(),
-  microchip_number: optionalStringField(50, '晶片號碼長度過長'),
+  microchip_number: optionalStringField(50, '晶片號碼格式不正確', '晶片號碼長度過長'),
   neutered: z.boolean({ error: '結紮狀態格式不正確' }).optional(),
-  blood_type: optionalStringField(20, '血型長度過長'),
-  fur_color: optionalStringField(100, '毛色長度過長'),
+  blood_type: optionalStringField(20, '血型格式不正確', '血型長度過長'),
+  fur_color: optionalStringField(100, '毛色格式不正確', '毛色長度過長'),
   notes: optionalTextField(),
   avatar_url: optionalUrlField(),
 }

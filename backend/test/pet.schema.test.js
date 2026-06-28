@@ -42,6 +42,20 @@ test('更新寵物 schema 應拒絕空白的寵物名稱', () => {
   assert.equal(result.error.issues[0]?.message, '寵物名稱不可為空白')
 })
 
+test('寵物字串欄位型別錯誤時應回傳格式錯誤', () => {
+  const result = updatePetSchema.safeParse({ breed: 123 })
+
+  assert.equal(result.success, false)
+  assert.equal(result.error.issues[0]?.message, '品種格式不正確')
+})
+
+test('寵物品種超過長度限制時應回傳長度錯誤', () => {
+  const result = updatePetSchema.safeParse({ breed: 'a'.repeat(101) })
+
+  assert.equal(result.success, false)
+  assert.equal(result.error.issues[0]?.message, '品種長度過長')
+})
+
 test('寵物生日應符合 YYYY-MM-DD 日期格式', () => {
   const result = createPetSchema.safeParse({
     name: 'Oreo',
