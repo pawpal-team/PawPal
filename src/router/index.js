@@ -21,16 +21,25 @@ const router = createRouter({
       path: '/login',
       name: 'Login',
       component: Login,
+      meta: {
+        guestOnly: true,
+      },
     },
     {
       path: '/register',
       name: 'Register',
       component: Register,
+      meta: {
+        guestOnly: true,
+      },
     },
     {
       path: '/forgot-password',
       name: 'ForgotPassword',
       component: ForgotPassword,
+      meta: {
+        guestOnly: true,
+      },
     },
     {
       path: '/medical',
@@ -66,7 +75,7 @@ router.beforeEach((to) => {
     return '/login'
   }
 
-  if (to.path === '/login' && authStore.isLoggedIn) {
+  if (to.meta.guestOnly && authStore.isLoggedIn) {
     return '/dashboard'
   }
 })
