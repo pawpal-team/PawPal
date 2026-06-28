@@ -16,7 +16,7 @@ export function createGrowthRecordsController(growthRecordsService) {
     }
 
     const records = await growthRecordsService.findGrowthRecords(userId, petId, metricType)
-    return res.json({ records })
+    return res.status(200).json({ records })
   }
 
   async function createGrowthRecord(req, res) {
@@ -61,7 +61,7 @@ export function createGrowthRecordsController(growthRecordsService) {
       return res.status(404).json({ message: '找不到這筆成長紀錄' })
     }
 
-    return res.json({ record })
+    return res.status(200).json({ record })
   }
 
   async function deleteGrowthRecord(req, res) {
