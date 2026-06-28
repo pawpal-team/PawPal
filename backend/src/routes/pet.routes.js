@@ -3,7 +3,7 @@ import { Router } from 'express'
 import { createPet, deletePet, getPet, listPets, updatePet } from '../controllers/pet.controller.js'
 import { authenticateToken } from '../middlewares/auth.middleware.js'
 import { validate } from '../middlewares/validate.js'
-import { createPetSchema, updatePetSchema } from '../schemas/petSchema.js'
+import { createPetSchema, updatePetSchema } from '../schemas/pet_schema.js'
 
 const router = Router()
 
