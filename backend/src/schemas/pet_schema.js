@@ -26,6 +26,14 @@ function optionalUrlField() {
   return z.string({ error: '寵物照片網址格式不正確' }).trim().optional()
 }
 
+function optionalDateField() {
+  return z
+    .string({ error: '生日格式錯誤，請使用 YYYY-MM-DD' })
+    .trim()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, { error: '生日格式錯誤，請使用 YYYY-MM-DD' })
+    .optional()
+}
+
 const petFieldsSchema = {
   name: optionalStringField(100, '寵物名稱長度過長').refine((value) => value !== '', {
     error: '寵物名稱不可為空白',
@@ -35,7 +43,7 @@ const petFieldsSchema = {
   }),
   breed: optionalStringField(100, '品種長度過長'),
   gender: optionalStringField(20, '性別長度過長'),
-  birthday: optionalStringField(10, '生日長度過長'),
+  birthday: optionalDateField(),
   weight: z.number({ error: '體重格式不正確' }).nonnegative().optional(),
   microchip_number: optionalStringField(50, '晶片號碼長度過長'),
   neutered: z.boolean({ error: '結紮狀態格式不正確' }).optional(),

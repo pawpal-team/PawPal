@@ -41,3 +41,14 @@ test('更新寵物 schema 應拒絕空白的寵物名稱', () => {
   assert.equal(result.success, false)
   assert.equal(result.error.issues[0]?.message, '寵物名稱不可為空白')
 })
+
+test('寵物生日應符合 YYYY-MM-DD 日期格式', () => {
+  const result = createPetSchema.safeParse({
+    name: 'Oreo',
+    species: 'Dog',
+    birthday: '2026/06/28',
+  })
+
+  assert.equal(result.success, false)
+  assert.equal(result.error.issues[0]?.message, '生日格式錯誤，請使用 YYYY-MM-DD')
+})
