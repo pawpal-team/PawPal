@@ -87,5 +87,5 @@ test('取得目前使用者資料失敗時應回傳 500', async (t) => {
   await getCurrentUser(req, res)
 
   assert.equal(res.statusCode, 500)
-  assert.deepEqual(res.body, { message: '取得目前使用者資料失敗，請稍後再試' })
+  assert.deepEqual(res.body, { message: '取得使用者資料失敗' })
 })

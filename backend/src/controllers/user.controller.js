@@ -13,7 +13,7 @@ export function createGetCurrentUser({ findUserById }) {
     } catch (error) {
       console.error(error)
 
-      return res.status(500).json({ message: '取得目前使用者資料失敗，請稍後再試' })
+      return res.status(500).json({ message: '取得使用者資料失敗' })
     }
   }
 }
