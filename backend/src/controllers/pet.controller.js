@@ -10,6 +10,10 @@ function parsePetId(id) {
   return parsedId
 }
 
+function isUniqueViolation(error) {
+  return error?.code === '23505'
+}
+
 export function createPetController(petService) {
   async function listPets(req, res) {
     try {
@@ -19,7 +23,7 @@ export function createPetController(petService) {
     } catch (error) {
       console.error(error)
 
-      return res.status(500).json({ message: 'Failed to fetch pets' })
+      return res.status(500).json({ message: '取得寵物列表失敗，請稍後再試' })
     }
   }
 
@@ -27,21 +31,21 @@ export function createPetController(petService) {
     const id = parsePetId(req.params.id)
 
     if (!id) {
-      return res.status(400).json({ message: 'Invalid pet id' })
+      return res.status(400).json({ message: '寵物 ID 格式不正確' })
     }
 
     try {
       const pet = await petService.findPetByIdAndUserId(id, req.userId)
 
       if (!pet) {
-        return res.status(404).json({ message: 'Pet not found' })
+        return res.status(404).json({ message: '找不到寵物' })
       }
 
       return res.status(200).json({ pet })
     } catch (error) {
       console.error(error)
 
-      return res.status(500).json({ message: 'Failed to fetch pet' })
+      return res.status(500).json({ message: '取得寵物資料失敗，請稍後再試' })
     }
   }
 
@@ -53,7 +57,11 @@ export function createPetController(petService) {
     } catch (error) {
       console.error(error)
 
-      return res.status(500).json({ message: 'Failed to create pet' })
+      if (isUniqueViolation(error)) {
+        return res.status(409).json({ message: '寵物晶片號碼已被使用' })
+      }
+
+      return res.status(500).json({ message: '建立寵物失敗，請稍後再試' })
     }
   }
 
@@ -61,21 +69,25 @@ export function createPetController(petService) {
     const id = parsePetId(req.params.id)
 
     if (!id) {
-      return res.status(400).json({ message: 'Invalid pet id' })
+      return res.status(400).json({ message: '寵物 ID 格式不正確' })
     }
 
     try {
       const pet = await petService.updatePetByIdAndUserId(id, req.userId, req.body)
 
       if (!pet) {
-        return res.status(404).json({ message: 'Pet not found' })
+        return res.status(404).json({ message: '找不到寵物' })
       }
 
       return res.status(200).json({ pet })
     } catch (error) {
       console.error(error)
 
-      return res.status(500).json({ message: 'Failed to update pet' })
+      if (isUniqueViolation(error)) {
+        return res.status(409).json({ message: '寵物晶片號碼已被使用' })
+      }
+
+      return res.status(500).json({ message: '更新寵物失敗，請稍後再試' })
     }
   }
 
@@ -83,21 +95,21 @@ export function createPetController(petService) {
     const id = parsePetId(req.params.id)
 
     if (!id) {
-      return res.status(400).json({ message: 'Invalid pet id' })
+      return res.status(400).json({ message: '寵物 ID 格式不正確' })
     }
 
     try {
       const deleted = await petService.deletePetByIdAndUserId(id, req.userId)
 
       if (!deleted) {
-        return res.status(404).json({ message: 'Pet not found' })
+        return res.status(404).json({ message: '找不到寵物' })
       }
 
       return res.status(204).send()
     } catch (error) {
       console.error(error)
 
-      return res.status(500).json({ message: 'Failed to delete pet' })
+      return res.status(500).json({ message: '刪除寵物失敗，請稍後再試' })
     }
   }
 

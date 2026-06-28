@@ -94,7 +94,58 @@ test('寵物不屬於已驗證使用者時應回傳 404', async () => {
   await getPet(req, res)
 
   assert.equal(res.statusCode, 404)
-  assert.deepEqual(res.body, { message: 'Pet not found' })
+  assert.deepEqual(res.body, { message: '找不到寵物' })
+})
+
+test('建立寵物時晶片號碼重複應回傳 409', async (t) => {
+  t.mock.method(console, 'error', () => {})
+
+  const { createPet } = createTestController({
+    createPetForUser: async () => {
+      const error = new Error('duplicate key value violates unique constraint')
+      error.code = '23505'
+      throw error
+    },
+  })
+  const req = {
+    userId: 42,
+    body: {
+      name: 'Oreo',
+      species: 'Dog',
+      microchip_number: 'chip-001',
+    },
+  }
+  const res = createResponse()
+
+  await createPet(req, res)
+
+  assert.equal(res.statusCode, 409)
+  assert.deepEqual(res.body, { message: '寵物晶片號碼已被使用' })
+})
+
+test('更新寵物時晶片號碼重複應回傳 409', async (t) => {
+  t.mock.method(console, 'error', () => {})
+
+  const { updatePet } = createTestController({
+    updatePetByIdAndUserId: async () => {
+      const error = new Error('duplicate key value violates unique constraint')
+      error.code = '23505'
+      throw error
+    },
+  })
+  const req = {
+    userId: 42,
+    params: { id: '4' },
+    body: {
+      microchip_number: 'chip-001',
+    },
+  }
+  const res = createResponse()
+
+  await updatePet(req, res)
+
+  assert.equal(res.statusCode, 409)
+  assert.deepEqual(res.body, { message: '寵物晶片號碼已被使用' })
 })
 
 test('應為已驗證使用者建立寵物', async () => {
