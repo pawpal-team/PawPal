@@ -32,7 +32,6 @@ async function handleSubmit() {
   <main class="login-form-page flex h-full items-center justify-center px-4 py-8 my-10">
     <form
       class="w-full max-w-[360px] rounded-[18px] bg-white px-8 py-7 shadow-[0_10px_35px_rgba(31,41,55,0.16)]"
-      action="submit"
       @submit.prevent="handleSubmit"
     >
       <header class="mb-7 flex flex-col items-center text-center">
