@@ -29,6 +29,10 @@ export const createCalendarEventSchema = z.object({
   notes: notesField,
 })
 
+export const calendarEventParamsSchema = z.object({
+  id: z.coerce.number().int().positive({ error: 'id 必須為正整數' }),
+})
+
 export const updateCalendarEventSchema = z.object({
   title: z.string().trim().min(1, { error: 'title 不得為空' }).optional(),
   eventDate: z
