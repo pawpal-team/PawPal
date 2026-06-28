@@ -6,9 +6,9 @@ const TOKEN_STORAGE_KEY = 'pawpal_token'
 const USER_STORAGE_KEY = 'pawpal_user'
 
 export const useAuthStore = defineStore('auth', () => {
-  const token = ref(localStorage.getItem(TOKEN_STORAGE_KEY) || '')
+  const token = ref(readStoredToken())
   const user = ref(readStoredUser())
-  const isLoggedIn = computed(() => Boolean(token.value))
+  const isLoggedIn = computed(() => isValidToken(token.value))
 
   function register(payload) {
     return registerApi(payload)
@@ -34,6 +34,18 @@ export const useAuthStore = defineStore('auth', () => {
     user.value = null
     localStorage.removeItem(TOKEN_STORAGE_KEY)
     localStorage.removeItem(USER_STORAGE_KEY)
+  }
+
+  function readStoredToken() {
+    const storedToken = localStorage.getItem(TOKEN_STORAGE_KEY) || ''
+
+    if (!isValidToken(storedToken)) {
+      localStorage.removeItem(TOKEN_STORAGE_KEY)
+      localStorage.removeItem(USER_STORAGE_KEY)
+      return ''
+    }
+
+    return storedToken
   }
 
   function readStoredUser() {
@@ -62,6 +74,31 @@ export const useAuthStore = defineStore('auth', () => {
       localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user.value))
     } else {
       localStorage.removeItem(USER_STORAGE_KEY)
+    }
+  }
+
+  function isValidToken(value) {
+    if (!value) {
+      return false
+    }
+
+    try {
+      const [, payload = ''] = value.split('.')
+
+      if (!payload) {
+        return false
+      }
+
+      const normalizedPayload = payload.replace(/-/g, '+').replace(/_/g, '/')
+      const decodedPayload = JSON.parse(atob(normalizedPayload))
+
+      if (typeof decodedPayload.exp !== 'number') {
+        return true
+      }
+
+      return decodedPayload.exp * 1000 > Date.now()
+    } catch {
+      return false
     }
   }
 
