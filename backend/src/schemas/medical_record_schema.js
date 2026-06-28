@@ -17,12 +17,12 @@ export const createRecordSchema = z.object({
         ? '請選擇紀錄類型'
         : '請選擇正確的紀錄類型（看診、疫苗、手術、用藥、體檢、其他）',
   }),
-  hospital_name: z.string().trim().max(100, { message: '醫院名稱太長（上限 100 字）' }).optional(),
+  hospital_name: z.string().trim().max(100, { message: '醫院名稱過長' }).optional(),
   title: z
     .string({ error: '請填寫標題' })
     .trim()
     .min(1, { message: '標題不能為空白' })
-    .max(200, { message: '標題太長（上限 200 字）' }),
+    .max(200, { message: '標題過長' }),
   record_date: z
     .string({ error: '請選擇日期' })
     .regex(dateRegex, { message: '請輸入正確的日期格式 (YYYY-MM-DD)' })
@@ -53,16 +53,12 @@ export const updateRecordSchema = z
         error: '請選擇正確的紀錄類型',
       })
       .optional(),
-    hospital_name: z
-      .string()
-      .trim()
-      .max(100, { message: '醫院名稱太長（上限 100 字）' })
-      .optional(),
+    hospital_name: z.string().trim().max(100, { message: '醫院名稱過長' }).optional(),
     title: z
       .string({ error: '請填寫標題' })
       .trim()
       .min(1, { message: '標題不能為空白' })
-      .max(200, { message: '標題太長（上限 200 字）' })
+      .max(200, { message: '標題過長' })
       .optional(),
     record_date: z
       .string()
