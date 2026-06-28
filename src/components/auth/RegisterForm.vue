@@ -1,8 +1,55 @@
+<script setup>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth.js'
+
+const router = useRouter()
+const authStore = useAuthStore()
+
+const name = ref('')
+const email = ref('')
+const password = ref('')
+const confirmPassword = ref('')
+const errorMessage = ref('')
+const successMessage = ref('')
+const isSubmitting = ref(false)
+
+async function handleSubmit() {
+  errorMessage.value = ''
+  successMessage.value = ''
+
+  if (password.value !== confirmPassword.value) {
+    errorMessage.value = '兩次輸入的密碼不一致'
+    return
+  }
+
+  isSubmitting.value = true
+
+  const result = await authStore.register({
+    name: name.value,
+    email: email.value,
+    password: password.value,
+  })
+
+  if (!result.success) {
+    errorMessage.value = result.message || '註冊失敗，請稍後再試'
+    isSubmitting.value = false
+    return
+  }
+
+  successMessage.value = result.message || '註冊成功'
+
+  window.setTimeout(() => {
+    router.push('/login')
+  }, 1000)
+}
+</script>
+
 <template>
   <main class="login-form-page flex h-full items-start justify-center px-4 pt-8 pb-10">
     <form
       class="w-full max-w-[360px] rounded-[18px] bg-white px-8 py-7 shadow-[0_10px_35px_rgba(31,41,55,0.16)]"
-      action="submit"
+      @submit.prevent="handleSubmit"
     >
       <header class="mb-7 flex flex-col items-center text-center">
         <h1 class="text-[22px] font-bold leading-tight text-brand-navy">加入PawPal</h1>
@@ -19,6 +66,7 @@
             type="text"
             placeholder="請輸入姓名"
             autocomplete="name"
+            v-model="name"
           />
         </label>
 
@@ -29,6 +77,7 @@
             type="email"
             placeholder="you@example.com"
             autocomplete="email"
+            v-model="email"
           />
         </label>
 
@@ -39,6 +88,7 @@
             type="password"
             placeholder="••••••••"
             autocomplete="current-password"
+            v-model="password"
           />
         </label>
 
@@ -49,15 +99,25 @@
             type="password"
             placeholder="••••••••"
             autocomplete="current-password"
+            v-model="confirmPassword"
           />
         </label>
       </div>
 
+      <p v-if="errorMessage" class="mt-4 text-center text-sm font-medium text-red-500">
+        {{ errorMessage }}
+      </p>
+
+      <p v-if="successMessage" class="mt-4 text-center text-sm font-medium text-green-600">
+        {{ successMessage }}
+      </p>
+
       <button
         class="mt-5 h-11 w-full rounded-xl bg-brand-orange text-[14px] font-bold text-brand-white shadow-[0_8px_18px_rgba(255,160,2,0.32)] transition hover:bg-[#e89000] focus:outline-none focus:ring-2 focus:ring-[#ffa002] focus:ring-offset-2"
         type="submit"
+        :disabled="isSubmitting"
       >
-        註冊
+        {{ isSubmitting ? '註冊中...' : '註冊' }}
       </button>
 
       <div class="my-6 flex items-center gap-3">

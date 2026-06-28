@@ -1,11 +1,30 @@
 <script setup>
 import { ref } from 'vue'
-const emit = defineEmits(['login'])
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth.js'
+
 const email = ref('')
 const password = ref('')
+const errorMessage = ref('')
+const isSubmitting = ref(false)
 
-function handleSubmit() {
-  emit('login', { email: email.value, password: password.value })
+const router = useRouter()
+const authStore = useAuthStore()
+
+async function handleSubmit() {
+  errorMessage.value = ''
+  isSubmitting.value = true
+
+  const result = await authStore.login(email.value, password.value)
+
+  if (!result.success) {
+    errorMessage.value = result.message || '登入失敗，請稍後再試'
+    isSubmitting.value = false
+    return
+  }
+
+  isSubmitting.value = false
+  router.push('/dashboard')
 }
 </script>
 
@@ -13,7 +32,6 @@ function handleSubmit() {
   <main class="login-form-page flex h-full items-center justify-center px-4 py-8 my-10">
     <form
       class="w-full max-w-[360px] rounded-[18px] bg-white px-8 py-7 shadow-[0_10px_35px_rgba(31,41,55,0.16)]"
-      action="submit"
       @submit.prevent="handleSubmit"
     >
       <header class="mb-7 flex flex-col items-center text-center">
@@ -47,11 +65,16 @@ function handleSubmit() {
         </label>
       </div>
 
+      <p v-if="errorMessage" class="mt-4 text-center text-sm font-medium text-red-500">
+        {{ errorMessage }}
+      </p>
+
       <button
         class="mt-5 h-11 w-full rounded-xl bg-brand-blue text-[14px] font-bold text-brand-white shadow-[0_8px_18px_rgba(146,168,245,0.36)] transition hover:bg-[#7F97EC] focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2"
         type="submit"
+        :disabled="isSubmitting"
       >
-        登入
+        {{ isSubmitting ? '登入中...' : '登入' }}
       </button>
 
       <div class="my-6 flex items-center gap-3">
