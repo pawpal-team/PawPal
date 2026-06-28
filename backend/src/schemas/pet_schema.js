@@ -30,7 +30,7 @@ const petFieldsSchema = {
   name: optionalStringField(100, '寵物名稱長度過長').refine((value) => value !== '', {
     error: '寵物名稱不可為空白',
   }),
-  species: optionalStringField(50, '物種長度過長').refine((value) => value !== '', {
+  species: optionalStringField(50, '物種字數過長').refine((value) => value !== '', {
     error: '物種不可為空白',
   }),
   breed: optionalStringField(100, '品種長度過長'),
@@ -48,7 +48,7 @@ const petFieldsSchema = {
 export const createPetSchema = z.object({
   ...petFieldsSchema,
   name: requiredStringField(createRequiredMessage, 100, '寵物名稱長度過長'),
-  species: requiredStringField(createRequiredMessage, 50, '物種長度過長'),
+  species: requiredStringField(createRequiredMessage, 50, '物種字數過長'),
 })
 
 export const updatePetSchema = z.object(petFieldsSchema).refine((value) => Object.keys(value).length > 0, {
