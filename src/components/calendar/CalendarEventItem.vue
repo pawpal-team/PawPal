@@ -1,7 +1,9 @@
 <script setup>
 import { computed } from 'vue'
 
-const props = defineProps({ events: Array })
+const props = defineProps({
+  events: { type: Array, default: () => [] },
+})
 
 const MAX = 3
 
