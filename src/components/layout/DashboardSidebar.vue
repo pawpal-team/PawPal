@@ -1,5 +1,6 @@
 <script setup>
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth.js'
 import { useSidebarStore } from '@/stores/sidebar'
 import home from '@/assets/icons/home.svg'
 import home_o from '@/assets/icons/home_o.svg'
@@ -15,9 +16,19 @@ import notice from '@/assets/icons/notice.svg'
 import notice_o from '@/assets/icons/notice_o.svg'
 import setting from '@/assets/icons/setting.svg'
 import setting_o from '@/assets/icons/setting_o.svg'
+import logoutIcon from '@/assets/icons/login.svg'
+
+const props = defineProps({
+  showDesktop: {
+    type: Boolean,
+    default: true,
+  },
+})
 
 const sidebarStore = useSidebarStore()
 const route = useRoute()
+const router = useRouter()
+const authStore = useAuthStore()
 
 function isActive(item) {
   return route.path === item.to
@@ -25,6 +36,12 @@ function isActive(item) {
 
 function getIcon(item) {
   return isActive(item) ? item.activeIcon : item.icon
+}
+
+function handleLogout() {
+  authStore.logout()
+  sidebarStore.closeSidebar()
+  router.push('/login')
 }
 
 const navItems = [
@@ -198,15 +215,14 @@ const navItems = [
               <div
                 class="flex items-center justify-center border-t border-brand-lightblue pt-[50px]"
               >
-                <!-- 導回首頁 -->
-                <RouterLink
-                  to="/"
-                  @click="sidebarStore.closeSidebar()"
+                <button
+                  type="button"
+                  @click="handleLogout"
                   class="flex items-center gap-1.5 text-base font-medium text-brand-gray active:text-brand-orange"
                 >
-                  <img src="@/assets/icons/login.svg" alt="Logout Icon" class="h-4 w-4" />
+                  <img :src="logoutIcon" alt="Logout Icon" class="h-4 w-4" />
                   登出
-                </RouterLink>
+                </button>
               </div>
             </li>
           </ul>
@@ -227,6 +243,7 @@ const navItems = [
 
   <!-- 電腦 -->
   <aside
+    v-if="props.showDesktop"
     class="hidden lg:flex fixed left-0 top-[68px] h-[calc(100vh-68px)] w-52 flex-col bg-[#ECF1FD] z-40"
   >
     <nav class="flex flex-1 flex-col py-6">
@@ -246,6 +263,16 @@ const navItems = [
           </router-link>
         </li>
       </ul>
+      <div class="mt-auto px-5 pt-6">
+        <button
+          type="button"
+          @click="handleLogout"
+          class="flex w-full items-center gap-3 px-1 py-3 text-base font-medium text-brand-gray hover:text-brand-orange"
+        >
+          <img :src="logoutIcon" alt="Logout Icon" class="h-5 w-5 shrink-0" />
+          登出
+        </button>
+      </div>
     </nav>
   </aside>
 </template>
