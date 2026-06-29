@@ -1,7 +1,9 @@
 <script setup>
+import { useAuthStore } from '@/stores/auth'
 import { useSidebarStore } from '@/stores/sidebar'
 
 const sidebarStore = useSidebarStore()
+const authStore = useAuthStore()
 </script>
 
 <template>
@@ -105,11 +107,11 @@ const sidebarStore = useSidebarStore()
 
         <section>
           <ul class="flex flex-col gap-4">
-            <li>
+            <li v-if="authStore.isLoggedIn">
               <span class="text-base font-bold tracking-wider text-brand-navy">會員專區</span>
             </li>
 
-            <li>
+            <li v-if="authStore.isLoggedIn">
               <a
                 href="#"
                 class="cursor-pointer px-3 text-sm font-medium text-brand-gray active:text-brand-orange"
@@ -121,14 +123,15 @@ const sidebarStore = useSidebarStore()
               <div
                 class="flex items-center justify-center gap-20 border-t border-brand-lightblue pt-[50px]"
               >
-                <a
-                  href="#"
+                <router-link
+                  to="/register"
+                  @click="sidebarStore.closeSidebar()"
                   class="cursor-pointer flex items-center gap-1.5 text-base font-medium text-brand-gray active:text-brand-orange"
                 >
                   <img src="@/assets/icons/register.svg" alt="Register Icon" class="h-4 w-4" />
 
                   註冊
-                </a>
+                </router-link>
 
                 <router-link
                   to="/login"

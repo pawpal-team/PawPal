@@ -3,6 +3,8 @@ import cors from 'cors'
 import userRoutes from './routes/user.routes.js'
 import authRoutes from './routes/auth.routes.js'
 import growthRecordsRoutes from './routes/growth_records.routes.js'
+import petRoutes from './routes/pet.routes.js'
+import medicalRecordRoutes from './routes/medical_record.routes.js'
 
 const app = express()
 const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || 'http://localhost:5173'
@@ -16,6 +18,8 @@ app.use(express.json())
 app.use('/api/users', userRoutes)
 app.use('/api/auth', authRoutes)
 app.use('/api/growth-records', growthRecordsRoutes)
+app.use('/api/pets', petRoutes)
+app.use('/api/medical-records', medicalRecordRoutes)
 
 app.get('/', (req, res) => {
   res.json({

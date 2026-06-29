@@ -1,15 +1,17 @@
 <script setup>
+import { computed } from 'vue'
 import { calendarEvents } from '@/data/calendarEvents'
 import { pets as rawPets } from '@/data/pets'
-import { mockUsers } from '@/data/user'
 import PetCard from '@/components/pet/PetCard.vue'
 import CalendarGrid from '@/components/calendar/CalendarGrid.vue'
 import EventList from '@/components/calendar/EventList.vue'
 import AppHeader from '@/components/layout/AppHeader.vue'
 import AppFooter from '@/components/layout/AppFooter.vue'
 import memberBanner from '@/assets/images/member_banner_dashboard.png'
+import { useAuthStore } from '@/stores/auth.js'
 
 const themeColors = ['green', 'orange', 'blue']
+const authStore = useAuthStore()
 
 const dashboardPets = rawPets.map((p) => ({
   ...p,
@@ -17,7 +19,7 @@ const dashboardPets = rawPets.map((p) => ({
   ageUnit: '',
 }))
 
-const userName = mockUsers[0]?.name ?? '使用者'
+const userName = computed(() => authStore.user?.name || '寵物家長')
 </script>
 
 <template>

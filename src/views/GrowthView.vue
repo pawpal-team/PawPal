@@ -1,6 +1,5 @@
 <script setup>
 import AppHeader from '@/components/layout/AppHeader.vue'
-import DashboardSidebar from '@/components/layout/DashboardSidebar.vue'
 import AppFooter from '@/components/layout/AppFooter.vue'
 import PetSwitcher from '@/components/pet/PetSwitcher.vue'
 import GrowthRangeTabs from '@/components/growth/GrowthRangeTabs.vue'
@@ -10,10 +9,7 @@ import GrowthChartCard from '@/components/growth/GrowthChartCard.vue'
 
 <template>
   <div class="min-h-screen bg-brand-white">
-    <AppHeader />
-    <div class="hidden lg:block">
-      <DashboardSidebar />
-    </div>
+    <AppHeader variant="member" />
     <div class="relative z-0 flex min-h-screen flex-col pt-14 lg:pt-17 lg:pl-52">
       <main class="min-w-0 flex-1 px-4 py-6 md:px-8 lg:px-10">
         <section class="mx-auto w-full">
