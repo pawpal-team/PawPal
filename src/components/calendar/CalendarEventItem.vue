@@ -44,7 +44,7 @@ const overflow = computed(() => Math.max(0, props.events.length - MAX))
       v-for="e in visible"
       :key="e.id"
       :style="{ background: colorMap[e.type] ?? colorMap.other }"
-      class="block w-full rounded text-white px-1 py-0.5 overflow-hidden whitespace-nowrap text-ellipsis leading-tight text-xs lg:text-sm text-center cursor-default select-none"
+      class="block w-full rounded text-white px-1 py-0.5 overflow-hidden whitespace-nowrap text-ellipsis leading-tight text-xs text-center cursor-default select-none"
     >
       {{ e.title }}
     </div>
