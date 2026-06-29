@@ -1,32 +1,113 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
-import { mockUsers } from '@/data/user.js'
+import { computed, ref } from 'vue'
+import { login as loginApi, register as registerApi } from '@/api/auth.js'
+
+const TOKEN_STORAGE_KEY = 'pawpal_token'
+const USER_STORAGE_KEY = 'pawpal_user'
 
 export const useAuthStore = defineStore('auth', () => {
-  const user = ref(null)
-  const isLoggedIn = ref(false)
+  const token = ref(readStoredToken())
+  const user = ref(readStoredUser())
+  const isLoggedIn = computed(() => isValidToken(token.value))
 
-  function login(email, password) {
-    const foundUser = mockUsers.find((user) => user.email === email && user.password === password)
+  function register(payload) {
+    return registerApi(payload)
+  }
 
-    if (foundUser) {
-      user.value = foundUser
-      isLoggedIn.value = true
-      return true
+  async function login(email, password) {
+    const result = await loginApi({ email, password })
+
+    if (!result.success) {
+      return result
     }
 
-    return false
+    token.value = result.data.token || ''
+    user.value = result.data.user || null
+
+    persistAuthState()
+
+    return result
   }
 
   function logout() {
+    token.value = ''
     user.value = null
-    isLoggedIn.value = false
+    localStorage.removeItem(TOKEN_STORAGE_KEY)
+    localStorage.removeItem(USER_STORAGE_KEY)
+  }
+
+  function readStoredToken() {
+    const storedToken = localStorage.getItem(TOKEN_STORAGE_KEY) || ''
+
+    if (!isValidToken(storedToken)) {
+      localStorage.removeItem(TOKEN_STORAGE_KEY)
+      localStorage.removeItem(USER_STORAGE_KEY)
+      return ''
+    }
+
+    return storedToken
+  }
+
+  function readStoredUser() {
+    const rawUser = localStorage.getItem(USER_STORAGE_KEY)
+
+    if (!rawUser) {
+      return null
+    }
+
+    try {
+      return JSON.parse(rawUser)
+    } catch {
+      localStorage.removeItem(USER_STORAGE_KEY)
+      return null
+    }
+  }
+
+  function persistAuthState() {
+    if (token.value) {
+      localStorage.setItem(TOKEN_STORAGE_KEY, token.value)
+    } else {
+      localStorage.removeItem(TOKEN_STORAGE_KEY)
+    }
+
+    if (user.value) {
+      localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user.value))
+    } else {
+      localStorage.removeItem(USER_STORAGE_KEY)
+    }
+  }
+
+  function isValidToken(value) {
+    if (!value) {
+      return false
+    }
+
+    try {
+      const [, payload = ''] = value.split('.')
+
+      if (!payload) {
+        return false
+      }
+
+      const normalizedPayload = payload.replace(/-/g, '+').replace(/_/g, '/')
+      const decodedPayload = JSON.parse(atob(normalizedPayload))
+
+      if (typeof decodedPayload.exp !== 'number') {
+        return true
+      }
+
+      return decodedPayload.exp * 1000 > Date.now()
+    } catch {
+      return false
+    }
   }
 
   return {
+    token,
     user,
     isLoggedIn,
     login,
+    register,
     logout,
   }
 })

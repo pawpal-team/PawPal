@@ -13,7 +13,7 @@ export async function register(req, res) {
 
     if (existingUser) {
       return res.status(409).json({
-        message: 'Email already exists',
+        message: '此 Email 已被註冊',
       })
     }
 
@@ -25,14 +25,14 @@ export async function register(req, res) {
     })
 
     return res.status(201).json({
-      message: 'Register successful',
+      message: '註冊成功',
       user,
     })
   } catch (error) {
     console.error(error)
 
     return res.status(500).json({
-      message: 'Failed to register user',
+      message: '註冊失敗，請稍後再試',
     })
   }
 }
@@ -45,7 +45,7 @@ export async function login(req, res) {
 
     if (!user) {
       return res.status(401).json({
-        message: 'Invalid email or password',
+        message: '帳號或密碼錯誤',
       })
     }
 
@@ -53,7 +53,7 @@ export async function login(req, res) {
 
     if (!isPasswordValid) {
       return res.status(401).json({
-        message: 'Invalid email or password',
+        message: '帳號或密碼錯誤',
       })
     }
 
@@ -61,7 +61,7 @@ export async function login(req, res) {
       console.error('JWT_SECRET is not configured')
 
       return res.status(500).json({
-        message: 'Failed to login',
+        message: '登入失敗，請稍後再試',
       })
     }
 
@@ -75,7 +75,7 @@ export async function login(req, res) {
     )
 
     return res.status(200).json({
-      message: 'Login successful',
+      message: '登入成功',
       token,
       user: {
         id: user.id,
@@ -89,7 +89,7 @@ export async function login(req, res) {
     console.error(error)
 
     return res.status(500).json({
-      message: 'Failed to login',
+      message: '登入失敗，請稍後再試',
     })
   }
 }

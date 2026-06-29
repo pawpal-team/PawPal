@@ -4,7 +4,7 @@ export function validate(schema, target = 'body') {
 
     if (!result.success) {
       return res.status(400).json({
-        message: result.error.issues[0]?.message || 'Invalid request data',
+        message: result.error.issues[0]?.message || '請求資料格式錯誤',
       })
     }
 
