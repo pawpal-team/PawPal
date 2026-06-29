@@ -30,7 +30,7 @@ function getIcon(item) {
 const navItems = [
   { key: 'home', icon: home, activeIcon: home_o, label: '首頁', to: '/dashboard' },
   { key: 'map', icon: location, activeIcon: location_o, label: '醫院地圖' },
-  { key: 'records', icon: diagnostic, activeIcon: diagnostic_o, label: '病歷紀錄', to: '/medical' },
+  { key: 'records', icon: diagnostic, activeIcon: diagnostic_o, label: '醫療紀錄', to: '/medical' },
   { key: 'growth', icon: growth, activeIcon: growth_o, label: '成長歷程', to: '/growth' },
   { key: 'profile', icon: petIcon, activeIcon: petIcon_o, label: '基本資料' },
   { key: 'notifications', icon: notice, activeIcon: notice_o, label: '通知中心' },
@@ -167,7 +167,7 @@ const navItems = [
               <router-link
                 to="/medical"
                 class="px-3 text-sm font-medium text-brand-gray active:text-brand-orange"
-                >病歷紀錄</router-link
+                >醫療紀錄</router-link
               >
             </li>
 
