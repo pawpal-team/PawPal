@@ -15,7 +15,7 @@ import PetSwitcher from '@/components/pet/PetSwitcher.vue'
         <section class="mx-auto w-full">
           <PetSwitcher />
           <div class="mb-2 flex items-center justify-between gap-4 md:mb-6">
-            <h1 class="text-xl font-bold text-brand-navy md:text-2xl">病歷紀錄</h1>
+            <h1 class="text-xl font-bold text-brand-navy md:text-2xl">醫療紀錄</h1>
             <AddMedicalButton />
           </div>
           <div
