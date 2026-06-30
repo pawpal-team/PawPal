@@ -109,7 +109,7 @@ const handleFileChange = (event) => {
               {{ isEditMode ? '編輯醫療紀錄' : '新增醫療紀錄' }}
             </h2>
             <span class="text-xs text-brand-gray pt-1">
-              {{ isEditMode ? '修改您的寵物資料' : '為您的寵物建立新的健康檔案' }}
+              {{ isEditMode ? '修改您的紀錄資料' : '為您的寵物建立新的醫療紀錄' }}
             </span>
           </div>
           <button
