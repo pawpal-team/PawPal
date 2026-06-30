@@ -1,10 +1,30 @@
 <script setup>
+import { ref } from 'vue'
 import AppHeader from '@/components/layout/AppHeader.vue'
 import AppFooter from '@/components/layout/AppFooter.vue'
 import MedicalFilterTabs from '@/components/medical/MedicalFilterTabs.vue'
 import MedicalTimeline from '@/components/medical/MedicalTimeline.vue'
 import AddMedicalButton from '@/components/medical/AddMedicalButton.vue'
 import PetSwitcher from '@/components/pet/PetSwitcher.vue'
+import AddMedicalModal from '@/components/medical/MedicalRecordModal.vue'
+
+const isModalOpen = ref(false)
+const selectedRecord = ref(null)
+
+const openAddModal = () => {
+  selectedRecord.value = null
+  isModalOpen.value = true
+}
+
+const openEditModal = (record) => {
+  selectedRecord.value = record
+  isModalOpen.value = true
+}
+
+const onModalSubmit = ({ mode, data }) => {
+  console.log('表單送出成功，模式：', mode, '資料：', data)
+  isModalOpen.value = false
+}
 </script>
 
 <template>
@@ -16,7 +36,7 @@ import PetSwitcher from '@/components/pet/PetSwitcher.vue'
           <PetSwitcher />
           <div class="mb-2 flex items-center justify-between gap-4 md:mb-6">
             <h1 class="text-xl font-bold text-brand-navy md:text-2xl">病歷紀錄</h1>
-            <AddMedicalButton />
+            <AddMedicalButton @click="openAddModal" />
           </div>
           <div
             class="overflow-hidden rounded-3xl border border-brand-lightblue bg-brand-white shadow-[0_8px_28px_rgba(61,74,122,0.08)]"
@@ -25,12 +45,18 @@ import PetSwitcher from '@/components/pet/PetSwitcher.vue'
               <MedicalFilterTabs />
             </div>
             <div class="py-3 md:py-6">
-              <MedicalTimeline />
+              <MedicalTimeline @edit-record="openEditModal" />
             </div>
           </div>
         </section>
       </main>
     </div>
     <AppFooter class="lg:hidden" />
+    <AddMedicalModal
+      :is-open="isModalOpen"
+      :initial-data="selectedRecord"
+      @close="isModalOpen = false"
+      @submit="onModalSubmit"
+    />
   </div>
 </template>
