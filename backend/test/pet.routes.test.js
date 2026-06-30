@@ -45,7 +45,7 @@ test('寵物請求 body 應在進入 controller 前驗證', () => {
   assert.equal(updateRoute.middleware.length, 3)
 })
 
-test('應將寵物路由掛載在 /api/pets', () => {
+test('應將寵物路由掛載在 /api/v1/pets', () => {
   const hasPetsRouter = app.router.stack.some((layer) => layer.handle === petRoutes)
 
   assert.equal(hasPetsRouter, true)
