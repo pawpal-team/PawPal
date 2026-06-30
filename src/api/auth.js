@@ -25,9 +25,9 @@ async function request(path, payload) {
 }
 
 export function register(payload) {
-  return request('/api/auth/register', payload)
+  return request('/api/v1/auth/register', payload)
 }
 
 export function login(payload) {
-  return request('/api/auth/login', payload)
+  return request('/api/v1/auth/login', payload)
 }
