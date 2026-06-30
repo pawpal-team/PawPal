@@ -18,7 +18,7 @@ test('growth records 路由結構正確', () => {
   ])
 })
 
-test('growth records 路由掛載在 /api/growth-records', () => {
+test('growth records 路由掛載在 /api/v1/growth-records', () => {
   const hasMounted = app.router.stack.some((layer) => layer.handle === growthRecordsRoutes)
   assert.equal(hasMounted, true)
 })
