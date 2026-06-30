@@ -6,7 +6,7 @@ import {
   findRecordById as findRecordByIdService,
   updateRecord as updateRecordService,
   deleteRecord as deleteRecordService,
-} from '../services/medical_record.service.js'
+} from '../services/medical_records.service.js'
 
 function getUserId(req) {
   const userId = req.userId || req.user?.id

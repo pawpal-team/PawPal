@@ -9,7 +9,7 @@ import {
   findRecordById,
   updateRecord,
   deleteRecord,
-} from '../src/services/medical_record.service.js'
+} from '../src/services/medical_records.service.js'
 
 test('checkPetOwnership 應透過 userId 與 petId 驗證寵物所有權', async (t) => {
   const query = t.mock.method(pool, 'query', async (text, values) => {

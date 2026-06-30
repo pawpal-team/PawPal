@@ -10,7 +10,7 @@ import { validate } from '../middlewares/validate.js'
 import {
   createGrowthRecordSchema,
   updateGrowthRecordSchema,
-} from '../schemas/growth_record_schema.js'
+} from '../schemas/growth_records.schema.js'
 
 const router = Router()
 

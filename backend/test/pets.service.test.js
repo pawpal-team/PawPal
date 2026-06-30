@@ -8,7 +8,7 @@ import {
   findPetByIdAndUserId,
   findPetsByUserId,
   updatePetByIdAndUserId,
-} from '../src/services/pet.service.js'
+} from '../src/services/pets.service.js'
 
 test('findPetsByUserId 應只查詢使用者擁有的寵物', async (t) => {
   const rows = [{ id: 1, user_id: 1, name: 'Momo' }]

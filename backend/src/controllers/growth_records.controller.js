@@ -1,5 +1,5 @@
 import * as defaultGrowthRecordsService from '../services/growth_records.service.js'
-import { METRIC_TYPES } from '../schemas/growth_record_schema.js'
+import { METRIC_TYPES } from '../schemas/growth_records.schema.js'
 
 export function createGrowthRecordsController(growthRecordsService) {
   async function getGrowthRecords(req, res) {

@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
 import app from '../src/app.js'
-import growthRecordsRoutes from '../src/routes/growth_records.routes.js'
+import growthRecordsRoutes from '../src/routes/growth_records.route.js'
 
 test('growth records 路由結構正確', () => {
   const routes = growthRecordsRoutes.stack.map((layer) => ({
