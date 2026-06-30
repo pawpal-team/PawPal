@@ -1,10 +1,11 @@
 <script setup>
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import { calendarEvents } from '@/data/calendarEvents'
 import { pets as rawPets } from '@/data/pets'
 import PetCard from '@/components/pet/PetCard.vue'
 import CalendarGrid from '@/components/calendar/CalendarGrid.vue'
 import EventList from '@/components/calendar/EventList.vue'
+import AddEventModal from '@/components/calendar/AddEventModal.vue'
 import AppHeader from '@/components/layout/AppHeader.vue'
 import AppFooter from '@/components/layout/AppFooter.vue'
 import memberBanner from '@/assets/images/member_banner_dashboard.png'
@@ -12,6 +13,18 @@ import { useAuthStore } from '@/stores/auth.js'
 
 const themeColors = ['green', 'orange', 'blue']
 const authStore = useAuthStore()
+
+const showAddModal = ref(false)
+const addModalDate = ref('')
+
+const openAddModal = (date = '') => {
+  addModalDate.value = date
+  showAddModal.value = true
+}
+
+const handleAddSubmit = (payload) => {
+  showAddModal.value = false
+}
 
 const dashboardPets = rawPets.map((p) => ({
   ...p,
@@ -44,12 +57,12 @@ const userName = computed(() => authStore.user?.name || '寵物家長')
 
     <div class="w-full px-4 lg:px-8 pb-16 mt-2 md:mt-6">
       <div class="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-6 lg:gap-x-6 lg:gap-y-8">
-        <CalendarGrid />
+        <CalendarGrid @open-add-modal="openAddModal" />
 
         <div
           class="min-h-0 min-w-0 overflow-y-auto overflow-x-hidden rounded-3xl border border-brand-lightblue bg-brand-white shadow-[0_8px_28px_rgba(61,74,122,0.08)] p-4"
         >
-          <EventList :events="calendarEvents" :compact="true" />
+          <EventList :events="calendarEvents" :compact="true" @add="openAddModal()" />
         </div>
 
         <section class="lg:col-span-2 min-w-0">
@@ -75,4 +88,10 @@ const userName = computed(() => authStore.user?.name || '寵物家長')
   </div>
 
   <AppFooter class="lg:hidden" />
+  <AddEventModal
+    :is-open="showAddModal"
+    :selected-date="addModalDate"
+    @close="showAddModal = false"
+    @submit="handleAddSubmit"
+  />
 </template>
