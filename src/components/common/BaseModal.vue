@@ -229,7 +229,7 @@ const handleFileChange = (event) => {
             </button>
             <button
               type="submit"
-              class="cursor-pointer rounded-xl bg-brand-blue px-6 py-2.5 text-sm font-semibold text-white shadow-md shadow-brand-blue/20 transition duration-200 hover:bg-brand-blue/90 hover:shadow-lg active:scale-95"
+              class="cursor-pointer rounded-xl bg-brand-blue px-6 py-2.5 text-sm font-semibold text-white shadow-md shadow-brand-blue/20 transition duration-200 hover:bg-[#7b94ee] hover:shadow-lg active:scale-95"
             >
               確認送出
             </button>
