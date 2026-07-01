@@ -125,9 +125,6 @@ function goToToday() {
 
 function selectCell(index) {
   selectedIndex.value = index
-  if (window.innerWidth < 1024) {
-    emit('open-add-modal', calendarCells.value[index].fullDate)
-  }
 }
 </script>
 <template>

@@ -4,12 +4,10 @@ import { usePetStore } from '@/stores/petStore'
 
 const props = defineProps({
   isOpen: { type: Boolean, default: false },
-  title: { type: String, default: '新增寵物行程' },
-  subtitle: { type: String, default: '' },
-  selectedDate: { type: String, default: '' },
+  event: { type: Object, default: null },
 })
 
-const emit = defineEmits(['close', 'submit'])
+const emit = defineEmits(['close', 'submit', 'delete'])
 
 const { pets } = usePetStore()
 
@@ -37,19 +35,12 @@ const timeOptions = (() => {
 const form = ref({
   title: '',
   petId: '',
-  date: props.selectedDate || '',
+  date: '',
   time: '',
   location: '',
   type: '看診',
   notes: '',
 })
-
-watch(
-  () => props.selectedDate,
-  (val) => {
-    form.value.date = val || ''
-  },
-)
 
 // 將 YYYY-MM-DD 轉換為顯示用的 YYYY / MM / DD
 const displayDate = computed(() => {
@@ -58,27 +49,27 @@ const displayDate = computed(() => {
   return `${y} / ${m} / ${d}`
 })
 
-const resetForm = () => {
-  form.value = {
-    title: '',
-    petId: '',
-    date: props.selectedDate || '',
-    time: '',
-    location: '',
-    type: '看診',
-    notes: '',
-  }
-}
+// event prop 帶入時，自動填入表單
+watch(
+  () => props.event,
+  (val) => {
+    if (!val) return
+    form.value = {
+      title: val.title ?? '',
+      petId: val.petId ?? val.pet_id ?? '',
+      date: val.date ?? val.event_date ?? '',
+      time: val.time ?? val.event_time ?? '',
+      location: val.location ?? '',
+      type: val.type ?? '看診',
+      notes: val.notes ?? '',
+    }
+  },
+  { immediate: true },
+)
 
-const handleClose = () => {
-  resetForm()
-  emit('close')
-}
-
-const handleSubmit = () => {
-  emit('submit', { ...form.value })
-  resetForm()
-}
+const handleClose = () => emit('close')
+const handleDelete = () => emit('delete', props.event)
+const handleSubmit = () => emit('submit', { ...form.value })
 </script>
 
 <template>
@@ -93,10 +84,7 @@ const handleSubmit = () => {
       >
         <!-- 頂部標頭 -->
         <div class="flex items-start justify-between">
-          <div class="flex flex-col gap-1">
-            <h2 class="text-2xl font-bold tracking-wide text-brand-navy">{{ title }}</h2>
-            <span v-if="subtitle" class="pt-1 text-xs text-brand-gray">{{ subtitle }}</span>
-          </div>
+          <h2 class="text-2xl font-bold tracking-wide text-brand-navy">編輯寵物行程</h2>
           <button
             type="button"
             @click="handleClose"
@@ -261,20 +249,32 @@ const handleSubmit = () => {
           </div>
 
           <!-- 底部按鈕 -->
-          <div class="mt-2 flex items-center justify-end gap-3 border-t border-slate-100 pt-4">
+          <div class="mt-2 flex items-center justify-between gap-3 border-t border-slate-100 pt-4">
+            <!-- 左側：刪除 -->
             <button
               type="button"
-              @click="handleClose"
-              class="cursor-pointer rounded-xl border border-slate-200 px-6 py-2.5 text-sm font-semibold text-slate-500 transition duration-200 hover:bg-slate-50 hover:text-slate-700 active:scale-95"
+              @click="handleDelete"
+              class="cursor-pointer rounded-xl border border-red-200 px-6 py-2.5 text-sm font-semibold text-red-400 transition duration-200 hover:bg-red-50 hover:text-red-600 active:scale-95"
             >
-              取消
+              刪除
             </button>
-            <button
-              type="submit"
-              class="cursor-pointer rounded-xl bg-brand-blue px-6 py-2.5 text-sm font-bold text-white shadow-md shadow-brand-blue/20 transition duration-200 hover:bg-[#7b94ee] hover:shadow-lg active:scale-95"
-            >
-              新增
-            </button>
+
+            <!-- 右側：取消 + 儲存 -->
+            <div class="flex items-center gap-3">
+              <button
+                type="button"
+                @click="handleClose"
+                class="cursor-pointer rounded-xl border border-slate-200 px-6 py-2.5 text-sm font-semibold text-slate-500 transition duration-200 hover:bg-slate-50 hover:text-slate-700 active:scale-95"
+              >
+                取消
+              </button>
+              <button
+                type="submit"
+                class="cursor-pointer rounded-xl bg-brand-blue px-6 py-2.5 text-sm font-bold text-white shadow-md shadow-brand-blue/20 transition duration-200 hover:bg-[#7b94ee] hover:shadow-lg active:scale-95"
+              >
+                儲存
+              </button>
+            </div>
           </div>
         </form>
       </div>

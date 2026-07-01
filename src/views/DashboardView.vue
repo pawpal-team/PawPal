@@ -6,6 +6,7 @@ import PetCard from '@/components/pet/PetCard.vue'
 import CalendarGrid from '@/components/calendar/CalendarGrid.vue'
 import EventList from '@/components/calendar/EventList.vue'
 import AddEventModal from '@/components/calendar/AddEventModal.vue'
+import EditEventModal from '@/components/calendar/EditEventModal.vue'
 import AppHeader from '@/components/layout/AppHeader.vue'
 import AppFooter from '@/components/layout/AppFooter.vue'
 import memberBanner from '@/assets/images/member_banner_dashboard.png'
@@ -24,6 +25,22 @@ const openAddModal = (date = '') => {
 
 const handleAddSubmit = (payload) => {
   showAddModal.value = false
+}
+
+const showEditModal = ref(false)
+const editingEvent = ref(null)
+
+const openEditModal = (event) => {
+  editingEvent.value = event
+  showEditModal.value = true
+}
+
+const handleEditSubmit = (payload) => {
+  showEditModal.value = false
+}
+
+const handleEditDelete = (event) => {
+  showEditModal.value = false
 }
 
 const dashboardPets = rawPets.map((p) => ({
@@ -62,7 +79,7 @@ const userName = computed(() => authStore.user?.name || '寵物家長')
         <div
           class="min-h-0 min-w-0 overflow-y-auto overflow-x-hidden rounded-3xl border border-brand-lightblue bg-brand-white shadow-[0_8px_28px_rgba(61,74,122,0.08)] p-4"
         >
-          <EventList :events="calendarEvents" :compact="true" @add="openAddModal()" />
+          <EventList :events="calendarEvents" :compact="true" @add="openAddModal()" @edit="openEditModal" />
         </div>
 
         <section class="lg:col-span-2 min-w-0">
@@ -93,5 +110,12 @@ const userName = computed(() => authStore.user?.name || '寵物家長')
     :selected-date="addModalDate"
     @close="showAddModal = false"
     @submit="handleAddSubmit"
+  />
+  <EditEventModal
+    :is-open="showEditModal"
+    :event="editingEvent"
+    @close="showEditModal = false"
+    @submit="handleEditSubmit"
+    @delete="handleEditDelete"
   />
 </template>
