@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, computed, watch } from 'vue'
 
 const props = defineProps({
   isOpen: { type: Boolean, default: false },
@@ -12,12 +12,22 @@ const emit = defineEmits(['close', 'submit'])
 const form = ref({
   record_date: new Date().toISOString().substring(0, 10),
   weight: '',
-  body_length: '',
+  length: '',
   food_intake: '',
   water_frequency: '',
   urination: '',
   defecation: '',
 })
+
+const hasAtLeastOne = computed(
+  () =>
+    form.value.weight !== '' ||
+    form.value.length !== '' ||
+    form.value.food_intake !== '' ||
+    form.value.water_frequency !== '' ||
+    form.value.urination !== '' ||
+    form.value.defecation !== '',
+)
 
 watch(
   () => props.isOpen,
@@ -26,7 +36,7 @@ watch(
       form.value = {
         record_date: new Date().toISOString().substring(0, 10),
         weight: '',
-        body_length: '',
+        length: '',
         food_intake: '',
         water_frequency: '',
         urination: '',
@@ -42,7 +52,7 @@ const handleSubmit = () => {
   emit('submit', {
     record_date: form.value.record_date,
     weight: form.value.weight !== '' ? Number(form.value.weight) : null,
-    body_length: form.value.body_length !== '' ? Number(form.value.body_length) : null,
+    length: form.value.length !== '' ? Number(form.value.length) : null,
     food_intake: form.value.food_intake !== '' ? Number(form.value.food_intake) : null,
     water_frequency: form.value.water_frequency !== '' ? Number(form.value.water_frequency) : null,
     urination: form.value.urination !== '' ? Number(form.value.urination) : null,
@@ -117,10 +127,9 @@ const handleSubmit = () => {
                 身體長度
                 <span class="text-xs font-normal text-brand-gray/50">（選填）</span>
               </label>
-
               <div class="relative">
                 <input
-                  v-model="form.body_length"
+                  v-model="form.length"
                   type="number"
                   min="0"
                   step="0.1"
@@ -141,7 +150,6 @@ const handleSubmit = () => {
                 進食量
                 <span class="text-xs font-normal text-brand-gray/50">（選填）</span>
               </label>
-
               <div class="relative">
                 <input
                   v-model="form.food_intake"
@@ -234,7 +242,13 @@ const handleSubmit = () => {
             </button>
             <button
               type="submit"
-              class="cursor-pointer rounded-xl bg-brand-blue px-6 py-2.5 text-sm font-semibold text-white shadow-md shadow-brand-blue/20 transition duration-200 hover:bg-brand-blue/80 hover:shadow-lg active:scale-95"
+              :disabled="!hasAtLeastOne"
+              :class="[
+                'rounded-xl px-6 py-2.5 text-sm font-semibold text-white shadow-md transition duration-200',
+                hasAtLeastOne
+                  ? 'cursor-pointer bg-brand-orange shadow-brand-orange/20 hover:bg-[#ee9300] hover:shadow-lg active:scale-95'
+                  : 'cursor-not-allowed bg-slate-300 shadow-none',
+              ]"
             >
               新增紀錄
             </button>
