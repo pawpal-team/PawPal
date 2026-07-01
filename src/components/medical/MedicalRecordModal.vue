@@ -130,7 +130,7 @@ const handleFileChange = (event) => {
             <input
               v-model="form.title"
               type="text"
-              placeholder="輸入醫療紀錄標題（必填）"
+              placeholder="請輸入醫療紀錄標題（必填）"
               class="w-full rounded-2xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-sm text-brand-darkgray placeholder-brand-gray/40 outline-none transition duration-200 hover:border-brand-blue hover:bg-brand-blue/5 focus:border-brand-blue focus:bg-brand-white focus:ring-4 focus:ring-brand-blue/10"
               required
             />
@@ -174,7 +174,7 @@ const handleFileChange = (event) => {
               <input
                 v-model="form.hospital_name"
                 type="text"
-                placeholder="醫院名稱（選填）"
+                placeholder="請輸入醫療院所名稱"
                 class="w-full rounded-2xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-sm text-brand-darkgray placeholder-brand-gray/40 outline-none transition duration-200 hover:border-brand-blue hover:bg-brand-blue/5 focus:border-brand-blue focus:bg-white focus:ring-4 focus:ring-brand-blue/10"
               />
             </div>
