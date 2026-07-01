@@ -10,7 +10,7 @@ const props = defineProps({
 const emit = defineEmits(['close', 'submit'])
 
 const form = ref({
-  record_date: new Date().toISOString().substring(0, 10),
+  record_date: new Date(),
   weight: '',
   length: '',
   food_intake: '',
@@ -34,7 +34,7 @@ watch(
   (newVal) => {
     if (newVal) {
       form.value = {
-        record_date: new Date().toISOString().substring(0, 10),
+        record_date: new Date(),
         weight: '',
         length: '',
         food_intake: '',
@@ -49,8 +49,18 @@ watch(
 const handleClose = () => emit('close')
 
 const handleSubmit = () => {
+  let formattedDate = ''
+  if (form.value.record_date instanceof Date) {
+    const y = form.value.record_date.getFullYear()
+    const m = String(form.value.record_date.getMonth() + 1).padStart(2, '0')
+    const d = String(form.value.record_date.getDate()).padStart(2, '0')
+    formattedDate = `${y}-${m}-${d}`
+  } else {
+    formattedDate = form.value.record_date.substring(0, 10)
+  }
+
   emit('submit', {
-    record_date: form.value.record_date,
+    record_date: formattedDate,
     weight: form.value.weight !== '' ? Number(form.value.weight) : null,
     length: form.value.length !== '' ? Number(form.value.length) : null,
     food_intake: form.value.food_intake !== '' ? Number(form.value.food_intake) : null,
@@ -92,12 +102,28 @@ const handleSubmit = () => {
               記錄日期
               <span class="text-red-600 font-normal">*</span>
             </label>
-            <input
+            <VDatePicker
               v-model="form.record_date"
-              type="date"
-              required
-              class="w-full rounded-2xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-sm text-brand-darkgray outline-none transition duration-200 hover:border-brand-blue hover:bg-brand-blue/5 focus:border-brand-blue focus:bg-white focus:ring-4 focus:ring-brand-blue/10 cursor-pointer"
-            />
+              :masks="{ input: 'YYYY-MM-DD' }"
+              color="orange"
+              :popover="{ visibility: 'click', placement: 'bottom-start' }"
+            >
+              <template #default="{ inputValue, inputEvents }">
+                <div class="relative">
+                  <input
+                    :value="inputValue"
+                    v-on="inputEvents"
+                    placeholder="請選擇記錄日期"
+                    class="w-full rounded-2xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-sm text-brand-darkgray placeholder-brand-gray/40 outline-none transition duration-200 hover:border-brand-blue hover:bg-brand-blue/5 focus:border-brand-blue focus:bg-white focus:ring-4 focus:ring-brand-blue/10 cursor-pointer"
+                    readonly
+                  />
+                  <span
+                    class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-brand-gray text-xs"
+                    >▼</span
+                  >
+                </div>
+              </template>
+            </VDatePicker>
           </div>
 
           <div class="grid grid-cols-2 gap-4">
