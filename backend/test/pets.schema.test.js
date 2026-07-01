@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import { createPetSchema, updatePetSchema } from '../src/schemas/pet_schema.js'
+import { createPetSchema, updatePetSchema } from '../src/schemas/pets.schema.js'
 
 test('建立寵物 schema 應修剪可寫入字串欄位', () => {
   const result = createPetSchema.safeParse({

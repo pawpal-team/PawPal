@@ -7,7 +7,7 @@ import {
   createGetSingleRecord,
   createUpdateRecord,
   createDeleteRecord,
-} from '../src/controllers/medical_record.controller.js'
+} from '../src/controllers/medical_records.controller.js'
 
 function createMockResponse() {
   return {

@@ -12,22 +12,22 @@ async function request(path, payload) {
 
     return {
       success: true,
-      message: response.data?.message || 'Request successful',
+      message: response.data?.message || '請求成功',
       data: response.data,
     }
   } catch (error) {
     return {
       success: false,
-      message: error.response?.data?.message || 'Unable to connect to server',
+      message: error.response?.data?.message || '無法連線到伺服器',
       data: error.response?.data || null,
     }
   }
 }
 
 export function register(payload) {
-  return request('/api/auth/register', payload)
+  return request('/api/v1/auth/register', payload)
 }
 
 export function login(payload) {
-  return request('/api/auth/login', payload)
+  return request('/api/v1/auth/login', payload)
 }

@@ -1,4 +1,4 @@
-import * as defaultPetService from '../services/pet.service.js'
+import * as defaultPetService from '../services/pets.service.js'
 
 function parsePetId(id) {
   const parsedId = Number(id)
