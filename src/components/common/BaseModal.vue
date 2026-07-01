@@ -22,10 +22,12 @@ const form = ref({
   fur_color: '',
   notes: '',
   avatar_url: '',
+  photo_files: [],
 })
 
 const speciesOptions = ['狗', '貓', '其他']
 const genderOptions = ['公', '母', '未知']
+const fileInputRef = ref(null)
 
 const inputClass =
   'w-full rounded-2xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-sm text-brand-darkgray placeholder-brand-gray/40 outline-none transition duration-200 hover:border-brand-blue hover:bg-brand-blue/5 focus:border-brand-blue focus:bg-white focus:ring-4 focus:ring-brand-blue/10'
@@ -44,6 +46,7 @@ const resetForm = () => {
     fur_color: '',
     notes: '',
     avatar_url: '',
+    photo_files: [],
   }
 }
 
@@ -76,6 +79,20 @@ const handleSubmit = () => {
 
   emit('submit', payload)
   resetForm()
+}
+
+const triggerFileInput = () => fileInputRef.value?.click()
+
+const setPhotoFiles = (files) => {
+  form.value.photo_files = Array.from(files ?? [])
+}
+
+const handleFileChange = (event) => {
+  setPhotoFiles(event.target.files)
+}
+
+const handleDrop = (event) => {
+  setPhotoFiles(event.dataTransfer?.files)
 }
 </script>
 
@@ -139,7 +156,7 @@ const handleSubmit = () => {
               <input
                 v-model="form.breed"
                 type="text"
-                placeholder="例如：米克斯犬"
+                placeholder="例如：傑克羅素"
                 :class="inputClass"
               />
             </div>
@@ -224,13 +241,48 @@ const handleSubmit = () => {
           </div>
 
           <div class="flex flex-col gap-2">
-            <label class="text-base font-bold text-brand-navy">照片網址</label>
+            <label class="text-base font-bold text-brand-navy">
+              上傳寵物大頭貼
+              <span class="text-xs font-normal text-brand-gray/50"></span>
+            </label>
             <input
-              v-model="form.avatar_url"
-              type="url"
-              placeholder="請輸入照片網址"
-              :class="inputClass"
+              ref="fileInputRef"
+              type="file"
+              multiple
+              accept="image/*"
+              class="hidden"
+              @change="handleFileChange"
             />
+            <div
+              class="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-brand-blue/30 bg-brand-blue/5 py-5 transition duration-200 hover:border-brand-blue hover:bg-brand-blue/10"
+              @click="triggerFileInput"
+              @dragover.prevent
+              @drop.prevent="handleDrop"
+            >
+              <div class="flex items-center gap-2 text-sm font-semibold text-slate-600">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5 text-slate-500"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
+                  />
+                </svg>
+                <span>
+                  {{
+                    form.photo_files.length
+                      ? `已選擇 ${form.photo_files.length} 張照片`
+                      : '上傳或拖曳寵物照片...'
+                  }}
+                </span>
+              </div>
+            </div>
           </div>
 
           <div class="flex flex-col gap-2">
