@@ -76,7 +76,6 @@ const handleAddFirstRecord = () => {
                 目前此分類下還沒有任何資料，<br class="md:hidden" />快來為毛孩建立第一筆健康檔案吧！
               </p>
 
-              <!-- 引導按鈕 -->
               <button
                 type="button"
                 @click="handleAddFirstRecord"
