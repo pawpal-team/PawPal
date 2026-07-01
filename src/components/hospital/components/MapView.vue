@@ -3,7 +3,7 @@ import { computed } from 'vue'
 import { LMap, LTileLayer } from '@vue-leaflet/vue-leaflet'
 import 'leaflet/dist/leaflet.css'
 import { hospitals as defaultHospitals } from '@/data/hospitals.js'
-import HospitalMarker from './HospitalMarker.vue'
+import HospitalMarker from '@/components/hospital/components/HospitalMarker.vue'
 
 const props = defineProps({
   hospitals: {
