@@ -5,10 +5,17 @@
     aria-label="新增寵物"
   >
     <span
-      class="flex h-[74px] w-[74px] shrink-0 items-center justify-center rounded-full border-2 border-dashed border-brand-orange bg-brand-orange/10 text-4xl font-light leading-none text-brand-orange transition group-hover:bg-brand-orange group-hover:text-white md:h-[88px] md:w-[88px]"
+      class="grid h-[74px] w-[74px] shrink-0 place-items-center rounded-full border-2 border-dashed border-brand-orange bg-brand-orange/10 text-brand-orange transition group-hover:bg-brand-orange group-hover:text-white md:h-[88px] md:w-[88px]"
       aria-hidden="true"
     >
-      +
+      <span class="relative block h-6 w-6 md:h-7 md:w-7">
+        <span
+          class="absolute left-1/2 top-0 h-full w-[4px] -translate-x-1/2 rounded-full bg-current"
+        ></span>
+        <span
+          class="absolute left-0 top-1/2 h-[4px] w-full -translate-y-1/2 rounded-full bg-current"
+        ></span>
+      </span>
     </span>
 
     <span class="min-w-0">
