@@ -1,4 +1,4 @@
-import { findUserById } from '../services/user.service.js'
+import { findUserById } from '../services/users.service.js'
 
 export function createGetCurrentUser({ findUserById }) {
   return async function getCurrentUser(req, res) {

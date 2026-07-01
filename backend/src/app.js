@@ -1,14 +1,15 @@
 import express from 'express'
 import cors from 'cors'
-import userRoutes from './routes/user.routes.js'
-import authRoutes from './routes/auth.routes.js'
-import calendarEventRoutes from './routes/calendar_events.routes.js'
-import growthRecordsRoutes from './routes/growth_records.routes.js'
-import petRoutes from './routes/pet.routes.js'
-import medicalRecordRoutes from './routes/medical_record.routes.js'
+import userRoutes from './routes/users.route.js'
+import authRoutes from './routes/auth.route.js'
+import calendarEventRoutes from './routes/calendar_events.route.js'
+import growthRecordsRoutes from './routes/growth_records.route.js'
+import petRoutes from './routes/pets.route.js'
+import medicalRecordRoutes from './routes/medical_records.route.js'
 
 const app = express()
 const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || 'http://localhost:5173'
+const API_PREFIX = '/api/v1'
 
 app.use(
   cors({
@@ -16,12 +17,12 @@ app.use(
   }),
 )
 app.use(express.json())
-app.use('/api/users', userRoutes)
-app.use('/api/auth', authRoutes)
-app.use('/api/calendar-events', calendarEventRoutes)
-app.use('/api/growth-records', growthRecordsRoutes)
-app.use('/api/pets', petRoutes)
-app.use('/api/medical-records', medicalRecordRoutes)
+app.use(`${API_PREFIX}/users`, userRoutes)
+app.use(`${API_PREFIX}/auth`, authRoutes)
+app.use(`${API_PREFIX}/calendar-events`, calendarEventRoutes)
+app.use(`${API_PREFIX}/growth-records`, growthRecordsRoutes)
+app.use(`${API_PREFIX}/pets`, petRoutes)
+app.use(`${API_PREFIX}/medical-records`, medicalRecordRoutes)
 
 app.get('/', (req, res) => {
   res.json({
