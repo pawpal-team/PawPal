@@ -6,8 +6,6 @@ import MedicalFilterTabs from '@/components/medical/MedicalFilterTabs.vue'
 import MedicalTimeline from '@/components/medical/MedicalTimeline.vue'
 import AddMedicalButton from '@/components/medical/AddMedicalButton.vue'
 import PetSwitcher from '@/components/pet/PetSwitcher.vue'
-import DeleteConfirmModal from '@/components/common/DeleteConfirmModal.vue'
-import MedicalRecordModal from '@/components/medical/MedicalRecordModal.vue'
 
 import { medicalRecords as originalRecords } from '@/data/medicalRecords.js'
 const mockRecords = ref([...originalRecords])
@@ -21,50 +19,17 @@ const filteredRecords = computed(() => {
   return mockRecords.value.filter((record) => record.type === currentTab.value)
 })
 
-const isDeleteOpen = ref(false)
-const pendingDeleteRecord = ref(null)
+const openEditModal = (record) => {
+  console.log('【測試】點擊編輯病歷：', record)
+}
 
 const openDeleteConfirm = (record) => {
-  pendingDeleteRecord.value = record
-  isDeleteOpen.value = true
-}
-
-const executeDelete = () => {
-  mockRecords.value = mockRecords.value.filter((r) => r.id !== pendingDeleteRecord.value.id)
-  isDeleteOpen.value = false
-}
-
-const isOpenAddModal = ref(false)
-const isEditMode = ref(false)
-const editingRecord = ref(null)
-
-const openAddModal = () => {
-  isEditMode.value = false
-  editingRecord.value = null
-  isOpenAddModal.value = true
-}
-
-const openEditModal = (record) => {
-  isEditMode.value = true
-  editingRecord.value = { ...record }
-  isOpenAddModal.value = true
+  console.log('【測試】點擊刪除病歷：', record)
+  mockRecords.value = mockRecords.value.filter((r) => r.id !== record.id)
 }
 
 const handleAddFirstRecord = () => {
-  openAddModal()
-}
-
-const handleSaveRecord = (formData) => {
-  if (isEditMode.value) {
-    mockRecords.value = mockRecords.value.map((r) => (r.id === formData.id ? formData : r))
-  } else {
-    const newRecord = {
-      ...formData,
-      id: Date.now(),
-    }
-    mockRecords.value.unshift(newRecord)
-  }
-  isOpenAddModal.value = false
+  console.log('【測試】點擊新增病歷')
 }
 </script>
 
@@ -77,7 +42,7 @@ const handleSaveRecord = (formData) => {
           <PetSwitcher />
           <div class="mb-2 flex items-center justify-between gap-4 md:mb-6">
             <h1 class="text-xl font-bold text-brand-navy md:text-2xl">醫療紀錄</h1>
-            <AddMedicalButton @click="openAddModal" />
+            <AddMedicalButton @click="handleAddFirstRecord" />
           </div>
           <div
             class="overflow-hidden rounded-3xl border border-brand-lightblue bg-brand-white shadow-[0_8px_28px_rgba(61,74,122,0.08)]"
@@ -124,21 +89,6 @@ const handleSaveRecord = (formData) => {
     </div>
     <AppFooter class="lg:hidden" />
   </div>
-
-  <DeleteConfirmModal
-    :is-open="isDeleteOpen"
-    title="確定刪除此病歷紀錄？"
-    :item-name="pendingDeleteRecord?.title || ''"
-    @close="isDeleteOpen = false"
-    @confirm="executeDelete"
-  />
-
-  <MedicalRecordModal
-    :is-open="isOpenAddModal"
-    :record-data="editingRecord"
-    @close="isOpenAddModal = false"
-    @save="handleSaveRecord"
-  />
 </template>
 
 <style scoped></style>
