@@ -1,10 +1,11 @@
 <script setup>
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import { calendarEvents } from '@/data/calendarEvents'
 import { pets as rawPets } from '@/data/pets'
 import PetCard from '@/components/pet/PetCard.vue'
 import CalendarGrid from '@/components/calendar/CalendarGrid.vue'
 import EventList from '@/components/calendar/EventList.vue'
+import DeleteEventModal from '@/components/calendar/DeleteEventModal.vue'
 import AppHeader from '@/components/layout/AppHeader.vue'
 import AppFooter from '@/components/layout/AppFooter.vue'
 import memberBanner from '@/assets/images/member_banner_dashboard.png'
@@ -20,6 +21,22 @@ const dashboardPets = rawPets.map((p) => ({
 }))
 
 const userName = computed(() => authStore.user?.name || '寵物家長')
+
+const showDeleteModal = ref(false)
+const eventToDelete = ref(null)
+
+const handleDeleteRequest = (event) => {
+  eventToDelete.value = event
+  showDeleteModal.value = true
+}
+const handleCloseDeleteModal = () => {
+  showDeleteModal.value = false
+  eventToDelete.value = null
+}
+const handleConfirmDelete = () => {
+  // TODO: 串接刪除行程 API 後，於此呼叫並更新 calendarEvents
+  handleCloseDeleteModal()
+}
 </script>
 
 <template>
@@ -49,7 +66,11 @@ const userName = computed(() => authStore.user?.name || '寵物家長')
         <div
           class="min-h-0 min-w-0 overflow-y-auto overflow-x-hidden rounded-3xl border border-brand-lightblue bg-brand-white shadow-[0_8px_28px_rgba(61,74,122,0.08)] p-4"
         >
-          <EventList :events="calendarEvents" :compact="true" />
+          <EventList
+            :events="calendarEvents"
+            :compact="true"
+            @delete="handleDeleteRequest"
+          />
         </div>
 
         <section class="lg:col-span-2 min-w-0">
@@ -75,4 +96,11 @@ const userName = computed(() => authStore.user?.name || '寵物家長')
   </div>
 
   <AppFooter class="lg:hidden" />
+
+  <DeleteEventModal
+    :is-open="showDeleteModal"
+    :item-name="eventToDelete?.title ?? ''"
+    @close="handleCloseDeleteModal"
+    @confirm="handleConfirmDelete"
+  />
 </template>
