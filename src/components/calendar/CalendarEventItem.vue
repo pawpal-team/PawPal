@@ -22,7 +22,7 @@ const overflow = computed(() => Math.max(0, props.events.length - MAX))
 </script>
 
 <template>
-  <!-- 手機：圓點 + +N 在正下方 -->
+  <!-- 手機：圓點 + more... 在右下角 -->
   <div class="flex flex-col gap-0.5 mt-1 w-full md:hidden">
     <div class="flex gap-1 ml-1">
       <span
@@ -34,9 +34,9 @@ const overflow = computed(() => Math.max(0, props.events.length - MAX))
     </div>
     <span
       v-if="overflow > 0"
-      class="text-[10px] text-brand-blue font-medium leading-none w-full text-center mt-1"
+      class="absolute bottom-1 right-1 text-[9px] text-brand-blue font-medium leading-none"
     >
-      +{{ overflow }}
+      more...
     </span>
   </div>
 

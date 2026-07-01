@@ -236,9 +236,9 @@ function selectCell(index) {
               </span>
               <span
                 v-if="cell.events?.length > 3"
-                class="hidden md:inline text-[10px] lg:text-xs text-brand-blue font-medium leading-none mt-1"
+                class="hidden md:inline rounded-full bg-brand-blue text-white px-1.5 py-0.5 text-[10px] lg:text-xs leading-none mt-1"
               >
-                +{{ cell.events.length - 3 }}
+                more...
               </span>
             </div>
 
