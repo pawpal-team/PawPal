@@ -21,10 +21,10 @@ const EVENT_TYPES = [
   { label: '其他', color: '#94a3b8' },
 ]
 
-// 時間選項：06:00 ~ 22:30，每 30 分鐘，24 小時制
+// 時間選項：00:00 ~ 23:30，每 30 分鐘，24 小時制
 const timeOptions = (() => {
   const options = []
-  for (let totalMins = 6 * 60; totalMins <= 22 * 60 + 30; totalMins += 30) {
+  for (let totalMins = 0; totalMins <= 23 * 60 + 30; totalMins += 30) {
     const h = Math.floor(totalMins / 60)
     const m = totalMins % 60
     options.push(`${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`)
