@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { calendarEvents } from '@/data/calendarEvents'
 import { pets as rawPets } from '@/data/pets'
 import PetCard from '@/components/pet/PetCard.vue'
+import AddPetButton from '@/components/pet/AddPetButton.vue'
 import CalendarGrid from '@/components/calendar/CalendarGrid.vue'
 import EventList from '@/components/calendar/EventList.vue'
 import AppHeader from '@/components/layout/AppHeader.vue'
@@ -61,6 +62,7 @@ const userName = computed(() => authStore.user?.name || '寵物家長')
           <div
             class="flex flex-col md:flex-row gap-3 md:gap-4 overflow-y-auto max-h-[360px] md:overflow-y-hidden md:overflow-x-auto md:max-h-none pb-2"
           >
+            <AddPetButton class="md:min-w-[132px] md:flex-1" />
             <PetCard
               v-for="(pet, index) in dashboardPets"
               :key="pet.id"
