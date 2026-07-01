@@ -1,9 +1,9 @@
 import { Router } from 'express'
 
-import { createPet, deletePet, getPet, listPets, updatePet } from '../controllers/pet.controller.js'
+import { createPet, deletePet, getPet, listPets, updatePet } from '../controllers/pets.controller.js'
 import { authenticateToken } from '../middlewares/auth.middleware.js'
 import { validate } from '../middlewares/validate.js'
-import { createPetSchema, updatePetSchema } from '../schemas/pet_schema.js'
+import { createPetSchema, updatePetSchema } from '../schemas/pets.schema.js'
 
 const router = Router()
 

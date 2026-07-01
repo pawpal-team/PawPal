@@ -1,11 +1,11 @@
 import express from 'express'
 import cors from 'cors'
-import userRoutes from './routes/user.routes.js'
-import authRoutes from './routes/auth.routes.js'
-import calendarEventRoutes from './routes/calendar_events.routes.js'
-import growthRecordsRoutes from './routes/growth_records.routes.js'
-import petRoutes from './routes/pet.routes.js'
-import medicalRecordRoutes from './routes/medical_record.routes.js'
+import userRoutes from './routes/users.route.js'
+import authRoutes from './routes/auth.route.js'
+import calendarEventRoutes from './routes/calendar_events.route.js'
+import growthRecordsRoutes from './routes/growth_records.route.js'
+import petRoutes from './routes/pets.route.js'
+import medicalRecordRoutes from './routes/medical_records.route.js'
 
 const app = express()
 const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || 'http://localhost:5173'

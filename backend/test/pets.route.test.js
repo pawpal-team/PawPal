@@ -3,7 +3,7 @@ import { test } from 'node:test'
 
 import app from '../src/app.js'
 import { authenticateToken } from '../src/middlewares/auth.middleware.js'
-import petRoutes from '../src/routes/pet.routes.js'
+import petRoutes from '../src/routes/pets.route.js'
 
 test('每個寵物 CRUD 路由都應使用 JWT 驗證保護', () => {
   const routes = petRoutes.stack.map((layer) => ({

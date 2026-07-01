@@ -12,7 +12,7 @@ import {
   calendarEventParamsSchema,
   createCalendarEventSchema,
   updateCalendarEventSchema,
-} from '../schemas/calendar_events_schema.js'
+} from '../schemas/calendar_events.schema.js'
 
 const router = Router()
 
