@@ -101,7 +101,7 @@ const handleFileChange = (event) => {
       @click.self="handleClose"
     >
       <div
-        class="modal-card relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl bg-white p-6 shadow-2xl flex flex-col gap-6 md:p-8 transform duration-300 scale-100"
+        class="modal-card relative w-full max-w-2xl max-h-[90vh] overflow-hidden rounded-3xl bg-white p-6 shadow-2xl flex flex-col gap-6 md:p-8 transform duration-300 scale-100"
       >
         <div class="flex items-start justify-between">
           <div class="flex flex-col gap-1">
@@ -121,7 +121,10 @@ const handleFileChange = (event) => {
           </button>
         </div>
 
-        <form @submit.prevent="handleSubmit" class="flex flex-col gap-5">
+        <form
+          @submit.prevent="handleSubmit"
+          class="flex flex-col gap-5 overflow-y-auto pr-1 min-h-0"
+        >
           <div class="flex flex-col gap-2">
             <label class="text-base font-bold text-brand-navy">
               標題

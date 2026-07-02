@@ -199,21 +199,12 @@ const handleFileChange = (event) => {
               class="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-brand-blue/30 bg-brand-blue/5 py-5 transition duration-200 hover:border-brand-blue hover:bg-brand-blue/10"
             >
               <div class="flex items-center gap-2 text-sm font-semibold text-slate-600">
-                <svg
-                  xmlns="http://w3.org"
-                  class="h-5 w-5 text-slate-500"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
-                  />
-                </svg>
-                <span>上傳或拖曳相關照片、檔案、單據...</span>
+                <img
+                  class="h-5 w-5 object-contain"
+                  src="@/assets/icons/paper-clip.svg"
+                  alt="上傳圖標"
+                />
+                <span>上傳或拖曳看診照片、報告、藥單...</span>
               </div>
             </div>
           </div>
