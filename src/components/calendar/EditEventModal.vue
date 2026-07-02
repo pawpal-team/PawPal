@@ -70,7 +70,7 @@ const handleSubmit = () => emit('submit', { ...form.value })
       @click.self="handleClose"
     >
       <div
-        class="modal-card relative flex max-h-[90vh] w-full max-w-2xl flex-col gap-6 overflow-y-auto rounded-3xl bg-white p-6 shadow-2xl md:p-8"
+        class="modal-card relative flex max-h-[90vh] w-full max-w-2xl flex-col gap-6 overflow-hidden rounded-3xl bg-white pt-6 pb-6 pl-6 pr-2 shadow-2xl md:pt-8 md:pb-8 md:pr-2 md:pl-8"
       >
         <!-- 頂部標頭 -->
         <div class="flex items-start justify-between">
@@ -80,12 +80,15 @@ const handleSubmit = () => emit('submit', { ...form.value })
             @click="handleClose"
             class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-slate-100 text-lg text-brand-gray transition duration-200 hover:bg-brand-blue/20 hover:text-brand-navy active:scale-95"
           >
-            ×
+            ⨉
           </button>
         </div>
 
         <!-- 表單 -->
-        <form @submit.prevent="handleSubmit" class="flex flex-col gap-5">
+        <form
+          @submit.prevent="handleSubmit"
+          class="flex min-h-0 flex-col gap-5 overflow-y-auto pr-4 md:pr-6"
+        >
           <!-- Row 1：標題 + 寵物 -->
           <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
             <!-- 標題 -->

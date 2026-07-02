@@ -48,7 +48,7 @@ const handleFileChange = (event) => {
     >
       <!-- 白底卡片 -->
       <div
-        class="modal-card relative flex max-h-[90vh] w-full max-w-2xl flex-col gap-6 overflow-y-auto rounded-3xl bg-white p-6 shadow-2xl transition duration-300 scale-100 md:p-8"
+        class="modal-card relative flex max-h-[90vh] w-full max-w-2xl flex-col gap-6 overflow-hidden rounded-3xl bg-white pt-6 pb-6 pl-6 pr-2 shadow-2xl md:pt-8 md:pb-8 md:pr-2 md:pl-8"
       >
         <!-- 頂部標頭與 X 關閉鈕 -->
         <div class="flex items-start justify-between">
@@ -66,7 +66,10 @@ const handleFileChange = (event) => {
         </div>
 
         <!-- 內部主要表單 -->
-        <form @submit.prevent="handleSubmit" class="flex flex-col gap-5">
+        <form
+          @submit.prevent="handleSubmit"
+          class="flex min-h-0 flex-col gap-5 overflow-y-auto pr-4 md:pr-6"
+        >
           <!-- 單行文字輸入框(如：標題、姓名) -->
           <div class="flex flex-col gap-2">
             <label class="text-base font-bold text-brand-navy">
