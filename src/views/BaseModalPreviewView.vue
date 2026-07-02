@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import BaseModal from '@/components/common/BaseModal.vue'
+import AddPetModal from '@/components/pet/AddPetModal.vue'
 
 const isOpen = ref(true)
 </script>
@@ -15,6 +15,6 @@ const isOpen = ref(true)
       開啟新增寵物
     </button>
 
-    <BaseModal :is-open="isOpen" @close="isOpen = false" @submit="isOpen = false" />
+    <AddPetModal :is-open="isOpen" @close="isOpen = false" @submit="isOpen = false" />
   </main>
 </template>
