@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch, computed } from 'vue'
 import { usePetStore } from '@/stores/petStore'
+import TimeWheelPicker from '@/components/common/TimeWheelPicker.vue'
 
 const props = defineProps({
   isOpen: { type: Boolean, default: false },
@@ -22,17 +23,6 @@ const EVENT_TYPES = [
   { label: '訓練', color: '#2dd4bf' },
   { label: '其他', color: '#94a3b8' },
 ]
-
-// 時間選項：00:00 ~ 23:30，每 30 分鐘，24 小時制
-const timeOptions = (() => {
-  const options = []
-  for (let totalMins = 0; totalMins <= 23 * 60 + 30; totalMins += 30) {
-    const h = Math.floor(totalMins / 60)
-    const m = totalMins % 60
-    options.push(`${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`)
-  }
-  return options
-})()
 
 const form = ref({
   title: '',
@@ -183,22 +173,7 @@ const handleSubmit = () => {
               <label class="text-base font-bold text-brand-navy">
                 時間 <span class="text-xs font-normal text-brand-gray/50">（選填）</span>
               </label>
-              <div class="relative">
-                <select
-                  v-model="form.time"
-                  class="w-full appearance-none rounded-2xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-sm outline-none transition duration-200 hover:border-brand-blue hover:bg-brand-blue/5 focus:border-brand-blue focus:bg-white focus:ring-4 focus:ring-brand-blue/10"
-                  :class="form.time === '' ? 'text-brand-gray/40' : 'text-brand-darkgray'"
-                >
-                  <option value="" class="text-brand-gray/40">請選擇時間</option>
-                  <option v-for="t in timeOptions" :key="t" :value="t" class="text-brand-darkgray">
-                    {{ t }}
-                  </option>
-                </select>
-                <span
-                  class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs text-brand-gray"
-                  >▼</span
-                >
-              </div>
+              <TimeWheelPicker v-model="form.time" />
             </div>
           </div>
 
