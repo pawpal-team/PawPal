@@ -294,7 +294,7 @@ const handleFileChange = (event) => {
             </button>
             <button
               type="submit"
-              class="cursor-pointer rounded-xl bg-brand-blue px-6 py-2.5 text-sm font-semibold text-white shadow-md shadow-brand-blue/20 transition duration-200 hover:bg-brand-blue/80 hover:shadow-lg active:scale-95"
+              class="cursor-pointer rounded-xl bg-brand-blue px-6 py-2.5 text-sm font-semibold text-white shadow-md shadow-brand-blue/20 transition duration-200 hover:bg-[#7F97EC] hover:shadow-lg active:scale-95"
             >
               {{ isEditMode ? '儲存變更' : '新增紀錄' }}
             </button>
