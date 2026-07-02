@@ -123,7 +123,7 @@ const handleFileChange = (event) => {
 
         <form
           @submit.prevent="handleSubmit"
-          class="flex flex-col gap-5 overflow-y-auto pr-1 min-h-0"
+          class="flex min-h-0 flex-col gap-5 overflow-y-auto pr-4 md:pr-6"
         >
           <div class="flex flex-col gap-2">
             <label class="text-base font-bold text-brand-navy">
