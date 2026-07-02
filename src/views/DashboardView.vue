@@ -1,8 +1,9 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { calendarEvents } from '@/data/calendarEvents'
 import { pets as rawPets } from '@/data/pets'
 import PetCard from '@/components/pet/PetCard.vue'
+import PetProfileModal from '@/components/pet/PetProfileModal.vue'
 import AddPetButton from '@/components/pet/AddPetButton.vue'
 import CalendarGrid from '@/components/calendar/CalendarGrid.vue'
 import EventList from '@/components/calendar/EventList.vue'
@@ -13,6 +14,8 @@ import { useAuthStore } from '@/stores/auth.js'
 
 const themeColors = ['green', 'orange', 'blue']
 const authStore = useAuthStore()
+const selectedPet = ref(null)
+const isPetProfileOpen = ref(false)
 
 const dashboardPets = rawPets.map((p) => ({
   ...p,
@@ -21,6 +24,16 @@ const dashboardPets = rawPets.map((p) => ({
 }))
 
 const userName = computed(() => authStore.user?.name || '寵物家長')
+
+const openPetProfile = (pet) => {
+  selectedPet.value = pet
+  isPetProfileOpen.value = true
+}
+
+const closePetProfile = () => {
+  isPetProfileOpen.value = false
+  selectedPet.value = null
+}
 </script>
 
 <template>
@@ -69,6 +82,7 @@ const userName = computed(() => authStore.user?.name || '寵物家長')
               :pet="pet"
               :theme="themeColors[index % themeColors.length]"
               class="md:min-w-[132px] md:flex-1"
+              @click="openPetProfile(pet)"
             />
           </div>
         </section>
@@ -77,4 +91,10 @@ const userName = computed(() => authStore.user?.name || '寵物家長')
   </div>
 
   <AppFooter class="lg:hidden" />
+
+  <PetProfileModal
+    :is-open="isPetProfileOpen"
+    :pet="selectedPet"
+    @close="closePetProfile"
+  />
 </template>
