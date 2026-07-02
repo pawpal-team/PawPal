@@ -12,6 +12,7 @@ const emit = defineEmits(['close', 'submit'])
 const form = ref({
   name: '',
   species: '',
+  customSpecies: '',
   breed: '',
   gender: '',
   birthday: '',
@@ -36,6 +37,7 @@ const resetForm = () => {
   form.value = {
     name: '',
     species: '',
+    customSpecies: '',
     breed: '',
     gender: '',
     birthday: '',
@@ -62,9 +64,12 @@ const normalizeOptionalValue = (value) => {
 const handleClose = () => emit('close')
 
 const handleSubmit = () => {
+  const submittedSpecies =
+    form.value.species === '其他' ? form.value.customSpecies.trim() : form.value.species.trim()
+
   const payload = {
     name: form.value.name.trim(),
-    species: form.value.species.trim(),
+    species: submittedSpecies,
     breed: normalizeOptionalValue(form.value.breed),
     gender: normalizeOptionalValue(form.value.gender),
     birthday: normalizeOptionalValue(form.value.birthday),
@@ -149,6 +154,15 @@ const handleDrop = (event) => {
                   {{ species }}
                 </option>
               </select>
+              <input
+                v-if="form.species === '其他'"
+                v-model="form.customSpecies"
+                type="text"
+                maxlength="10"
+                placeholder="請輸入寵物種類"
+                :class="inputClass"
+                required
+              />
             </div>
 
             <div class="flex flex-col gap-2">
