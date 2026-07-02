@@ -1,5 +1,6 @@
 import express from 'express'
 import cors from 'cors'
+import helmet from 'helmet'
 import userRoutes from './routes/users.route.js'
 import authRoutes from './routes/auth.route.js'
 import calendarEventRoutes from './routes/calendar_events.route.js'
@@ -11,6 +12,7 @@ const app = express()
 const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || 'http://localhost:5173'
 const API_PREFIX = '/api/v1'
 
+app.use(helmet())
 app.use(
   cors({
     origin: FRONTEND_ORIGIN,
