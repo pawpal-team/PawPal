@@ -1,5 +1,7 @@
 <script setup>
+import { computed } from 'vue'
 import BaseButton from '@/components/common/BaseButton.vue'
+import petPhoto from '@/assets/images/dog.png'
 
 const props = defineProps({
   isOpen: {
@@ -13,6 +15,10 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['close'])
+
+const petImage = computed(
+  () => props.pet?.photoUrl || props.pet?.image || props.pet?.avatar_url || props.pet?.avatarUrl || petPhoto,
+)
 
 const formatValue = (value) => {
   if (value === '' || value == null) return '-'
@@ -45,7 +51,7 @@ const formatValue = (value) => {
               class="h-36 w-36 overflow-hidden rounded-full border-4 border-white bg-brand-lightblue shadow-[0_10px_24px_rgba(61,74,122,0.16)] md:h-40 md:w-40"
             >
               <img
-                :src="pet.photoUrl || pet.image"
+                :src="petImage"
                 :alt="`${pet.name || '寵物'}照片`"
                 class="h-full w-full object-cover"
               />

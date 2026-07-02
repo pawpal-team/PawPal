@@ -24,6 +24,8 @@ test('PetCard 是可點擊卡片，但新增寵物卡片不共用這個事件', 
 })
 
 test('PetProfileModal 顯示基本資料並使用共用 BaseButton 關閉', () => {
+  assert.match(profileModal, /petPhoto/)
+  assert.match(profileModal, /petImage/)
   assert.match(profileModal, /BaseButton/)
   assert.match(profileModal, /pet\.weight/)
   assert.match(profileModal, /pet\.microchipNumber/)
