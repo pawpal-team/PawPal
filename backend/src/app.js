@@ -6,6 +6,7 @@ import calendarEventRoutes from './routes/calendar_events.route.js'
 import growthRecordsRoutes from './routes/growth_records.route.js'
 import petRoutes from './routes/pets.route.js'
 import medicalRecordRoutes from './routes/medical_records.route.js'
+import { apiRateLimiter } from './config/rate_limit.js'
 
 const app = express()
 const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || 'http://localhost:5173'
@@ -17,6 +18,7 @@ app.use(
   }),
 )
 app.use(express.json())
+app.use(API_PREFIX, apiRateLimiter)
 app.use(`${API_PREFIX}/users`, userRoutes)
 app.use(`${API_PREFIX}/auth`, authRoutes)
 app.use(`${API_PREFIX}/calendar-events`, calendarEventRoutes)
