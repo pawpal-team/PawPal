@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import { createPetController } from '../src/controllers/pet.controller.js'
+import { createPetController } from '../src/controllers/pets.controller.js'
 
 test('應匯出可注入相依服務的寵物 controller factory', () => {
   assert.equal(typeof createPetController, 'function')

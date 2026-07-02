@@ -6,10 +6,13 @@ import MedicalFilterTabs from '@/components/medical/MedicalFilterTabs.vue'
 import MedicalTimeline from '@/components/medical/MedicalTimeline.vue'
 import AddMedicalButton from '@/components/medical/AddMedicalButton.vue'
 import PetSwitcher from '@/components/pet/PetSwitcher.vue'
+import AddMedicalModal from '@/components/medical/MedicalRecordModal.vue'
+
+const isModalOpen = ref(false)
+const selectedRecord = ref(null)
 
 import { medicalRecords as originalRecords } from '@/data/medicalRecords.js'
 const mockRecords = ref([...originalRecords])
-
 const currentTab = ref('全部')
 
 const filteredRecords = computed(() => {
@@ -19,8 +22,15 @@ const filteredRecords = computed(() => {
   return mockRecords.value.filter((record) => record.type === currentTab.value)
 })
 
+const openAddModal = () => {
+  selectedRecord.value = null
+  isModalOpen.value = true
+}
+
 const openEditModal = (record) => {
   console.log('【測試】點擊編輯病歷：', record)
+  selectedRecord.value = record
+  isModalOpen.value = true
 }
 
 const openDeleteConfirm = (record) => {
@@ -30,6 +40,12 @@ const openDeleteConfirm = (record) => {
 
 const handleAddFirstRecord = () => {
   console.log('【測試】點擊新增病歷')
+  openAddModal()
+}
+
+const onModalSubmit = ({ mode, data }) => {
+  console.log('表單送出成功，模式：', mode, '資料：', data)
+  isModalOpen.value = false
 }
 </script>
 
@@ -50,6 +66,7 @@ const handleAddFirstRecord = () => {
             <div class="border-b border-brand-lightblue bg-brand-lightblue px-2 py-1 md:px-8">
               <MedicalFilterTabs v-model="currentTab" />
             </div>
+            
             <div v-if="filteredRecords.length > 0" class="py-3 md:py-6">
               <MedicalTimeline
                 :records="filteredRecords"
@@ -83,11 +100,18 @@ const handleAddFirstRecord = () => {
                 立即新增第一筆紀錄
               </button>
             </div>
+
           </div>
         </section>
       </main>
     </div>
     <AppFooter class="lg:hidden" />
+    <AddMedicalModal
+      :is-open="isModalOpen"
+      :initial-data="selectedRecord"
+      @close="isModalOpen = false"
+      @submit="onModalSubmit"
+    />
   </div>
 </template>
 

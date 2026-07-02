@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import calendarEventsRoutes from '../src/routes/calendar_events.routes.js'
+import calendarEventsRoutes from '../src/routes/calendar_events.route.js'
 
 function findRoute(path, method) {
   return calendarEventsRoutes.stack.find(

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import * as userController from '../src/controllers/user.controller.js'
+import * as userController from '../src/controllers/users.controller.js'
 
 function createTestController(findUserById) {
   assert.equal(typeof userController.createGetCurrentUser, 'function')
