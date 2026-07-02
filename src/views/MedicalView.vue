@@ -35,8 +35,8 @@ const onModalSubmit = ({ mode, data }) => {
         <section class="mx-auto w-full">
           <PetSwitcher />
           <div class="mb-2 flex items-center justify-between gap-4 md:mb-6">
-            <h1 class="text-xl font-bold text-brand-navy md:text-2xl">病歷紀錄</h1>
-            <AddMedicalButton @click="openAddModal" />
+            <h1 class="text-xl font-bold text-brand-navy md:text-2xl">醫療紀錄</h1>
+            <AddMedicalButton />
           </div>
           <div
             class="overflow-hidden rounded-3xl border border-brand-lightblue bg-brand-white shadow-[0_8px_28px_rgba(61,74,122,0.08)]"

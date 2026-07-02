@@ -1,10 +1,9 @@
 <script setup>
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth.js'
 import { useSidebarStore } from '@/stores/sidebar'
 import home from '@/assets/icons/home.svg'
 import home_o from '@/assets/icons/home_o.svg'
-import petIcon from '@/assets/icons/pet_gray.svg'
-import petIcon_o from '@/assets/icons/pet.svg'
 import location from '@/assets/icons/location_gray.svg'
 import location_o from '@/assets/icons/location_o.svg'
 import diagnostic from '@/assets/icons/diagnostic_gray.svg'
@@ -15,9 +14,19 @@ import notice from '@/assets/icons/notice.svg'
 import notice_o from '@/assets/icons/notice_o.svg'
 import setting from '@/assets/icons/setting.svg'
 import setting_o from '@/assets/icons/setting_o.svg'
+import logoutIcon from '@/assets/icons/login.svg'
+
+const props = defineProps({
+  showDesktop: {
+    type: Boolean,
+    default: true,
+  },
+})
 
 const sidebarStore = useSidebarStore()
 const route = useRoute()
+const router = useRouter()
+const authStore = useAuthStore()
 
 function isActive(item) {
   return route.path === item.to
@@ -27,12 +36,17 @@ function getIcon(item) {
   return isActive(item) ? item.activeIcon : item.icon
 }
 
+function handleLogout() {
+  authStore.logout()
+  sidebarStore.closeSidebar()
+  router.push('/login')
+}
+
 const navItems = [
   { key: 'home', icon: home, activeIcon: home_o, label: '首頁', to: '/dashboard' },
   { key: 'map', icon: location, activeIcon: location_o, label: '醫院地圖' },
-  { key: 'records', icon: diagnostic, activeIcon: diagnostic_o, label: '病歷紀錄', to: '/medical' },
+  { key: 'records', icon: diagnostic, activeIcon: diagnostic_o, label: '醫療紀錄', to: '/medical' },
   { key: 'growth', icon: growth, activeIcon: growth_o, label: '成長歷程', to: '/growth' },
-  { key: 'profile', icon: petIcon, activeIcon: petIcon_o, label: '基本資料' },
   { key: 'notifications', icon: notice, activeIcon: notice_o, label: '通知中心' },
   { key: 'setting', icon: setting, activeIcon: setting_o, label: '設定' },
 ]
@@ -167,7 +181,7 @@ const navItems = [
               <router-link
                 to="/medical"
                 class="px-3 text-sm font-medium text-brand-gray active:text-brand-orange"
-                >病歷紀錄</router-link
+                >醫療紀錄</router-link
               >
             </li>
 
@@ -183,14 +197,6 @@ const navItems = [
               <a
                 href="#"
                 class="cursor-pointer px-3 text-sm font-medium text-brand-gray active:text-brand-orange"
-                >基本資料</a
-              >
-            </li>
-
-            <li>
-              <a
-                href="#"
-                class="cursor-pointer px-3 text-sm font-medium text-brand-gray active:text-brand-orange"
                 >通知中心</a
               >
             </li>
@@ -198,15 +204,14 @@ const navItems = [
               <div
                 class="flex items-center justify-center border-t border-brand-lightblue pt-[50px]"
               >
-                <!-- 導回首頁 -->
-                <RouterLink
-                  to="/"
-                  @click="sidebarStore.closeSidebar()"
+                <button
+                  type="button"
+                  @click="handleLogout"
                   class="flex items-center gap-1.5 text-base font-medium text-brand-gray active:text-brand-orange"
                 >
-                  <img src="@/assets/icons/login.svg" alt="Logout Icon" class="h-4 w-4" />
+                  <img :src="logoutIcon" alt="Logout Icon" class="h-4 w-4" />
                   登出
-                </RouterLink>
+                </button>
               </div>
             </li>
           </ul>
@@ -227,6 +232,7 @@ const navItems = [
 
   <!-- 電腦 -->
   <aside
+    v-if="props.showDesktop"
     class="hidden lg:flex fixed left-0 top-[68px] h-[calc(100vh-68px)] w-52 flex-col bg-[#ECF1FD] z-40"
   >
     <nav class="flex flex-1 flex-col py-6">
@@ -246,6 +252,16 @@ const navItems = [
           </router-link>
         </li>
       </ul>
+      <div class="mt-auto px-5 pt-6">
+        <button
+          type="button"
+          @click="handleLogout"
+          class="flex w-full items-center gap-3 px-1 py-3 text-base font-medium text-brand-gray hover:text-brand-orange"
+        >
+          <img :src="logoutIcon" alt="Logout Icon" class="h-5 w-5 shrink-0" />
+          登出
+        </button>
+      </div>
     </nav>
   </aside>
 </template>

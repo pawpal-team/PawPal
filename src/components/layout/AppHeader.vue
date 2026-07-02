@@ -17,6 +17,7 @@ const sidebarStore = useSidebarStore()
 const authStore = useAuthStore()
 
 const isMemberVariant = computed(() => props.variant === 'member')
+const shouldUseMemberSidebarOnMobile = computed(() => authStore.isLoggedIn)
 
 const navGroups = [
   {
@@ -129,9 +130,11 @@ const navGroups = [
 
   <DashboardSidebar v-if="isMemberVariant" />
 
+  <DashboardSidebar v-else-if="shouldUseMemberSidebarOnMobile" :show-desktop="false" />
+
   <!-- Sidebar Overlay -->
   <div
-    v-if="sidebarStore.isOpen && !isMemberVariant"
+    v-if="sidebarStore.isOpen && !isMemberVariant && !shouldUseMemberSidebarOnMobile"
     class="fixed inset-0 z-[60] bg-black/50 lg:hidden"
     @click="sidebarStore.closeSidebar()"
   />
@@ -139,7 +142,7 @@ const navGroups = [
   <!-- Sidebar -->
   <transition name="slide">
     <div
-      v-if="sidebarStore.isOpen && !isMemberVariant"
+      v-if="sidebarStore.isOpen && !isMemberVariant && !shouldUseMemberSidebarOnMobile"
       class="fixed inset-y-0 right-0 z-[70] overflow-y-auto bg-white lg:hidden"
     >
       <PublicSidebar />

@@ -39,16 +39,5 @@ const { setSelectedPet } = petStore
       </span>
     </button>
 
-    <button
-      type="button"
-      class="flex shrink-0 flex-col items-center gap-1 rounded-2xl px-2 py-1 transition cursor-pointer lg:hover:bg-brand-lightblue/60 active:scale-95"
-    >
-      <div
-        class="grid h-10 w-10 place-items-center rounded-full border-2 border-dashed border-brand-gray/40 text-brand-gray md:h-12 md:w-12 lg:h-14 lg:w-14"
-      >
-        <span class="text-xl leading-none">+</span>
-      </div>
-      <span class="text-sm text-brand-gray md:text-base lg:text-lg">新增寵物</span>
-    </button>
   </div>
 </template>

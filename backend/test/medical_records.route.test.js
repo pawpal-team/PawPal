@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 import app from '../src/app.js'
-import medicalRecordRoutes from '../src/routes/medical_record.routes.js'
+import medicalRecordRoutes from '../src/routes/medical_records.route.js'
 
 test('應註冊所有醫療紀錄模組對應的 CRUD 路由並正確配置中間件', () => {
   const expectedRoutes = [

@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { authenticateToken } from '../middlewares/auth.middleware.js'
 import { validate } from '../middlewares/validate.js'
 
-import { createRecordSchema, updateRecordSchema } from '../schemas/medical_record_schema.js'
+import { createRecordSchema, updateRecordSchema } from '../schemas/medical_records.schema.js'
 
 import {
   addRecord,
@@ -11,7 +11,7 @@ import {
   getSingleRecord,
   updateRecord,
   deleteRecord,
-} from '../controllers/medical_record.controller.js'
+} from '../controllers/medical_records.controller.js'
 
 const router = Router()
 
