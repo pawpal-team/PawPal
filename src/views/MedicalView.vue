@@ -77,7 +77,7 @@ const handleAddFirstRecord = () => {
               <button
                 type="button"
                 @click="handleAddFirstRecord"
-                class="mt-6 flex cursor-pointer items-center justify-center gap-2 rounded-2xl bg-brand-blue px-5 py-2.5 text-xs font-bold text-white shadow-md shadow-brand-blue/20 transition duration-200 hover:bg-brand-blue/90 hover:shadow-lg active:scale-95 md:px-6 md:py-3 md:text-sm"
+                class="mt-6 flex cursor-pointer items-center justify-center gap-2 rounded-full bg-brand-blue px-5 py-2.5 text-xs font-bold text-white shadow-md shadow-brand-blue/20 transition duration-200 hover:bg-brand-blue/90 hover:shadow-lg active:scale-95 md:px-6 md:py-3 md:text-sm"
               >
                 <span class="text-base font-normal -mt-0.5">＋</span>
                 立即新增第一筆紀錄
